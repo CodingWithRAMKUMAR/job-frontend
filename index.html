@@ -23,6 +23,21 @@
       color: transparent;
       margin-bottom: 1rem;
     }
+    .filters {
+      margin: 1rem 0;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .filters select, .filters input {
+      background: rgba(20, 25, 50, 0.7);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 2rem;
+      padding: 0.5rem 1rem;
+      color: white;
+      font-size: 0.9rem;
+    }
     .jobs-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -89,6 +104,21 @@
 <div class="container">
   <h1>JobBoard ✦</h1>
   <p>Fresh jobs from around the web, updated automatically.</p>
+  <div class="filters">
+    <label for="locationFilter">Filter by location:</label>
+    <select id="locationFilter">
+      <option value="all">All India</option>
+      <option value="Hyderabad">Hyderabad</option>
+      <option value="Bangalore">Bangalore</option>
+      <option value="Mumbai">Mumbai</option>
+      <option value="Delhi">Delhi</option>
+      <option value="Chennai">Chennai</option>
+      <option value="Pune">Pune</option>
+      <option value="Kolkata">Kolkata</option>
+      <option value="Ahmedabad">Ahmedabad</option>
+      <option value="India">India (nationwide)</option>
+    </select>
+  </div>
   <div id="jobsContainer" class="jobs-grid">
     <div class="loading">Loading jobs...</div>
   </div>
@@ -97,13 +127,14 @@
 
 <script>
   const API_URL = 'https://job-api-xizv.onrender.com/api/jobs';
+  let allJobs = [];
 
   async function fetchJobs() {
     try {
       const res = await fetch(API_URL);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const jobs = await res.json();
-      displayJobs(jobs);
+      allJobs = await res.json();
+      displayJobs();
     } catch (err) {
       console.error(err);
       document.getElementById('jobsContainer').innerHTML = '<div class="loading">Failed to load jobs. Check console for details.</div>';
@@ -117,13 +148,18 @@
     return tmp.textContent || tmp.innerText || '';
   }
 
-  function displayJobs(jobs) {
+  function displayJobs() {
     const container = document.getElementById('jobsContainer');
-    if (!jobs.length) {
-      container.innerHTML = '<div class="loading">No jobs yet. Check back soon!</div>';
+    const selectedLocation = document.getElementById('locationFilter').value;
+    let filtered = allJobs;
+    if (selectedLocation !== 'all') {
+      filtered = allJobs.filter(job => job.location && job.location.toLowerCase().includes(selectedLocation.toLowerCase()));
+    }
+    if (!filtered.length) {
+      container.innerHTML = '<div class="loading">No jobs found for this location.</div>';
       return;
     }
-    container.innerHTML = jobs.map(job => {
+    container.innerHTML = filtered.map(job => {
       const cleanDesc = stripHtml(job.description).substring(0, 200);
       return `
         <div class="job-card">
@@ -147,6 +183,7 @@
     });
   }
 
+  document.getElementById('locationFilter').addEventListener('change', () => displayJobs());
   fetchJobs();
 </script>
 </body>
