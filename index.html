@@ -3,295 +3,254 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>ApplyMore | Next-Gen IT Job Portal</title>
-  <meta name="description" content="ApplyMore finds the latest IT fresher jobs across India. Search, filter by location, and apply directly.">
+  <title>ApplyMore | Premium IT Jobs</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      /* Futuristic Palette */
-      --canvas: #05070a;
-      --glass: rgba(255, 255, 255, 0.03);
-      --glass-border: rgba(255, 255, 255, 0.08);
-      --text-main: #ffffff;
-      --text-dim: #94a3b8;
-      --accent: #6366f1;
-      --accent-glow: rgba(99, 102, 241, 0.4);
-      --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
-      --speed: 0.3s;
+      --primary: #6366f1;
+      --primary-glow: rgba(99, 102, 241, 0.5);
+      --bg: #030712;
+      --card-bg: rgba(17, 24, 39, 0.7);
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f9fafb;
+      --text-muted: #9ca3af;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     body.light {
-      --canvas: #f8fafc;
-      --glass: rgba(15, 23, 42, 0.03);
-      --glass-border: rgba(15, 23, 42, 0.08);
-      --text-main: #0f172a;
-      --text-dim: #64748b;
-      --accent: #3b82f6;
-      --card-gradient: linear-gradient(135deg, rgba(15,23,42,0.02) 0%, rgba(15,23,42,0) 100%);
+      --bg: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.8);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: rgba(0, 0, 0, 0.1);
     }
 
     body.vibrant {
-      --canvas: #0f0716;
-      --accent: #d946ef;
-      --accent-glow: rgba(217, 70, 239, 0.4);
+      --primary: #f43f5e;
+      --primary-glow: rgba(244, 63, 94, 0.5);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--canvas);
-      color: var(--text-main);
-      min-height: 100vh;
+      background-color: var(--bg);
+      color: var(--text);
       overflow-x: hidden;
-      transition: background-color 0.5s ease;
+      min-height: 100vh;
+      transition: background-color 0.4s ease;
     }
 
-    /* Animated Cyber Background */
-    .bg-blobs {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1;
-      filter: blur(120px);
-      opacity: 0.6;
+    /* === BACKGROUND ANIMATION === */
+    .bg-animation {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1; overflow: hidden;
     }
-    .blob {
-      position: absolute;
-      width: 40vw; height: 40vw;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: float 20s infinite alternate;
+    .orb {
+      position: absolute; width: 400px; height: 400px;
+      background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+      border-radius: 50%; filter: blur(60px);
+      animation: move 20s infinite alternate;
+      opacity: 0.4;
     }
-    @keyframes float {
-      0% { transform: translate(-10%, -10%); }
-      100% { transform: translate(60%, 40%); }
+    @keyframes move {
+      0% { transform: translate(-10%, -10%) scale(1); }
+      100% { transform: translate(100%, 50%) scale(1.2); }
     }
 
-    .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
 
-    /* Nav Glassmorphism */
-    .top-bar {
+    /* === HEADER === */
+    .navbar {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 1.2rem 2rem;
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 24px;
-      margin-bottom: 4rem;
+      padding: 1rem 2rem; background: var(--card-bg);
+      backdrop-filter: blur(12px); border: 1px solid var(--border);
+      border-radius: 20px; margin-bottom: 3rem;
+      position: sticky; top: 1rem; z-index: 100;
     }
+    .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; color: var(--primary); }
 
-    .logo h1 {
-      font-size: 1.5rem; font-weight: 800; letter-spacing: -1px;
-      background: linear-gradient(to right, var(--text-main), var(--accent));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    .theme-controls { display: flex; gap: 0.8rem; align-items: center; }
+    .theme-dot {
+      width: 14px; height: 14px; border-radius: 50%; cursor: pointer;
+      border: 2px solid var(--border); transition: var(--transition);
     }
+    .theme-dot:hover { transform: scale(1.3); }
 
-    .theme-controls { display: flex; gap: 0.5rem; align-items: center; }
-    .theme-btn {
-      border: none; background: var(--glass); color: var(--text-main);
-      padding: 0.6rem 1.2rem; border-radius: 12px; cursor: pointer;
-      font-weight: 600; font-size: 0.85rem; transition: var(--speed);
-      border: 1px solid var(--glass-border);
-    }
-    .theme-btn:hover { background: var(--accent); color: white; transform: translateY(-2px); }
+    /* === HERO === */
+    .hero { text-align: center; margin-bottom: 4rem; }
+    .hero h2 { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 800; margin-bottom: 1rem; }
+    .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
 
-    /* Modern Hero Section */
-    .hero { text-align: center; margin-bottom: 5rem; }
-    .hero .tagline {
-      display: inline-block; padding: 0.5rem 1rem; border-radius: 100px;
-      background: var(--glass); border: 1px solid var(--glass-border);
-      font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 2px; color: var(--accent); margin-bottom: 1.5rem;
+    /* === UNIQUE SEARCH & CHIPS === */
+    .search-wrapper {
+      max-width: 800px; margin: 0 auto 3rem;
     }
-    .hero h2 { font-size: 4rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
-    .hero p { color: var(--text-dim); font-size: 1.2rem; max-width: 600px; margin: 0 auto; }
+    .search-bar {
+      display: flex; align-items: center; background: var(--card-bg);
+      border: 1px solid var(--border); border-radius: 100px;
+      padding: 0.5rem 0.5rem 0.5rem 1.5rem; transition: var(--transition);
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
+    }
+    .search-bar:focus-within { border-color: var(--primary); box-shadow: 0 0 20px var(--primary-glow); }
+    .search-bar input {
+      flex: 1; background: transparent; border: none; color: var(--text);
+      outline: none; font-size: 1rem; padding: 0.5rem;
+    }
+    .search-icon { color: var(--primary); font-size: 1.2rem; }
 
-    /* Sci-fi Controls */
-    .controls {
-      display: grid; grid-template-columns: 1fr auto; gap: 1rem;
-      background: var(--glass); padding: 1rem; border-radius: 24px;
-      border: 1px solid var(--glass-border); margin-bottom: 3rem;
+    /* Replace Dropdown with Horizontal Pills */
+    .filter-pills {
+      display: flex; gap: 0.8rem; overflow-x: auto; padding: 1rem 0;
+      scrollbar-width: none; justify-content: center;
     }
-    .search-box { position: relative; }
-    .search-box i { position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%); color: var(--accent); }
-    .search-box input {
-      width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border);
-      padding: 1.2rem 1.2rem 1.2rem 3.5rem; border-radius: 16px; color: white;
-      font-family: inherit; font-size: 1rem; transition: var(--speed);
+    .filter-pills::-webkit-scrollbar { display: none; }
+    .pill {
+      white-space: nowrap; padding: 0.6rem 1.4rem; border-radius: 100px;
+      background: var(--card-bg); border: 1px solid var(--border);
+      color: var(--text-muted); cursor: pointer; font-weight: 600;
+      font-size: 0.85rem; transition: var(--transition);
     }
-    .search-box input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+    .pill.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-    .location-filter select {
-      background: var(--accent); color: white; border: none; padding: 0 2rem;
-      border-radius: 16px; font-weight: 700; cursor: pointer; height: 100%;
+    /* === JOB GRID === */
+    .jobs-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;
     }
-
-    /* Bento Job Grid */
-    .jobs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; }
-    
     .job-card {
-      background: var(--card-gradient);
-      border: 1px solid var(--glass-border);
-      border-radius: 28px; padding: 2rem;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative; overflow: hidden;
-      display: flex; flex-direction: column;
+      background: var(--card-bg); border: 1px solid var(--border);
+      padding: 1.8rem; border-radius: 24px; transition: var(--transition);
+      position: relative; overflow: hidden; display: flex; flex-direction: column;
     }
     .job-card:hover {
-      transform: translateY(-10px) scale(1.02);
-      border-color: var(--accent);
-      background: rgba(255,255,255,0.05);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      transform: translateY(-8px); border-color: var(--primary);
+      background: rgba(255, 255, 255, 0.05);
     }
-
-    .company-pill {
-      font-size: 0.75rem; font-weight: 800; color: var(--accent);
-      text-transform: uppercase; margin-bottom: 0.5rem;
-    }
-    .job-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.2; }
-    .location { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .company-name { font-weight: 700; color: var(--primary); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .job-title { font-size: 1.25rem; font-weight: 700; line-height: 1.3; margin-bottom: 1rem; }
+    .job-meta { display: flex; gap: 1rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .job-meta span { display: flex; align-items: center; gap: 0.4rem; }
     
-    .description { font-size: 0.95rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 2rem; flex-grow: 1; }
-
-    .card-footer { display: flex; justify-content: space-between; align-items: center; }
-    .deadline { font-size: 0.8rem; font-weight: 600; color: #ef4444; }
-
-    .job-link {
-      background: var(--text-main); color: var(--canvas);
-      padding: 0.8rem 1.5rem; border-radius: 12px; text-decoration: none;
-      font-weight: 800; font-size: 0.85rem; transition: var(--speed);
+    .apply-btn {
+      margin-top: auto; padding: 0.8rem; border-radius: 14px;
+      background: var(--primary); color: white; text-align: center;
+      text-decoration: none; font-weight: 700; transition: var(--transition);
     }
-    .job-link:hover { background: var(--accent); color: white; }
+    .apply-btn:hover { filter: brightness(1.2); letter-spacing: 1px; }
 
-    /* Custom Color Picker Dot */
-    #accentColor {
-      -webkit-appearance: none; border: none; width: 30px; height: 30px;
-      border-radius: 50%; cursor: pointer; background: none;
-    }
-    #accentColor::-webkit-color-swatch-wrapper { padding: 0; }
-    #accentColor::-webkit-color-swatch { border: 2px solid white; border-radius: 50%; }
+    /* === LOADING & EMPTY === */
+    .loader { grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--primary); }
 
-    @media (max-width: 768px) {
-      .hero h2 { font-size: 2.5rem; }
-      .controls { grid-template-columns: 1fr; }
-      .top-bar { flex-direction: column; gap: 1rem; }
+    @media (max-width: 600px) {
+      .navbar { padding: 1rem; margin-bottom: 2rem; }
+      .filter-pills { justify-content: flex-start; padding-left: 1rem; }
+      .hero h2 { font-size: 2rem; }
     }
   </style>
 </head>
 <body class="dark">
-  <div class="bg-blobs">
-    <div class="blob"></div>
+  <div class="bg-animation">
+    <div class="orb"></div>
+    <div class="orb" style="animation-delay: -5s; right: 0; bottom: 0;"></div>
   </div>
 
   <div class="container">
-    <nav class="top-bar">
-      <div class="logo"><h1>APPLY<span>MORE</span></h1></div>
+    <nav class="navbar">
+      <div class="logo">ApplyMore</div>
       <div class="theme-controls">
-        <button class="theme-btn" id="lightTheme">Light</button>
-        <button class="theme-btn" id="darkTheme">Cyber</button>
-        <button class="theme-btn" id="vibrantTheme">Neon</button>
-        <input type="color" id="accentColor" value="#6366f1">
+        <div class="theme-dot" id="lightTheme" style="background: #fff;" title="Light"></div>
+        <div class="theme-dot" id="darkTheme" style="background: #111;" title="Dark"></div>
+        <div class="theme-dot" id="vibrantTheme" style="background: #f43f5e;" title="Vibrant"></div>
+        <input type="color" id="accentColor" value="#6366f1" style="width: 20px; height:20px; border:none; cursor:pointer;">
       </div>
     </nav>
 
     <header class="hero">
-      <span class="tagline">v2.0 Beta • Neural Interface</span>
-      <h2>Elevate Your <br><span style="color:var(--accent)">Career Path.</span></h2>
-      <p>India's most sophisticated entry-level IT job engine. Powered by real-time data.</p>
+      <h2>Launch Your Future.</h2>
+      <p>The smartest way for IT freshers to find their first role. Verified daily across India.</p>
     </header>
 
-    <section class="controls">
-      <div class="search-box">
-        <i class="fas fa-bolt"></i>
-        <input type="text" id="searchInput" placeholder="Search by tech stack, role or company...">
+    <div class="search-wrapper">
+      <div class="search-bar">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="searchInput" placeholder="Search roles, skills, or companies...">
       </div>
-      <div class="location-filter">
-        <select id="locationFilter">
-          <option value="all">Everywhere</option>
-          <option value="Hyderabad">Hyderabad</option>
-          <option value="Bangalore">Bangalore</option>
-          <option value="Mumbai">Mumbai</option>
-          <option value="Pune">Pune</option>
-        </select>
-      </div>
-    </section>
-
-    <div id="jobsContainer" class="jobs-grid">
-      <div style="grid-column: 1/-1; text-align: center; padding: 5rem;">
-        <i class="fas fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--accent);"></i>
-        <p style="margin-top: 1rem; color: var(--text-dim);">Synchronizing with job servers...</p>
+      <div class="filter-pills" id="locationContainer">
+        <div class="pill active" data-loc="all">All Locations</div>
+        <div class="pill" data-loc="Hyderabad">Hyderabad</div>
+        <div class="pill" data-loc="Bangalore">Bangalore</div>
+        <div class="pill" data-loc="Mumbai">Mumbai</div>
+        <div class="pill" data-loc="Pune">Pune</div>
+        <div class="pill" data-loc="Chennai">Chennai</div>
+        <div class="pill" data-loc="Delhi">Delhi</div>
       </div>
     </div>
 
-    <footer style="margin-top: 6rem; padding: 4rem 0; border-top: 1px solid var(--glass-border); text-align: center;">
-      <div style="margin-bottom: 2rem; display: flex; justify-content: center; gap: 2rem;">
-        <a href="#" id="shareTwitter" style="color: var(--text-dim); text-decoration: none;"><i class="fab fa-twitter"></i></a>
-        <a href="#" id="shareLinkedin" style="color: var(--text-dim); text-decoration: none;"><i class="fab fa-linkedin"></i></a>
+    <div id="jobsContainer" class="jobs-grid">
+      <div class="loader">
+        <i class="fas fa-spinner fa-spin fa-2x"></i>
+        <p style="margin-top: 1rem;">Fetching fresh opportunities...</p>
       </div>
-      <p style="color: var(--text-dim); font-size: 0.9rem;">&copy; 2026 ApplyMore Ecosystem. Built by Ram.</p>
+    </div>
+
+    <footer style="margin-top: 5rem; text-align: center; color: var(--text-muted); font-size: 0.9rem; padding-bottom: 2rem;">
+      <p>© 2026 ApplyMore • Built for the next generation of engineers</p>
     </footer>
   </div>
 
   <script>
-    /* ALL EXISTING LOGIC PRESERVED 
-       IDs & CONSTANTS REMAIN THE SAME 
-    */
     const API_URL = 'https://job-api-xizv.onrender.com/api/jobs';
     let allJobs = [];
+    let currentLoc = 'all';
 
     async function fetchJobs() {
-      const container = document.getElementById('jobsContainer');
       try {
         const res = await fetch(API_URL);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         allJobs = await res.json();
         displayJobs();
       } catch (err) {
-        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center;">Failed to connect to data node.</div>`;
+        document.getElementById('jobsContainer').innerHTML = '<p style="grid-column:1/-1; text-align:center;">Network error. Please try again.</p>';
       }
     }
 
     function displayJobs() {
       const container = document.getElementById('jobsContainer');
       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      const selectedLocation = document.getElementById('locationFilter').value;
-
+      
       let filtered = allJobs;
-      if (selectedLocation !== 'all') {
-        filtered = filtered.filter(job => job.location?.toLowerCase().includes(selectedLocation.toLowerCase()));
+      
+      if (currentLoc !== 'all') {
+        filtered = filtered.filter(j => j.location?.toLowerCase().includes(currentLoc.toLowerCase()));
       }
       if (searchTerm) {
-        filtered = filtered.filter(job => 
-          job.title.toLowerCase().includes(searchTerm) || 
-          job.company.toLowerCase().includes(searchTerm)
+        filtered = filtered.filter(j => 
+          j.title.toLowerCase().includes(searchTerm) || 
+          j.company.toLowerCase().includes(searchTerm)
         );
       }
 
-      if (!filtered.length) {
-        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center;">No transmissions found.</div>`;
+      if (filtered.length === 0) {
+        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding: 4rem;">No jobs matching your criteria.</p>';
         return;
       }
 
-      container.innerHTML = filtered.map((job, index) => `
-        <div class="job-card" style="animation: fadeInUp 0.5s ease forwards ${index * 0.1}s; opacity:0;">
-          <div class="company-pill">${escapeHtml(job.company)}</div>
+      container.innerHTML = filtered.map((job, i) => `
+        <div class="job-card" style="animation: fadeInUp 0.5s ease forwards ${i * 0.05}s; opacity: 0;">
+          <div class="company-name">${escapeHtml(job.company)}</div>
           <div class="job-title">${escapeHtml(job.title)}</div>
-          <div class="location"><i class="fas fa-location-dot"></i> ${escapeHtml(job.location || 'Remote/India')}</div>
-          <div class="description">${escapeHtml(job.description?.replace(/<[^>]*>/g, '').substring(0, 120))}...</div>
-          <div class="card-footer">
-            <span class="deadline">${job.applicationDeadline ? 'Ends ' + new Date(job.applicationDeadline).toLocaleDateString() : ''}</span>
-            <a href="${job.url}" target="_blank" class="job-link">View Portal</a>
+          <div class="job-meta">
+            <span><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'India')}</span>
+            ${job.applicationDeadline ? `<span><i class="far fa-calendar-alt"></i> ${new Date(job.applicationDeadline).toLocaleDateString()}</span>` : ''}
           </div>
+          <a href="${job.url}" target="_blank" class="apply-btn">Apply Direct</a>
         </div>
       `).join('');
     }
 
-    // Helper functions
     function escapeHtml(str) {
       if(!str) return '';
       const div = document.createElement('div');
@@ -299,39 +258,40 @@
       return div.innerHTML;
     }
 
+    // Interaction Logic
+    document.querySelectorAll('.pill').forEach(pill => {
+      pill.onclick = () => {
+        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        currentLoc = pill.dataset.loc;
+        displayJobs();
+      };
+    });
+
+    document.getElementById('searchInput').oninput = displayJobs;
+
     // Theme Management
     function setTheme(t) {
       document.body.className = t;
       localStorage.setItem('theme', t);
     }
     
-    function setAccent(c) {
-      document.documentElement.style.setProperty('--accent', c);
-      document.documentElement.style.setProperty('--accent-glow', c + '66');
-      localStorage.setItem('accentColor', c);
-    }
-
-    // Event Listeners (Retained from original)
     document.getElementById('lightTheme').onclick = () => setTheme('light');
     document.getElementById('darkTheme').onclick = () => setTheme('dark');
     document.getElementById('vibrantTheme').onclick = () => setTheme('vibrant');
-    document.getElementById('accentColor').oninput = (e) => setAccent(e.target.value);
-    document.getElementById('searchInput').oninput = displayJobs;
-    document.getElementById('locationFilter').onchange = displayJobs;
+    document.getElementById('accentColor').oninput = (e) => {
+      document.documentElement.style.setProperty('--primary', e.target.value);
+      document.documentElement.style.setProperty('--primary-glow', e.target.value + '80');
+    };
 
-    // Load defaults
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
-    const savedAccent = localStorage.getItem('accentColor') || '#6366f1';
-    setAccent(savedAccent);
-    document.getElementById('accentColor').value = savedAccent;
-
+    // Load
+    setTheme(localStorage.getItem('theme') || 'dark');
     fetchJobs();
   </script>
 
   <style>
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
