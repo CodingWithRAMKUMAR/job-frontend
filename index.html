@@ -1,203 +1,461 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ApplyMore | Next-Gen Job Platform</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ApplyMore – IT Fresher Jobs in India</title>
+  <meta name="description" content="ApplyMore finds the latest IT fresher jobs across India. Search, filter by location, and apply directly to company websites. Free and updated daily.">
+  <meta name="keywords" content="IT jobs, fresher jobs India, software developer jobs, Hyderabad jobs, Bangalore jobs">
+  <meta name="author" content="Ram">
+  <meta name="robots" content="index, follow">
 
-<style>
-:root{
-  --bg:#020617;
-  --card:#0f172a;
-  --accent:#6366f1;
-  --accent2:#22d3ee;
-  --text:#e2e8f0;
-  --muted:#94a3b8;
-}
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://applymore.vercel.app/">
 
-*{margin:0;padding:0;box-sizing:border-box}
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://applymore.vercel.app/">
+  <meta property="og:title" content="ApplyMore – IT Fresher Jobs in India">
+  <meta property="og:description" content="Find entry-level IT jobs across India. Search, filter by location, and apply directly.">
+  <meta property="og:image" content="https://applymore.vercel.app/og-image.png">
 
-body{
-  font-family:Inter,sans-serif;
-  background:radial-gradient(circle at top,#0f172a,#020617);
-  color:var(--text);
-}
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://applymore.vercel.app/">
+  <meta property="twitter:title" content="ApplyMore – IT Fresher Jobs in India">
+  <meta property="twitter:description" content="Find entry-level IT jobs across India. Search, filter by location, and apply directly.">
+  <meta property="twitter:image" content="https://applymore.vercel.app/og-image.png">
 
-.container{max-width:1200px;margin:auto;padding:20px}
+  <!-- Preconnect to external origins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" as="style" crossorigin>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" crossorigin>
 
-/* HEADER */
-header{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:40px
-}
-.logo{
-  font-size:26px;font-weight:800;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;color:transparent
-}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-/* HERO */
-.hero{text-align:center;margin-bottom:50px}
-.hero h1{
-  font-size:48px;font-weight:800;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;color:transparent;
-}
-.hero p{color:var(--muted);margin-top:10px}
+  <!-- Structured Data (Organization) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ApplyMore",
+    "url": "https://applymore.vercel.app",
+    "logo": "https://applymore.vercel.app/logo.png",
+    "description": "Free job board for IT freshers in India, updated daily.",
+    "sameAs": [
+      "https://twitter.com/applymore",
+      "https://linkedin.com/company/applymore"
+    ]
+  }
+  </script>
 
-/* SEARCH */
-.search-bar{
-  display:flex;gap:10px;margin:30px 0;
-  background:rgba(255,255,255,0.05);
-  padding:10px;border-radius:12px
-}
-.search-bar input{
-  flex:1;padding:12px;border:none;border-radius:10px;
-  background:#020617;color:white
-}
+  <style>
+    /* CSS Variables */
+    :root {
+      --bg: #f8fafc;
+      --surface: white;
+      --text: #1e293b;
+      --text-secondary: #475569;
+      --border: #e2e8f0;
+      --border-hover: #cbd5e1;
+      --accent: #3b82f6;
+      --accent-dark: #2563eb;
+      --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }
+    body.dark {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --text: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --border: #334155;
+      --border-hover: #475569;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem 1rem;
+      transition: background 0.2s, color 0.2s;
+      line-height: 1.5;
+    }
+    .container { max-width: 1280px; margin: 0 auto; }
 
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:20px
-}
+    /* Header */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 {
+      font-size: 2rem;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .theme-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      color: var(--text);
+      transition: 0.2s;
+    }
+    .theme-btn:hover { border-color: var(--accent); }
 
-/* CARD */
-.card{
-  background:linear-gradient(145deg,#0f172a,#020617);
-  padding:20px;border-radius:16px;
-  border:1px solid rgba(255,255,255,0.05);
-  transition:.3s;
-  position:relative;
-  overflow:hidden
-}
+    /* Hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .hero .tagline {
+      display: inline-block;
+      background: var(--border);
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+    }
 
-.card::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(120deg,transparent,rgba(99,102,241,0.2),transparent);
-  opacity:0;
-  transition:.3s
-}
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      background: var(--surface);
+      padding: 1rem;
+      border-radius: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .search-box {
+      flex: 2;
+      position: relative;
+    }
+    .search-box i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+    }
+    .search-box input {
+      width: 100%;
+      padding: 0.7rem 1rem 0.7rem 2.5rem;
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      outline: none;
+      transition: 0.2s;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .search-box input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+    }
+    .location-filter select {
+      padding: 0.7rem 2rem 0.7rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      background: var(--bg);
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: var(--text);
+    }
 
-.card:hover{
-  transform:translateY(-8px) scale(1.01);
-  border-color:var(--accent)
-}
-.card:hover::after{opacity:1}
+    /* Job grid */
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .job-card {
+      background: var(--surface);
+      border-radius: 1rem;
+      padding: 1.2rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+      animation: fadeInUp 0.4s ease;
+    }
+    .job-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-hover);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .job-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .company {
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+    .location {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .description {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .deadline {
+      font-size: 0.75rem;
+      color: #dc2626;
+      background: #fee2e2;
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+    }
+    .job-link {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .job-link:hover {
+      background: var(--accent-dark);
+    }
+    .loading, .no-jobs {
+      text-align: center;
+      margin: 3rem 0;
+      font-size: 1rem;
+      color: var(--text-secondary);
+    }
 
-.title{font-size:18px;font-weight:600}
-.company{color:var(--accent);margin:6px 0}
-.location{font-size:12px;color:var(--muted)}
-.tags{margin-top:8px}
-.tag{
-  display:inline-block;
-  padding:4px 8px;
-  font-size:10px;
-  background:rgba(99,102,241,0.2);
-  border-radius:6px;
-  margin-right:5px
-}
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1rem 0;
+    }
+    .footer-links a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
 
-.btn{
-  display:inline-block;margin-top:12px;
-  padding:8px 14px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  border-radius:8px;color:white;text-decoration:none;
-  font-size:13px
-}
-
-/* SKELETON */
-.skeleton{
-  height:120px;
-  border-radius:12px;
-  background:linear-gradient(90deg,#0f172a,#1e293b,#0f172a);
-  animation:shimmer 1.5s infinite
-}
-
-@keyframes shimmer{
-  0%{background-position:-200px 0}
-  100%{background-position:200px 0}
-}
-
-footer{
-  text-align:center;margin-top:50px;color:var(--muted)
-}
-
-</style>
+    /* Mobile optimizations */
+    @media (max-width: 640px) {
+      body { padding: 1rem; }
+      .top-bar { flex-direction: column; align-items: stretch; }
+      .controls { flex-direction: column; align-items: stretch; }
+      .search-box, .location-filter select { width: 100%; }
+      .location-filter select { margin-top: 0.5rem; }
+      .job-card { padding: 1rem; }
+      .jobs-grid { gap: 1rem; }
+    }
+  </style>
 </head>
 <body>
-
 <div class="container">
-<header>
-<div class="logo">ApplyMore</div>
-</header>
+  <div class="top-bar">
+    <h1>ApplyMore</h1>
+    <div>
+      <button id="lightTheme" class="theme-btn">Light</button>
+      <button id="darkTheme" class="theme-btn">Dark</button>
+    </div>
+  </div>
 
-<div class="hero">
-<h1>Land Your Dream Job Faster</h1>
-<p>Smart job discovery for IT freshers across India</p>
-</div>
+  <div class="hero">
+    <div class="tagline">🚀 Launch your career in IT</div>
+    <p>Handpicked entry‑level IT jobs across India. Apply before deadlines and start your journey.</p>
+  </div>
 
-<div class="search-bar">
-<input id="search" placeholder="Search roles, companies, skills...">
-</div>
+  <div class="controls">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Search jobs, companies, skills...">
+    </div>
+    <div class="location-filter">
+      <select id="locationFilter">
+        <option value="all">All Locations</option>
+        <option value="Hyderabad">Hyderabad</option>
+        <option value="Bangalore">Bangalore</option>
+        <option value="Mumbai">Mumbai</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Chennai">Chennai</option>
+        <option value="Pune">Pune</option>
+        <option value="Kolkata">Kolkata</option>
+        <option value="Ahmedabad">Ahmedabad</option>
+      </select>
+    </div>
+  </div>
 
-<div id="jobs" class="grid"></div>
+  <div id="jobsContainer" class="jobs-grid">
+    <div class="loading">Loading fresh opportunities...</div>
+  </div>
 
-<footer>
-<p>Built like a startup product 🚀</p>
-</footer>
+  <footer>
+    <div class="footer-links">
+      <a href="#" id="shareTwitter"><i class="fab fa-twitter"></i> Share on Twitter</a>
+      <a href="#" id="shareLinkedin"><i class="fab fa-linkedin"></i> Share on LinkedIn</a>
+    </div>
+    <p>Made with ❤️ by Ram — Helping freshers land their dream job.</p>
+    <p class="copyright">© 2026 ApplyMore. All jobs are fetched automatically from trusted sources.</p>
+  </footer>
 </div>
 
 <script>
-const API="https://job-api-xizv.onrender.com/api/jobs";
-let data=[];
+  const API_URL = 'https://job-api-xizv.onrender.com/api/jobs';
+  let allJobs = [];
 
-function showSkeleton(){
-  const el=document.getElementById('jobs');
-  el.innerHTML=Array(6).fill('<div class="skeleton"></div>').join('');
-}
-
-async function load(){
-  showSkeleton();
-  try{
-    const res=await fetch(API);
-    data=await res.json();
-    render(data);
-  }catch{
-    document.getElementById('jobs').innerHTML="Failed to load jobs";
+  async function fetchJobs() {
+    const container = document.getElementById('jobsContainer');
+    try {
+      const res = await fetch(API_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      allJobs = await res.json();
+      displayJobs();
+    } catch (err) {
+      console.error(err);
+      container.innerHTML = '<div class="no-jobs">Failed to load jobs. Please refresh or try again later.</div>';
+    }
   }
-}
 
-function render(list){
-  const el=document.getElementById('jobs');
-  el.innerHTML=list.map(j=>`
-    <div class="card">
-      <div class="title">${j.title}</div>
-      <div class="company">${j.company}</div>
-      <div class="location">${j.location||'Remote'}</div>
-      <div class="tags">
-        <span class="tag">Fresher</span>
-        <span class="tag">IT</span>
-      </div>
-      <a href="${j.url}" target="_blank" class="btn">Apply Now</a>
-    </div>
-  `).join('');
-}
+  function stripHtml(html) {
+    if (!html) return '';
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
+  }
 
-document.getElementById('search').addEventListener('input',e=>{
-  const q=e.target.value.toLowerCase();
-  render(data.filter(j=>
-    j.title.toLowerCase().includes(q) ||
-    j.company.toLowerCase().includes(q)
-  ));
-});
+  function formatDate(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
 
-load();
+  function displayJobs() {
+    const container = document.getElementById('jobsContainer');
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const selectedLocation = document.getElementById('locationFilter').value;
+
+    let filtered = allJobs;
+    if (selectedLocation !== 'all') {
+      filtered = filtered.filter(job => job.location && job.location.toLowerCase().includes(selectedLocation.toLowerCase()));
+    }
+    if (searchTerm) {
+      filtered = filtered.filter(job =>
+        job.title.toLowerCase().includes(searchTerm) ||
+        job.company.toLowerCase().includes(searchTerm) ||
+        (job.description && job.description.toLowerCase().includes(searchTerm))
+      );
+    }
+
+    if (!filtered.length) {
+      container.innerHTML = '<div class="no-jobs">No jobs found. Check back soon!</div>';
+      return;
+    }
+
+    container.innerHTML = filtered.map(job => {
+      const cleanDesc = stripHtml(job.description).substring(0, 200);
+      const deadlineHtml = job.applicationDeadline ?
+        `<div class="deadline">⏰ Apply by ${formatDate(job.applicationDeadline)}</div>` : '';
+      return `
+        <div class="job-card">
+          <div class="job-title">${escapeHtml(job.title)}</div>
+          <div class="company">${escapeHtml(job.company)}</div>
+          <div class="location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}</div>
+          <div class="description">${escapeHtml(cleanDesc)}...</div>
+          ${deadlineHtml}
+          <a href="${escapeHtml(job.url)}" target="_blank" class="job-link">Apply Now →</a>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  // Event listeners
+  document.getElementById('searchInput').addEventListener('input', () => displayJobs());
+  document.getElementById('locationFilter').addEventListener('change', () => displayJobs());
+
+  // Share buttons – use current URL dynamically
+  document.getElementById('shareTwitter').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.open(`https://twitter.com/intent/tweet?text=Find IT fresher jobs in India! ${encodeURIComponent(window.location.href)}`, '_blank');
+  });
+  document.getElementById('shareLinkedin').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(window.location.href)}&title=IT Fresher Jobs in India`, '_blank');
+  });
+
+  // Theme switching
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.body.classList.add(savedTheme);
+  document.getElementById('lightTheme').addEventListener('click', () => {
+    document.body.classList.remove('dark');
+    localStorage.setItem('theme', 'light');
+  });
+  document.getElementById('darkTheme').addEventListener('click', () => {
+    document.body.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+  });
+
+  fetchJobs();
 </script>
-
 </body>
 </html>
