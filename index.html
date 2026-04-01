@@ -229,13 +229,15 @@
       margin-right: 5px;
       color: var(--accent);
     }
+    /* ===== Fix button visibility ===== */
     .btn {
       display: inline-block;
       margin-top: 12px;
       padding: 8px 16px;
+      background: var(--accent);
       background: linear-gradient(90deg, var(--accent), var(--accent2));
       border-radius: 30px;
-      color: white !important;
+      color: #ffffff !important;      /* force white text */
       text-decoration: none;
       font-size: 13px;
       font-weight: 500;
@@ -384,20 +386,13 @@
       );
     }
 
-    // Remove duplicates by URL
-    const seen = new Set();
-    const uniqueJobs = filtered.filter(job => {
-      if (seen.has(job.url)) return false;
-      seen.add(job.url);
-      return true;
-    });
-
-    if (!uniqueJobs.length) {
-      document.getElementById('jobs').innerHTML = '<div style="text-align:center; padding:40px;">No jobs found. Check back soon!</div>';
+    const container = document.getElementById('jobs');
+    if (!filtered.length) {
+      container.innerHTML = '<div style="text-align:center; padding:40px;">No jobs found. Check back soon!</div>';
       return;
     }
 
-    document.getElementById('jobs').innerHTML = uniqueJobs.map(job => {
+    container.innerHTML = filtered.map(job => {
       const cleanDesc = stripHtml(job.description).substring(0, 180);
       const deadlineHtml = job.applicationDeadline ?
         `<div class="deadline">⏰ Apply by ${formatDate(job.applicationDeadline)}</div>` : '';
