@@ -18,18 +18,14 @@
   <meta property="og:image" content="https://applymore.vercel.app/og-image.png">
   <meta property="twitter:card" content="summary_large_image">
 
-  <!-- Preconnect to external origins -->
+  <!-- Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
-  <!-- Preload critical resources -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" as="style">
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style">
-
-  <!-- Critical inline CSS (enough to show the page structure immediately) -->
+  <!-- Inline critical CSS (layout, grid, basic styles) -->
   <style>
-    /* Critical styles: layout, grid, basic card, loading */
+    /* Critical styles – enough to render the page structure */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -55,6 +51,36 @@
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
+    }
+    .theme-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .theme-btn {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 2rem;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+      color: #1e293b;
+    }
+    .accent-picker {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .accent-picker label { font-size: 0.8rem; color: #475569; }
+    #accentColor {
+      width: 30px;
+      height: 30px;
+      border: 2px solid #e2e8f0;
+      border-radius: 50%;
+      cursor: pointer;
+      background: #3b82f6;
     }
     .hero {
       text-align: center;
@@ -132,34 +158,155 @@
     .deadline { font-size: 0.75rem; color: #dc2626; background: #fee2e2; display: inline-block; padding: 0.2rem 0.6rem; border-radius: 1rem; margin-bottom: 1rem; }
     .job-link { display: inline-block; background: #3b82f6; color: white; padding: 0.4rem 1rem; border-radius: 2rem; text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: 0.2s; }
     .loading, .no-jobs { text-align: center; margin: 3rem 0; font-size: 1.1rem; color: #475569; }
-    footer { text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e2e8f0; font-size: 0.85rem; color: #475569; }
-    .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin: 1rem 0; }
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.85rem;
+      color: #475569;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1rem 0;
+    }
     .footer-links a { color: #3b82f6; text-decoration: none; }
     @media (max-width: 640px) {
       body { padding: 1rem; }
       .top-bar { flex-direction: column; align-items: stretch; }
+      .theme-controls { justify-content: space-between; }
       .controls { flex-direction: column; align-items: stretch; }
       .search-box, .location-filter select { width: 100%; }
       .location-filter select { margin-top: 0.5rem; }
     }
   </style>
 
-  <!-- Full CSS loaded asynchronously (includes themes, animations, and remaining styles) -->
-  <link rel="preload" href="/full.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/full.css"></noscript>
+  <!-- Full CSS loaded asynchronously (includes themes, animations, remaining styles) -->
+  <style media="print" onload="this.media='all'">
+    /* Full CSS – your original style block (minus the critical part) */
+    :root {
+      --bg-gradient-start: #f8fafc;
+      --bg-gradient-end: #eef2f6;
+      --card-bg: white;
+      --text-primary: #1e293b;
+      --text-secondary: #334155;
+      --text-muted: #475569;
+      --border-light: #e2e8f0;
+      --border-hover: #cbd5e1;
+      --accent: #3b82f6;
+      --accent-dark: #2563eb;
+      --deadline-bg: #fee2e2;
+      --deadline-text: #dc2626;
+      --tag-bg: #e2e8f0;
+      --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.05);
+      --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.1);
+      --transition: all 0.2s ease;
+    }
+    body.dark {
+      --bg-gradient-start: #0f172a;
+      --bg-gradient-end: #1e293b;
+      --card-bg: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-light: #334155;
+      --border-hover: #475569;
+      --tag-bg: #334155;
+      --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.2);
+      --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.3);
+    }
+    body.vibrant {
+      --bg-gradient-start: #fdf2f8;
+      --bg-gradient-end: #fce7f3;
+      --card-bg: white;
+      --text-primary: #831843;
+      --text-secondary: #9d174d;
+      --text-muted: #be185d;
+      --border-light: #fbcfe8;
+      --border-hover: #f9a8d4;
+      --accent: #ec489a;
+      --accent-dark: #db2777;
+      --deadline-bg: #fee2e2;
+      --deadline-text: #dc2626;
+      --tag-bg: #fbcfe8;
+    }
+    /* All the remaining styles from your original CSS that are not already in critical */
+    body {
+      background: linear-gradient(145deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+      color: var(--text-primary);
+    }
+    .top-bar { border-bottom-color: var(--border-light); }
+    .logo h1 { background: linear-gradient(135deg, var(--accent), #8b5cf6); }
+    .theme-btn {
+      background: var(--card-bg);
+      border-color: var(--border-light);
+      color: var(--text-primary);
+    }
+    .theme-btn:hover { border-color: var(--accent); }
+    .accent-picker label { color: var(--text-muted); }
+    #accentColor { border-color: var(--border-light); background: var(--accent); }
+    .hero .tagline { background: var(--tag-bg); }
+    .hero p { color: var(--text-secondary); }
+    .controls {
+      background: var(--card-bg);
+      box-shadow: var(--shadow-sm);
+    }
+    .search-box i { color: var(--text-muted); }
+    .search-box input {
+      border-color: var(--border-light);
+      background: var(--bg-gradient-start);
+      color: var(--text-primary);
+    }
+    .search-box input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+    }
+    .location-filter select {
+      border-color: var(--border-light);
+      background: var(--bg-gradient-start);
+      color: var(--text-primary);
+    }
+    .job-card {
+      background: var(--card-bg);
+      box-shadow: var(--shadow-sm);
+      border-color: var(--border-light);
+    }
+    .job-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-hover);
+    }
+    .job-title { color: var(--text-primary); }
+    .company { color: var(--accent); }
+    .location { color: var(--text-muted); }
+    .description { color: var(--text-secondary); }
+    .deadline {
+      color: var(--deadline-text);
+      background: var(--deadline-bg);
+    }
+    .job-link { background: var(--accent); }
+    .job-link:hover { background: var(--accent-dark); }
+    .loading, .no-jobs { color: var(--text-muted); }
+    footer {
+      border-top-color: var(--border-light);
+      color: var(--text-muted);
+    }
+    .footer-links a { color: var(--accent); }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .job-card {
+      animation: fadeInUp 0.4s ease;
+    }
+    /* Ensure that any missing styles from the original are covered */
+  </style>
 
   <!-- Fonts and icons loaded asynchronously -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'">
 
-  <style>
-    /* Full CSS content (original style block) – minified and moved to external file for better caching */
-    /* This block will be loaded asynchronously, so we place it in a separate file. */
-    /* But to keep the answer self-contained, I'll include it in a <style> tag but with media="print" to make it non-blocking. */
-    /* However, the easiest is to use the above pattern: load a separate full.css. I'll provide the content of full.css in the answer. */
-  </style>
-
-  <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -175,9 +322,6 @@
   </script>
 </head>
 <body>
-  <!-- The same HTML structure as before, but I'll keep it minimal here. The full body content is unchanged from the original. -->
-  <!-- However, to save space, I'll note that you should keep your existing body content exactly as it was. -->
-  <body>
 <div class="container">
   <div class="top-bar">
     <div class="logo">
@@ -234,6 +378,7 @@
 </div>
 
 <script>
+  // All the JavaScript from your original file (theme switching, accent picker, fetchJobs, etc.)
   const API_URL = 'https://job-api-xizv.onrender.com/api/jobs';
   let allJobs = [];
 
@@ -312,14 +457,12 @@
     });
   }
 
-  // Theme switching
   function setTheme(theme) {
     document.body.classList.remove('light', 'dark', 'vibrant');
     document.body.classList.add(theme);
     localStorage.setItem('theme', theme);
   }
 
-  // Accent color change
   function setAccent(color) {
     document.documentElement.style.setProperty('--accent', color);
     const darkColor = shadeColor(color, -20);
@@ -337,14 +480,12 @@
     return `#${((1 << 24) + (R << 16) + (G << 8) + B).toString(16).slice(1)}`;
   }
 
-  // Load saved preferences
   const savedTheme = localStorage.getItem('theme') || 'light';
   setTheme(savedTheme);
   const savedAccent = localStorage.getItem('accentColor') || '#3b82f6';
   setAccent(savedAccent);
   document.getElementById('accentColor').value = savedAccent;
 
-  // Event listeners
   document.getElementById('lightTheme').addEventListener('click', () => setTheme('light'));
   document.getElementById('darkTheme').addEventListener('click', () => setTheme('dark'));
   document.getElementById('vibrantTheme').addEventListener('click', () => setTheme('vibrant'));
@@ -364,6 +505,5 @@
 
   fetchJobs();
 </script>
-
 </body>
 </html>
