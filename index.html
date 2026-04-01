@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FreshStart | IT Fresher Jobs in India</title>
+  <title>ApplyMore | IT Fresher Jobs in India</title>
+  <meta name="description" content="ApplyMore finds the latest IT fresher jobs across India. Search, filter by location, and apply directly to company websites. Free and updated daily.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -13,6 +15,8 @@
       color: #1e293b;
     }
     .container { max-width: 1280px; margin: 0 auto; padding: 2rem 1rem; }
+
+    /* Hero section */
     .hero {
       text-align: center;
       margin-bottom: 3rem;
@@ -23,22 +27,24 @@
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
-    .hero p {
-      font-size: 1.2rem;
-      color: #334155;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    .tagline {
+    .hero .tagline {
       display: inline-block;
       background: #e2e8f0;
       padding: 0.3rem 1rem;
       border-radius: 40px;
       font-size: 0.9rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
+    .hero p {
+      font-size: 1.1rem;
+      color: #334155;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Controls row */
     .controls {
       display: flex;
       justify-content: space-between;
@@ -83,6 +89,8 @@
       font-size: 0.9rem;
       cursor: pointer;
     }
+
+    /* Job grid */
     .jobs-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -153,12 +161,14 @@
     .job-link:hover {
       background: #2563eb;
     }
-    .loading {
+    .loading, .no-jobs {
       text-align: center;
       margin: 3rem 0;
       font-size: 1.1rem;
       color: #475569;
     }
+
+    /* Footer */
     footer {
       text-align: center;
       margin-top: 4rem;
@@ -177,13 +187,16 @@
       color: #3b82f6;
       text-decoration: none;
     }
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
 <div class="container">
   <div class="hero">
     <div class="tagline">🚀 Launch your career in IT</div>
-    <h1>FreshStart</h1>
+    <h1>ApplyMore</h1>
     <p>Handpicked entry‑level IT jobs across India. Apply before deadlines and start your journey.</p>
   </div>
 
@@ -217,7 +230,7 @@
       <a href="#" id="shareLinkedin"><i class="fab fa-linkedin"></i> Share on LinkedIn</a>
     </div>
     <p>Made with ❤️ by Ram — Helping freshers land their dream job.</p>
-    <p class="copyright">© 2026 FreshStart. All operations are local; your data stays private.</p>
+    <p class="copyright">© 2026 ApplyMore. All jobs are fetched automatically from trusted sources.</p>
   </footer>
 </div>
 
@@ -226,6 +239,7 @@
   let allJobs = [];
 
   async function fetchJobs() {
+    const container = document.getElementById('jobsContainer');
     try {
       const res = await fetch(API_URL);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -233,7 +247,7 @@
       displayJobs();
     } catch (err) {
       console.error(err);
-      document.getElementById('jobsContainer').innerHTML = '<div class="loading">Failed to load jobs. Please refresh.</div>';
+      container.innerHTML = '<div class="no-jobs">Failed to load jobs. Please refresh or try again later.</div>';
     }
   }
 
@@ -268,7 +282,7 @@
     }
 
     if (!filtered.length) {
-      container.innerHTML = '<div class="loading">No jobs found. Check back soon!</div>';
+      container.innerHTML = '<div class="no-jobs">No jobs found. Check back soon!</div>';
       return;
     }
 
@@ -283,7 +297,7 @@
           <div class="location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}</div>
           <div class="description">${escapeHtml(cleanDesc)}...</div>
           ${deadlineHtml}
-          <a href="${escapeHtml(job.url)}" target="_blank" class="job-link">View & Apply →</a>
+          <a href="${escapeHtml(job.url)}" target="_blank" class="job-link">Apply Now →</a>
         </div>
       `;
     }).join('');
@@ -299,9 +313,11 @@
     });
   }
 
+  // Event listeners for search and filter
   document.getElementById('searchInput').addEventListener('input', () => displayJobs());
   document.getElementById('locationFilter').addEventListener('change', () => displayJobs());
 
+  // Share buttons – use current URL dynamically
   document.getElementById('shareTwitter').addEventListener('click', (e) => {
     e.preventDefault();
     window.open(`https://twitter.com/intent/tweet?text=Find IT fresher jobs in India! ${encodeURIComponent(window.location.href)}`, '_blank');
