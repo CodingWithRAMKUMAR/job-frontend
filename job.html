@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApplyMore – Job Details</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google AdSense – replace with your own code after you get it -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+     crossorigin="anonymous"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      padding: 2rem 1rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    .company {
+      color: #3b82f6;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .location {
+      color: #475569;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .description {
+      line-height: 1.6;
+      margin: 1.5rem 0;
+      color: #334155;
+    }
+    .deadline {
+      background: #fee2e2;
+      color: #dc2626;
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 1rem;
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    .apply-btn {
+      display: inline-block;
+      background: #3b82f6;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+    .apply-btn:hover {
+      background: #2563eb;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      color: #3b82f6;
+      text-decoration: none;
+    }
+    .ad-container {
+      margin: 2rem 0;
+      text-align: center;
+      background: #f1f5f9;
+      padding: 1rem;
+      border-radius: 1rem;
+    }
+    @media (max-width: 640px) {
+      .container {
+        padding: 1rem;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="jobDetail">
+  <div style="text-align: center; padding: 2rem;">Loading job details...</div>
+</div>
+
+<script>
+  const API_URL = 'https://job-api-xizv.onrender.com/api/jobs';
+
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  async function loadJob() {
+    const jobId = getQueryParam('id');
+    if (!jobId) {
+      document.getElementById('jobDetail').innerHTML = '<div style="text-align:center; padding:2rem;">Invalid job ID. <a href="/">Go back</a></div>';
+      return;
+    }
+    try {
+      const res = await fetch(API_URL);
+      const jobs = await res.json();
+      const job = jobs.find(j => j._id === jobId);
+      if (!job) throw new Error('Job not found');
+      displayJob(job);
+    } catch (err) {
+      document.getElementById('jobDetail').innerHTML = '<div style="text-align:center; padding:2rem;">Job not found. <a href="/">Go back</a></div>';
+    }
+  }
+
+  function stripHtml(html) {
+    if (!html) return '';
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function formatDate(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  function displayJob(job) {
+    const cleanDesc = stripHtml(job.description) || 'No description provided.';
+    const deadlineHtml = job.applicationDeadline ? `<div class="deadline">⏰ Apply by ${formatDate(job.applicationDeadline)}</div>` : '';
+    const html = `
+      <h1>${escapeHtml(job.title)}</h1>
+      <div class="company">${escapeHtml(job.company)}</div>
+      <div class="location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}</div>
+      ${deadlineHtml}
+      <div class="description">${escapeHtml(cleanDesc)}</div>
+
+      <!-- Ad banner – replace with your AdSense ad unit -->
+      <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+             data-ad-slot="YOUR_AD_SLOT"
+             data-ad-format="auto"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});<\/script>
+      </div>
+
+      <a href="${escapeHtml(job.url)}" target="_blank" class="apply-btn">Apply Now →</a>
+      <br>
+      <a href="/" class="back-link">← Back to all jobs</a>
+    `;
+    document.getElementById('jobDetail').innerHTML = html;
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  loadJob();
+</script>
+</body>
+</html>
