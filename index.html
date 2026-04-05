@@ -5,13 +5,12 @@
      crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>ApplyMore – Daily IT Fresher Jobs in Hyderabad, Chennai, Mumbai, Pune, Gurugram</title>
-  <meta name="description" content="ApplyMore finds the latest entry‑level IT jobs for freshers in Hyderabad, Chennai, Mumbai, Pune & Gurugram. Updated daily. Free, no sign‑up. Apply directly.">
-  <meta name="keywords" content="IT fresher jobs, entry level IT jobs, Hyderabad jobs, Chennai jobs, Mumbai jobs, Pune jobs, Gurugram jobs">
+  <title>ApplyMore – Daily IT Fresher Jobs in India</title>
+  <meta name="description" content="ApplyMore finds the latest entry‑level IT jobs for freshers. Updated daily. Free, no sign‑up.">
+  <meta name="keywords" content="IT fresher jobs, entry level IT jobs, Hyderabad, Chennai, Mumbai, Pune, Gurugram">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* Your existing CSS – unchanged from the last working version */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg-dark: #0a0a2a;
@@ -349,7 +348,7 @@
     });
 
     // --------------------------------------------------------------
-    // SUPABASE JOBS (no deletion, all jobs stay)
+    // SUPABASE JOBS
     // --------------------------------------------------------------
     const SUPABASE_URL = 'https://qmljqckhhdmvcbomydhf.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_rmCQIW6Lw90zleW-lYZcFw_WZrcHw4h';
@@ -407,6 +406,7 @@
       }
       try {
         const url = `${SUPABASE_URL}/rest/v1/ApplyMore?select=*&order=created_at.desc&limit=${PAGE_SIZE}&offset=${currentOffset}`;
+        console.log('Fetching jobs from:', url); // DEBUG
         const response = await fetch(url, {
           headers: {
             'apikey': SUPABASE_ANON_KEY,
@@ -415,6 +415,7 @@
         });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
+        console.log('Fetched data:', data); // DEBUG
         if (data.length < PAGE_SIZE) hasMore = false;
         if (reset) {
           allJobs = data;
@@ -466,7 +467,9 @@
       const selectedLocation = document.getElementById('locationFilter').value;
       const selectedExp = document.getElementById('expFilter').value;
 
+      console.log('All jobs count:', allJobs.length); // DEBUG
       let filtered = allJobs;
+
       if (selectedLocation !== 'all') {
         filtered = filtered.filter(job => job.location && job.location.toLowerCase().includes(selectedLocation.toLowerCase()));
       }
@@ -481,8 +484,13 @@
         filtered = filtered.filter(job => getExperienceLevel(job) === selectedExp);
       }
 
+      console.log('Filtered jobs count:', filtered.length); // DEBUG
+
       if (!filtered.length) {
-        container.innerHTML = '<div class="no-jobs">No jobs found. Check back soon!</div>';
+        let message = 'No jobs found. ';
+        if (selectedExp !== 'all') message += `Try changing the experience filter to "All jobs".`;
+        else message += 'Check back later or adjust search/location.';
+        container.innerHTML = `<div class="no-jobs">${message}</div>`;
         return;
       }
 
