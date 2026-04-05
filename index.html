@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* Your existing CSS – unchanged (keep exactly as before) */
+    /* Your existing CSS – unchanged from the last working version */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg-dark: #0a0a2a;
@@ -117,7 +117,7 @@
     .search-box { flex: 2; position: relative; }
     .search-box i { position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); font-size: 0.8rem; }
     .search-box input { width: 100%; padding: 0.5rem 1rem 0.5rem 2rem; background: var(--input-bg); border: 1px solid var(--glass-border); border-radius: 2rem; font-size: 0.8rem; color: var(--text-light); }
-    .location-filter select, .exp-filter select {
+    .location-filter select {
       padding: 0.5rem 1rem;
       background: var(--input-bg);
       border: 1px solid var(--glass-border);
@@ -183,7 +183,7 @@
       .add-link-box { flex-direction: column; align-items: stretch; }
       .links-list { justify-content: center; }
       .controls { flex-direction: column; }
-      .search-box, .location-filter select, .exp-filter select { width: 100%; }
+      .search-box, .location-filter select { width: 100%; }
       .job-title { font-size: 0.9rem; }
       .main-header h1 { font-size: 1.8rem; }
     }
@@ -221,7 +221,7 @@
     <div class="controls">
       <div class="search-box">
         <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" placeholder="Search jobs, companies...">
+        <input type="text" id="searchInput" placeholder="Search jobs, companies... (e.g., 'fresher')">
       </div>
       <div class="location-filter">
         <select id="locationFilter">
@@ -231,14 +231,6 @@
           <option value="Gurugram">Gurugram</option>
           <option value="Mumbai">Mumbai</option>
           <option value="Pune">Pune</option>
-        </select>
-      </div>
-      <div class="exp-filter">
-        <select id="expFilter">
-          <option value="all" selected>All jobs</option>
-          <option value="fresher">Fresher (0‑2 years)</option>
-          <option value="mid">1‑2 years</option>
-          <option value="senior">3+ years</option>
         </select>
       </div>
     </div>
@@ -349,7 +341,7 @@
     });
 
     // --------------------------------------------------------------
-    // SUPABASE JOBS (all jobs, no deletion)
+    // SUPABASE JOBS (no filter, all jobs visible)
     // --------------------------------------------------------------
     const SUPABASE_URL = 'https://qmljqckhhdmvcbomydhf.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_rmCQIW6Lw90zleW-lYZcFw_WZrcHw4h';
@@ -385,15 +377,9 @@
       return '';
     }
 
-    function getExperienceLevel(job) {
+    function isFresherJob(job) {
       const text = (job.title + ' ' + (job.description || '')).toLowerCase();
-      if (/(fresher|entry level|entry-level|junior|graduate|trainee|0[- ]2 years|less than 2 years|recent graduate|new grad|early career)/i.test(text)) {
-        return 'fresher';
-      }
-      if (/(senior|lead|principal|architect|3\+ years|4 years|5 years|experienced)/i.test(text)) {
-        return 'senior';
-      }
-      return 'mid';
+      return /(fresher|entry level|entry-level|junior|graduate|trainee|0[- ]2 years|less than 2 years|recent graduate|new grad|early career)/i.test(text);
     }
 
     async function fetchJobs(reset = true) {
@@ -464,7 +450,6 @@
       const container = document.getElementById('jobsContainer');
       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
       const selectedLocation = document.getElementById('locationFilter').value;
-      const selectedExp = document.getElementById('expFilter').value;
 
       let filtered = allJobs;
       if (selectedLocation !== 'all') {
@@ -477,23 +462,16 @@
           (job.description && job.description.toLowerCase().includes(searchTerm))
         );
       }
-      if (selectedExp !== 'all') {
-        filtered = filtered.filter(job => getExperienceLevel(job) === selectedExp);
-      }
 
       if (!filtered.length) {
-        let message = 'No jobs found. ';
-        if (selectedExp !== 'all') message += `Try changing the experience filter to "All jobs".`;
-        else message += 'Check back later or adjust search/location.';
-        container.innerHTML = `<div class="no-jobs">${message}</div>`;
+        container.innerHTML = '<div class="no-jobs">No jobs found. Check back later or adjust search/location.</div>';
         return;
       }
 
       container.innerHTML = filtered.map(job => {
         const cleanDesc = (job.description || '').substring(0, 120);
         const badge = getJobBadge(job.created_at);
-        const expLevel = getExperienceLevel(job);
-        const fresherBadge = expLevel === 'fresher' ? '<span class="fresher-badge">Fresher</span>' : '';
+        const fresherBadge = isFresherJob(job) ? '<span class="fresher-badge">Fresher</span>' : '';
         return `
           <div class="job-card">
             <div class="job-title">
@@ -510,7 +488,7 @@
         `;
       }).join('');
 
-      if (hasMore && !searchTerm && selectedLocation === 'all' && selectedExp === 'all') {
+      if (hasMore && !searchTerm && selectedLocation === 'all') {
         const loadMoreDiv = document.createElement('div');
         loadMoreDiv.id = 'loadMoreTrigger';
         loadMoreDiv.style.textAlign = 'center';
@@ -580,7 +558,6 @@
 
     document.getElementById('searchInput')?.addEventListener('input', () => displayJobs());
     document.getElementById('locationFilter')?.addEventListener('change', () => displayJobs());
-    document.getElementById('expFilter')?.addEventListener('change', () => displayJobs());
 
     document.getElementById('shareTwitter')?.addEventListener('click', (e) => {
       e.preventDefault();
