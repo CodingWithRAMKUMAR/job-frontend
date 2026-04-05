@@ -7,11 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ApplyMore – IT Jobs in India</title>
   <meta name="description" content="ApplyMore finds the latest IT jobs across India. Search, filter by location, and apply directly. Free and updated daily.">
-  <meta name="keywords" content="IT jobs, fresher jobs, experienced jobs, Hyderabad, Chennai, Mumbai, Pune, Gurugram">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* Your existing CSS – unchanged from the last working version */
+    /* Your existing CSS – same as before – no changes needed */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg-dark: #0a0a2a;
@@ -125,6 +124,15 @@
       font-size: 0.8rem;
       color: var(--text-light);
     }
+    .reset-btn {
+      background: var(--accent);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      color: white;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
     .jobs-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -183,7 +191,7 @@
       .add-link-box { flex-direction: column; align-items: stretch; }
       .links-list { justify-content: center; }
       .controls { flex-direction: column; }
-      .search-box, .location-filter select { width: 100%; }
+      .search-box, .location-filter select, .reset-btn { width: 100%; }
       .job-title { font-size: 0.9rem; }
       .main-header h1 { font-size: 1.8rem; }
     }
@@ -221,7 +229,7 @@
     <div class="controls">
       <div class="search-box">
         <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" placeholder="Search jobs, companies... (e.g., 'fresher')">
+        <input type="text" id="searchInput" placeholder="Search jobs, companies...">
       </div>
       <div class="location-filter">
         <select id="locationFilter">
@@ -233,6 +241,7 @@
           <option value="Pune">Pune</option>
         </select>
       </div>
+      <button id="resetFiltersBtn" class="reset-btn">Reset Filters</button>
     </div>
 
     <div id="jobsContainer" class="jobs-grid">
@@ -258,7 +267,7 @@
 
   <script>
     // --------------------------------------------------------------
-    // PARTICLE BACKGROUND (same as before)
+    // PARTICLE BACKGROUND (unchanged)
     // --------------------------------------------------------------
     const canvas = document.getElementById('particleCanvas');
     let ctx = canvas.getContext('2d');
@@ -341,22 +350,18 @@
     });
 
     // --------------------------------------------------------------
-    // SUPABASE JOBS (no filter, all jobs visible)
+    // SUPABASE JOBS – fetch all, then display with filters
     // --------------------------------------------------------------
     const SUPABASE_URL = 'https://qmljqckhhdmvcbomydhf.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_rmCQIW6Lw90zleW-lYZcFw_WZrcHw4h';
 
     let allJobs = [];
-    let currentOffset = 0;
-    const PAGE_SIZE = 20;
-    let isLoading = false;
-    let hasMore = true;
 
     function showSkeleton() {
       const container = document.getElementById('jobsContainer');
       container.innerHTML = `
         <div class="skeleton-grid">
-          ${Array(4).fill(`
+          ${Array(6).fill(`
             <div class="skeleton-card">
               <div class="skeleton-title"></div>
               <div class="skeleton-company"></div>
@@ -382,52 +387,36 @@
       return /(fresher|entry level|entry-level|junior|graduate|trainee|0[- ]2 years|less than 2 years|recent graduate|new grad|early career)/i.test(text);
     }
 
-    async function fetchJobs(reset = true) {
-      if (isLoading) return;
-      isLoading = true;
-      if (reset) {
-        currentOffset = 0;
-        allJobs = [];
-        hasMore = true;
-        showSkeleton();
-      }
+    async function fetchJobs() {
+      showSkeleton();
       try {
-        const url = `${SUPABASE_URL}/rest/v1/ApplyMore?select=*&order=created_at.desc&limit=${PAGE_SIZE}&offset=${currentOffset}`;
+        const url = `${SUPABASE_URL}/rest/v1/ApplyMore?select=*&order=created_at.desc`;
+        console.log('Fetching jobs from:', url);
         const response = await fetch(url, {
           headers: {
             'apikey': SUPABASE_ANON_KEY,
             'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
           }
         });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${await response.text()}`);
         const data = await response.json();
-        if (data.length < PAGE_SIZE) hasMore = false;
-        if (reset) {
-          allJobs = data;
-        } else {
-          allJobs = [...allJobs, ...data];
-        }
-        currentOffset += data.length;
+        console.log(`Fetched ${data.length} jobs from Supabase`);
+        allJobs = data;
         displayJobs();
-        if (reset) {
-          localStorage.setItem('cachedJobs', JSON.stringify({ timestamp: Date.now(), jobs: allJobs }));
-        }
+        // Cache for offline (optional)
+        localStorage.setItem('cachedJobs', JSON.stringify({ timestamp: Date.now(), jobs: allJobs }));
       } catch (err) {
-        console.error(err);
-        if (reset) {
-          const cached = localStorage.getItem('cachedJobs');
-          if (cached) {
-            const { jobs } = JSON.parse(cached);
-            allJobs = jobs;
-            displayJobs(true);
-            const container = document.getElementById('jobsContainer');
-            container.innerHTML += '<div class="no-jobs" style="margin-top:1rem;">⚠️ Using cached jobs. New jobs will appear soon.</div>';
-          } else {
-            document.getElementById('jobsContainer').innerHTML = '<div class="no-jobs">Failed to load jobs. Please refresh.</div>';
-          }
+        console.error('Fetch error:', err);
+        // Try to load from cache
+        const cached = localStorage.getItem('cachedJobs');
+        if (cached) {
+          const { jobs } = JSON.parse(cached);
+          allJobs = jobs;
+          displayJobs(true);
+          document.getElementById('jobsContainer').innerHTML += '<div class="no-jobs" style="margin-top:1rem;">⚠️ Using cached jobs. New jobs will appear soon.</div>';
+        } else {
+          document.getElementById('jobsContainer').innerHTML = '<div class="no-jobs">Failed to load jobs. Please refresh or try again later.</div>';
         }
-      } finally {
-        isLoading = false;
       }
     }
 
@@ -448,13 +437,16 @@
 
     function displayJobs() {
       const container = document.getElementById('jobsContainer');
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
       const selectedLocation = document.getElementById('locationFilter').value;
 
       let filtered = allJobs;
+
+      // Location filter
       if (selectedLocation !== 'all') {
         filtered = filtered.filter(job => job.location && job.location.toLowerCase().includes(selectedLocation.toLowerCase()));
       }
+      // Search filter
       if (searchTerm) {
         filtered = filtered.filter(job =>
           job.title.toLowerCase().includes(searchTerm) ||
@@ -464,7 +456,7 @@
       }
 
       if (!filtered.length) {
-        container.innerHTML = '<div class="no-jobs">No jobs found. Check back later or adjust search/location.</div>';
+        container.innerHTML = '<div class="no-jobs">No jobs found. Try changing the search or location, or reset filters.</div>';
         return;
       }
 
@@ -487,16 +479,13 @@
           </div>
         `;
       }).join('');
+    }
 
-      if (hasMore && !searchTerm && selectedLocation === 'all') {
-        const loadMoreDiv = document.createElement('div');
-        loadMoreDiv.id = 'loadMoreTrigger';
-        loadMoreDiv.style.textAlign = 'center';
-        loadMoreDiv.style.margin = '1rem 0';
-        loadMoreDiv.innerHTML = '<button id="loadMoreBtn" style="background: var(--accent); border: none; padding: 0.4rem 1rem; border-radius: 2rem; color: white; cursor: pointer;">Load More Jobs</button>';
-        container.appendChild(loadMoreDiv);
-        document.getElementById('loadMoreBtn')?.addEventListener('click', () => fetchJobs(false));
-      }
+    // Reset filters
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('locationFilter').value = 'all';
+      displayJobs();
     }
 
     // --------------------------------------------------------------
@@ -558,6 +547,7 @@
 
     document.getElementById('searchInput')?.addEventListener('input', () => displayJobs());
     document.getElementById('locationFilter')?.addEventListener('change', () => displayJobs());
+    document.getElementById('resetFiltersBtn')?.addEventListener('click', resetFilters);
 
     document.getElementById('shareTwitter')?.addEventListener('click', (e) => {
       e.preventDefault();
@@ -572,8 +562,9 @@
       alert('Please email your issue to support@applymore.com');
     });
 
-    setInterval(() => fetchJobs(true), 5 * 60 * 1000);
-    fetchJobs(true);
+    // Fetch jobs on load and every 5 minutes
+    fetchJobs();
+    setInterval(fetchJobs, 5 * 60 * 1000);
   </script>
 </body>
 </html>
