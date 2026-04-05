@@ -9,11 +9,9 @@
   <title>ApplyMore – IT Fresher Jobs in India</title>
   <meta name="description" content="ApplyMore finds the latest IT fresher jobs across India. Search, filter by location, and apply directly to company websites. Free and updated daily.">
   <meta name="keywords" content="IT jobs, fresher jobs, India, Hyderabad, Bangalore, Mumbai, Chennai, Pune, Gurugram">
-  <meta name="author" content="ApplyMore">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* Your existing CSS – same as the previous version (no changes needed) */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg-dark: #0a0a2a;
@@ -204,7 +202,6 @@
       </div>
     </div>
 
-    <!-- Found a job link? Box -->
     <div class="add-link-box">
       <h3><i class="fas fa-link"></i> Found a job link?</h3>
       <input type="url" id="newLinkInput" placeholder="Paste job URL here...">
@@ -255,7 +252,7 @@
 
   <script>
     // --------------------------------------------------------------
-    // 1. OPTIMISED PARTICLE BACKGROUND
+    // PARTICLE BACKGROUND (optimised)
     // --------------------------------------------------------------
     const canvas = document.getElementById('particleCanvas');
     let ctx = canvas.getContext('2d');
@@ -338,7 +335,7 @@
     });
 
     // --------------------------------------------------------------
-    // 2. SUPABASE JOBS
+    // SUPABASE JOBS
     // --------------------------------------------------------------
     const SUPABASE_URL = 'https://qmljqckhhdmvcbomydhf.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_rmCQIW6Lw90zleW-lYZcFw_WZrcHw4h';
@@ -464,7 +461,7 @@
     }
 
     // --------------------------------------------------------------
-    // 3. RECOMMENDED LINKS (localStorage)
+    // RECOMMENDED LINKS (localStorage)
     // --------------------------------------------------------------
     let recommendedLinks = JSON.parse(localStorage.getItem('recommendedLinks') || '[]');
     function renderLinks() {
@@ -497,7 +494,7 @@
     renderLinks();
 
     // --------------------------------------------------------------
-    // 4. THEME & EVENT LISTENERS
+    // THEME & EVENT LISTENERS
     // --------------------------------------------------------------
     function setTheme(theme) {
       document.body.classList.remove('light', 'dark', 'vibrant');
