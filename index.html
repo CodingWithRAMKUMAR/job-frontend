@@ -6,11 +6,20 @@
      crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>ApplyMore – IT Fresher Jobs in India</title>
-  <meta name="description" content="ApplyMore finds the latest IT fresher jobs across India. Search, filter by location, and apply directly to company websites. Free and updated daily.">
-  <meta name="keywords" content="IT jobs, fresher jobs, India, Hyderabad, Bangalore, Mumbai, Chennai, Pune, Gurugram">
+  
+  <!-- Improved title for Google & users -->
+  <title>ApplyMore – Daily IT Fresher Jobs in Hyderabad, Chennai, Mumbai, Pune, Gurugram</title>
+  
+  <!-- Improved meta description (appears in Google search results) -->
+  <meta name="description" content="ApplyMore finds the latest entry‑level IT jobs for freshers in Hyderabad, Chennai, Mumbai, Pune & Gurugram. Updated daily. Free, no sign‑up. Apply directly to company websites.">
+  
+  <meta name="keywords" content="IT fresher jobs, entry level IT jobs, Hyderabad jobs, Chennai jobs, Mumbai jobs, Pune jobs, Gurugram jobs, software engineer fresher, data analyst fresher">
+  <meta name="author" content="ApplyMore">
+  <meta name="robots" content="index, follow">
+  
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -68,9 +77,33 @@
       padding: 1.5rem 1rem;
       backdrop-filter: blur(2px);
     }
-    .main-header { text-align: center; margin-bottom: 1.5rem; }
-    .main-header h1 { font-size: 2.5rem; background: linear-gradient(135deg, var(--accent), #a855f7); background-clip: text; -webkit-background-clip: text; color: transparent; }
-    .main-header p { font-size: 0.9rem; color: var(--text-muted); }
+    
+    /* Improved header section */
+    .main-header {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .main-header h1 {
+      font-size: 2.8rem;
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .main-header .tagline {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-top: 0.25rem;
+    }
+    .main-header .subhead {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0.5rem auto 0;
+    }
+    
     .top-bar {
       display: flex;
       justify-content: flex-end;
@@ -188,6 +221,8 @@
       .controls { flex-direction: column; }
       .search-box, .location-filter select { width: 100%; }
       .job-title { font-size: 0.9rem; }
+      .main-header h1 { font-size: 1.8rem; }
+      .main-header .tagline { font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -196,7 +231,8 @@
   <div class="container">
     <div class="main-header">
       <h1>ApplyMore</h1>
-      <p>⚡ Your launchpad to an IT career ⚡</p>
+      <div class="tagline">🚀 Daily IT Fresher Jobs – No Sign‑up, Free Forever</div>
+      <div class="subhead">Handpicked entry‑level roles in Hyderabad • Chennai • Mumbai • Pune • Gurugram. Updated every 12 hours from LinkedIn & Indeed.</div>
     </div>
     <div class="top-bar">
       <div class="theme-controls">
@@ -400,7 +436,7 @@
         const data = await response.json();
         if (data.length < PAGE_SIZE) hasMore = false;
         if (reset) {
-          allJobs = data;  // data already contains 'id' field
+          allJobs = data;
         } else {
           allJobs = [...allJobs, ...data];
         }
