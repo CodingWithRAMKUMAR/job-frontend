@@ -158,7 +158,15 @@
     .new-badge, .expiring-badge { font-size: 0.6rem; padding: 0.1rem 0.4rem; border-radius: 1rem; }
     .new-badge { background: #22c55e; }
     .expiring-badge { background: #f97316; }
-    .view-details { display: inline-block; background: var(--accent); color: white; padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.7rem; text-decoration: none; }
+    .view-details {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 2rem;
+      font-size: 0.7rem;
+      text-decoration: none;
+    }
 
     .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
     .skeleton-card { background: rgba(30,35,70,0.5); border-radius: 1rem; padding: 1rem; animation: pulse 1.2s infinite; }
@@ -252,13 +260,13 @@
 
   <script>
     // --------------------------------------------------------------
-    // OPTIMISED PARTICLE BACKGROUND (reduced on mobile)
+    // OPTIMISED PARTICLE BACKGROUND
     // --------------------------------------------------------------
     const canvas = document.getElementById('particleCanvas');
     let ctx = canvas.getContext('2d');
     let particles = [];
     let mouseX = 0, mouseY = 0;
-    let particleCount = window.innerWidth < 768 ? 40 : 80; // fewer on mobile
+    let particleCount = window.innerWidth < 768 ? 40 : 80;
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -398,7 +406,6 @@
         }
         currentOffset += data.length;
         displayJobs();
-        // Cache only first page for offline
         if (reset) {
           localStorage.setItem('cachedJobs', JSON.stringify({ timestamp: Date.now(), jobs: allJobs }));
         }
@@ -471,12 +478,12 @@
             <div class="location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}</div>
             <div class="description">${escapeHtml(cleanDesc)}...</div>
             <div class="deadline">📅 Posted: ${formatDate(job.posted_date || job.created_at)}</div>
-            <a href="${escapeHtml(job.url)}" target="_blank" class="view-details">Apply →</a>
+            <a href="job.html?id=${job._id}" class="view-details">View Details →</a>
           </div>
         `;
       }).join('');
 
-      // Add loading indicator at bottom if more jobs exist
+      // Add "Load More" button if more jobs exist
       if (hasMore && !searchTerm && selectedLocation === 'all') {
         const loadMoreDiv = document.createElement('div');
         loadMoreDiv.id = 'loadMoreTrigger';
@@ -545,13 +552,8 @@
     document.getElementById('vibrantTheme')?.addEventListener('click', () => setTheme('vibrant'));
     document.getElementById('accentColor')?.addEventListener('input', (e) => setAccent(e.target.value));
 
-    document.getElementById('searchInput')?.addEventListener('input', () => {
-      // Re-display filtered results from allJobs (already loaded)
-      displayJobs();
-    });
-    document.getElementById('locationFilter')?.addEventListener('change', () => {
-      displayJobs();
-    });
+    document.getElementById('searchInput')?.addEventListener('input', () => displayJobs());
+    document.getElementById('locationFilter')?.addEventListener('change', () => displayJobs());
 
     document.getElementById('shareTwitter')?.addEventListener('click', (e) => {
       e.preventDefault();
@@ -566,12 +568,8 @@
       alert('Please email your issue to support@applymore.com');
     });
 
-    // Initial load
+    setInterval(() => fetchJobs(true), 5 * 60 * 1000);
     fetchJobs(true);
-    // Refresh every 5 minutes (but only new jobs will appear after page reload or manual refresh)
-    setInterval(() => {
-      fetchJobs(true);
-    }, 5 * 60 * 1000);
   </script>
 </body>
 </html>
