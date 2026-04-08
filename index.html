@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ApplyMore – IT Jobs by Experience</title>
-  <meta name="description" content="ApplyMore lists IT jobs in India, grouped by experience level: Fresher, 1‑2 years, 3+ years. Free and updated daily.">
+  <meta name="description" content="ApplyMore lists IT jobs in India. Filter by experience level: Fresher, 1‑2 years, 3+ years. Free and updated daily.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -138,6 +138,26 @@
       font-size: 0.8rem;
       color: var(--text-light);
     }
+    .filter-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid var(--glass-border);
+      border-radius: 2rem;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      transition: var(--transition);
+    }
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
     .reset-btn {
       background: var(--accent);
       border: none;
@@ -147,31 +167,11 @@
       cursor: pointer;
       font-size: 0.8rem;
     }
-    .category-section {
-      margin-bottom: 3rem;
-    }
-    .category-title {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--glass-border);
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-    .category-badge {
-      font-size: 0.8rem;
-      background: #8b5cf6;
-      padding: 0.2rem 0.6rem;
-      border-radius: 2rem;
-      color: white;
-    }
-    .category-badge.mid { background: #f59e0b; }
-    .category-badge.senior { background: #ef4444; }
     .jobs-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 1.5rem;
+      margin-top: 1rem;
     }
     .job-card {
       background: rgba(20, 25, 55, 0.7);
@@ -217,7 +217,8 @@
     .footer-links a { color: var(--accent); text-decoration: none; }
     @media (max-width: 640px) {
       .add-link-box, .controls { flex-direction: column; align-items: stretch; }
-      .search-box, .location-filter select, .reset-btn { width: 100%; }
+      .search-box, .location-filter select, .filter-buttons, .reset-btn { width: 100%; }
+      .filter-buttons { justify-content: center; }
     }
   </style>
 </head>
@@ -265,31 +266,17 @@
           <option value="Pune">Pune</option>
         </select>
       </div>
+      <div class="filter-buttons">
+        <button data-filter="all" class="filter-btn active">All Jobs</button>
+        <button data-filter="fresher" class="filter-btn">Fresher (0 yrs)</button>
+        <button data-filter="mid" class="filter-btn">1‑2 years</button>
+        <button data-filter="senior" class="filter-btn">3+ years</button>
+      </div>
       <button id="resetFiltersBtn" class="reset-btn">Reset Filters</button>
     </div>
 
-    <div id="fresherSection" class="category-section">
-      <div class="category-title">
-        <span>🎓 Fresher (0 years)</span>
-        <span class="category-badge">Entry level</span>
-      </div>
-      <div class="jobs-grid" id="fresherJobs"></div>
-    </div>
-
-    <div id="midSection" class="category-section">
-      <div class="category-title">
-        <span>📈 1‑2 years</span>
-        <span class="category-badge mid">Junior / Mid level</span>
-      </div>
-      <div class="jobs-grid" id="midJobs"></div>
-    </div>
-
-    <div id="seniorSection" class="category-section">
-      <div class="category-title">
-        <span>🚀 3+ years</span>
-        <span class="category-badge senior">Senior / Lead</span>
-      </div>
-      <div class="jobs-grid" id="seniorJobs"></div>
+    <div id="jobsContainer" class="jobs-grid">
+      <div class="empty-message">Loading jobs...</div>
     </div>
 
     <footer>
@@ -308,7 +295,7 @@
 
   <script>
     // --------------------------------------------------------------
-    // PARTICLE BACKGROUND (unchanged)
+    // PARTICLE BACKGROUND
     // --------------------------------------------------------------
     const canvas = document.getElementById('particleCanvas');
     let ctx = canvas.getContext('2d');
@@ -397,18 +384,19 @@
     const SUPABASE_ANON_KEY = 'sb_publishable_rmCQIW6Lw90zleW-lYZcFw_WZrcHw4h';
 
     let allJobs = [];
+    let currentFilter = 'all'; // 'all', 'fresher', 'mid', 'senior'
 
     // Strict experience level determination
     function getExperienceLevel(job) {
       const text = (job.title + ' ' + (job.description || '')).toLowerCase();
       
-      // 1. Senior keywords (immediate senior)
+      // Senior keywords (immediate senior)
       const seniorKeywords = ['senior', 'lead', 'principal', 'architect', 'manager', 'director', 'head', 'staff engineer', 'distinguished'];
       for (let kw of seniorKeywords) {
         if (text.includes(kw)) return 'senior';
       }
       
-      // 2. Extract any numeric years (e.g., "3 years", "2+ years", "1-2 years", "5 years")
+      // Numeric years
       const yearPattern = /(\d+(?:\.\d+)?)\s*[-+]?\s*(?:\d+(?:\.\d+)?)?\s*years?/i;
       const match = text.match(yearPattern);
       if (match) {
@@ -417,13 +405,13 @@
         if (years >= 1) return 'mid';
       }
       
-      // 3. Fresher keywords (only if no senior keywords and no year numbers above)
+      // Fresher keywords
       const fresherKeywords = ['fresher', 'entry level', 'entry-level', 'junior', 'graduate', 'trainee', 'recent graduate', 'new grad', 'early career', '0 years', 'zero years', 'no experience'];
       for (let kw of fresherKeywords) {
         if (text.includes(kw)) return 'fresher';
       }
       
-      // 4. Default to mid (1-2 years) – this will catch jobs like "Software Engineer" without any years mentioned
+      // Default to mid (1-2 years)
       return 'mid';
     }
 
@@ -437,9 +425,7 @@
         displayJobs();
       } catch (err) {
         console.error(err);
-        document.querySelectorAll('.jobs-grid').forEach(grid => {
-          grid.innerHTML = '<div class="empty-message">Failed to load jobs. Please refresh.</div>';
-        });
+        document.getElementById('jobsContainer').innerHTML = '<div class="empty-message">Failed to load jobs. Please refresh.</div>';
       }
     }
 
@@ -458,37 +444,33 @@
           (job.description && job.description.toLowerCase().includes(searchTerm))
         );
       }
+      if (currentFilter !== 'all') {
+        filtered = filtered.filter(job => getExperienceLevel(job) === currentFilter);
+      }
 
-      const fresherJobs = filtered.filter(job => getExperienceLevel(job) === 'fresher');
-      const midJobs = filtered.filter(job => getExperienceLevel(job) === 'mid');
-      const seniorJobs = filtered.filter(job => getExperienceLevel(job) === 'senior');
-
-      renderJobGrid('fresherJobs', fresherJobs, 'fresher');
-      renderJobGrid('midJobs', midJobs, 'mid');
-      renderJobGrid('seniorJobs', seniorJobs, 'senior');
-    }
-
-    function renderJobGrid(containerId, jobs, level) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-      if (jobs.length === 0) {
-        container.innerHTML = '<div class="empty-message">No jobs in this category.</div>';
+      const container = document.getElementById('jobsContainer');
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-message">No jobs found. Try different filters.</div>';
         return;
       }
-      let tagText = level === 'fresher' ? 'Fresher (0 yrs)' : (level === 'mid' ? '1-2 years' : '3+ years');
-      container.innerHTML = jobs.map(job => `
-        <div class="job-card">
-          <div class="job-title">
-            ${escapeHtml(job.title)}
-            <span class="exp-tag ${level}">${tagText}</span>
+
+      container.innerHTML = filtered.map(job => {
+        const level = getExperienceLevel(job);
+        let tagText = level === 'fresher' ? 'Fresher (0 yrs)' : (level === 'mid' ? '1-2 years' : '3+ years');
+        return `
+          <div class="job-card">
+            <div class="job-title">
+              ${escapeHtml(job.title)}
+              <span class="exp-tag ${level}">${tagText}</span>
+            </div>
+            <div class="company">${escapeHtml(job.company)}</div>
+            <div class="location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}</div>
+            <div class="description">${escapeHtml((job.description || '').substring(0, 120))}...</div>
+            <div class="deadline">📅 Posted: ${formatDate(job.posted_date || job.created_at)}</div>
+            <a href="job.html?id=${job.id}" class="view-details">View Details →</a>
           </div>
-          <div class="company">${escapeHtml(job.company)}</div>
-          <div class="location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}</div>
-          <div class="description">${escapeHtml((job.description || '').substring(0, 120))}...</div>
-          <div class="deadline">📅 Posted: ${formatDate(job.posted_date || job.created_at)}</div>
-          <a href="job.html?id=${job.id}" class="view-details">View Details →</a>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function formatDate(dateString) {
@@ -499,6 +481,25 @@
     function escapeHtml(str) {
       if (!str) return '';
       return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+    }
+
+    // Filter UI handlers
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.getAttribute('data-filter') === filter) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      displayJobs();
+    }
+
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('locationFilter').value = 'all';
+      setFilter('all');
     }
 
     // --------------------------------------------------------------
@@ -560,10 +561,13 @@
 
     document.getElementById('searchInput')?.addEventListener('input', displayJobs);
     document.getElementById('locationFilter')?.addEventListener('change', displayJobs);
-    document.getElementById('resetFiltersBtn')?.addEventListener('click', () => {
-      document.getElementById('searchInput').value = '';
-      document.getElementById('locationFilter').value = 'all';
-      displayJobs();
+    document.getElementById('resetFiltersBtn')?.addEventListener('click', resetFilters);
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const filter = e.currentTarget.getAttribute('data-filter');
+        setFilter(filter);
+      });
     });
 
     document.getElementById('shareTwitter')?.addEventListener('click', (e) => {
