@@ -27,4 +27,90 @@
       display: flex;
       justify-content: center;
       gap: 2rem;
-      flex-wrap: wrap
+      flex-wrap: wrap;
+    }
+    .main-nav a {
+      color: #f0f3ff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.3rem 0.8rem;
+      border-radius: 2rem;
+      transition: all 0.2s ease;
+    }
+    .main-nav a:hover { background: #3b82f6; color: white; }
+    .about-card {
+      background: rgba(20, 20, 50, 0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      border: 1px solid rgba(100, 150, 255, 0.3);
+    }
+    h1 { font-size: 2.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, #3b82f6, #a855f7); background-clip: text; -webkit-background-clip: text; color: transparent; }
+    h2 { font-size: 1.5rem; margin: 1.5rem 0 1rem; color: #3b82f6; }
+    p { line-height: 1.6; margin-bottom: 1rem; color: #cbd5e6; }
+    .mission-box {
+      background: rgba(59,130,246,0.1);
+      border-left: 4px solid #3b82f6;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+    footer { text-align: center; margin-top: 3rem; color: #a0b0d0; font-size: 0.8rem; }
+    .footer-links { display: flex; justify-content: center; gap: 1rem; margin: 1rem 0; flex-wrap: wrap; }
+    .footer-links a { color: #3b82f6; text-decoration: none; }
+    @media (max-width: 640px) { .main-nav { gap: 0.8rem; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="main-nav">
+      <a href="index.html">🏠 Home</a>
+      <a href="about.html">📖 About</a>
+      <a href="blog.html">✍️ Blog</a>
+      <a href="contact.html">📧 Contact</a>
+      <a href="privacy.html">🔒 Privacy</a>
+      <a href="terms.html">⚖️ Terms</a>
+    </nav>
+
+    <div class="about-card">
+      <h1>About ApplyMore</h1>
+      
+      <div class="mission-box">
+        <p><strong>🎯 Our Mission:</strong> Help every IT fresher in India find their first job within 3 months of graduation.</p>
+      </div>
+
+      <h2>Who We Are</h2>
+      <p>ApplyMore was founded by Ram, a developer who struggled to find entry-level IT jobs after graduation. I realized that freshers waste hours searching multiple job portals, only to find senior-level positions or irrelevant listings.</p>
+      
+      <p>So I built ApplyMore — a free, automated platform that scrapes LinkedIn and Indeed daily, filters for <strong>0-2 years experience</strong>, and shows jobs in major Indian cities including Hyderabad, Bangalore, Chennai, Mumbai, Pune, Delhi, Gurugram, Kolkata, Ahmedabad, and Noida.</p>
+
+      <h2>Why Trust ApplyMore?</h2>
+      <p>✅ <strong>100% Free</strong> — No paid plans, no hidden charges<br>
+      ✅ <strong>Daily Updates</strong> — We scrape every 12 hours<br>
+      ✅ <strong>No Spam</strong> — Only real job listings from verified companies<br>
+      ✅ <strong>Fresher-Focused</strong> — We filter out senior roles automatically<br>
+      ✅ <strong>Made in India</strong> — Built specifically for the Indian IT job market</p>
+
+      <h2>How It Works</h2>
+      <p>1. Our automated scraper searches LinkedIn and Indeed for 10+ IT roles (Data Analyst, Software Engineer, Java Developer, etc.)<br>
+      2. Jobs are filtered by location (10+ Indian cities) and experience level<br>
+      3. Duplicates are removed, and new jobs are added to our database<br>
+      4. You see clean, organized listings — no clutter, no ads (yet!)</p>
+
+      <h2>Our Commitment</h2>
+      <p>ApplyMore will <strong>always remain free</strong> for job seekers. We may add non-intrusive ads in the future to cover server costs, but the core job search feature will never be paywalled.</p>
+      
+      <p>If you find this useful, share it with a fellow fresher! 🚀</p>
+    </div>
+
+    <footer>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <p>© 2026 ApplyMore. Helping IT freshers land their dream job.</p>
+    </footer>
+  </div>
+</body>
+</html>
