@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+    /* ===== FULL STYLES (same as before, no changes) ===== */
     * {
       margin: 0;
       padding: 0;
@@ -103,7 +104,6 @@
       z-index: 2;
     }
 
-    /* Premium Navigation */
     .main-nav {
       background: rgba(15, 25, 45, 0.7);
       backdrop-filter: blur(20px);
@@ -155,7 +155,6 @@
       transform: translateY(-2px);
     }
 
-    /* Premium Header */
     .main-header {
       text-align: center;
       margin-bottom: 2rem;
@@ -191,7 +190,6 @@
       margin-top: 0.5rem;
     }
 
-    /* Premium Stats Cards */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -237,7 +235,6 @@
       margin-top: 0.3rem;
     }
 
-    /* Premium Value Section */
     .value-section {
       background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.08));
       border-radius: 1.5rem;
@@ -293,7 +290,6 @@
       line-height: 1.5;
     }
 
-    /* Community Buttons Section (ONLY WhatsApp Group, WhatsApp Community, LinkedIn) */
     .community-section {
       background: rgba(15, 25, 45, 0.6);
       backdrop-filter: blur(16px);
@@ -369,7 +365,6 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     }
 
-    /* Premium Controls */
     .controls {
       display: flex;
       gap: 1rem;
@@ -467,7 +462,6 @@
       box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
     }
 
-    /* Premium Job Cards */
     .jobs-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -578,7 +572,6 @@
       margin: 0.5rem 0;
     }
 
-    /* Loading Skeleton */
     .skeleton-card {
       background: linear-gradient(135deg, rgba(25, 35, 65, 0.5), rgba(20, 25, 55, 0.4));
       border-radius: 1rem;
@@ -616,7 +609,6 @@
       border-radius: 1rem;
     }
 
-    /* Footer */
     footer {
       text-align: center;
       margin-top: 3rem;
@@ -642,7 +634,6 @@
       color: var(--purple);
     }
 
-    /* Top Bar */
     .top-bar {
       display: flex;
       justify-content: flex-end;
@@ -667,7 +658,6 @@
       transform: scale(1.05);
     }
 
-    /* Add Link Box */
     .add-link-box {
       background: rgba(15, 25, 45, 0.6);
       backdrop-filter: blur(16px);
@@ -707,7 +697,6 @@
       gap: 0.3rem;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
       .main-header h1 { font-size: 2rem; }
       .controls { flex-direction: column; align-items: stretch; }
@@ -769,26 +758,14 @@
       <h2>🎯 Your IT Career Starts Here</h2>
       <p>Handpicked entry-level IT jobs from across India — no spam, just real opportunities</p>
       <div class="tips-grid">
-        <div class="tip-card">
-          <h3>📝 Resume Tips</h3>
-          <p>Highlight internships, projects, and technical skills. Keep it under 1 page.</p>
-        </div>
-        <div class="tip-card">
-          <h3>💡 Interview Prep</h3>
-          <p>Practice DSA problems. Prepare to explain 2-3 projects in depth.</p>
-        </div>
-        <div class="tip-card">
-          <h3>🚀 Top Skills 2025</h3>
-          <p>Python, SQL, Cloud, Git, AI/ML fundamentals.</p>
-        </div>
-        <div class="tip-card">
-          <h3>📅 Daily Updates</h3>
-          <p>We scrape LinkedIn & Indeed every 12 hours. Check daily!</p>
-        </div>
+        <div class="tip-card"><h3>📝 Resume Tips</h3><p>Highlight internships, projects, and technical skills. Keep it under 1 page.</p></div>
+        <div class="tip-card"><h3>💡 Interview Prep</h3><p>Practice DSA problems. Prepare to explain 2-3 projects in depth.</p></div>
+        <div class="tip-card"><h3>🚀 Top Skills 2025</h3><p>Python, SQL, Cloud, Git, AI/ML fundamentals.</p></div>
+        <div class="tip-card"><h3>📅 Daily Updates</h3><p>We scrape LinkedIn & Indeed every 12 hours. Check daily!</p></div>
       </div>
     </div>
 
-    <!-- Community Section – Only WhatsApp Group, WhatsApp Community, LinkedIn (No Twitter) -->
+    <!-- Community Section -->
     <div class="community-section">
       <h2>🌐 Join Our Community</h2>
       <p>Get daily job alerts, career tips, and connect with fellow job seekers</p>
@@ -869,9 +846,6 @@
   </div>
 
   <script>
-    // ============================================
-    // SUPABASE CONFIGURATION
-    // ============================================
     const SUPABASE_URL = 'https://qmljqckhhdmvcbomydhf.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_rmCQIW6Lw90zleW-lYZcFw_WZrcHw4h';
 
@@ -898,8 +872,7 @@
       if (!dateString) return '';
       const date = new Date(dateString);
       const now = new Date();
-      const diffTime = Math.abs(now - date);
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      const diffDays = Math.ceil(Math.abs(now - date) / (1000 * 60 * 60 * 24));
       if (diffDays === 0) return 'Today';
       if (diffDays === 1) return 'Yesterday';
       if (diffDays < 7) return `${diffDays} days ago`;
@@ -926,6 +899,7 @@
       const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
       const selectedLocation = document.getElementById('locationFilter').value;
       let filtered = [...allJobs];
+
       if (selectedLocation !== 'all') {
         filtered = filtered.filter(job => job.location && job.location.toLowerCase().includes(selectedLocation.toLowerCase()));
       }
@@ -939,12 +913,37 @@
       if (currentFilter !== 'all') {
         filtered = filtered.filter(job => getExperienceLevel(job) === currentFilter);
       }
+
+      // ========== SORTING FOR "ALL JOBS" ==========
+      if (currentFilter === 'all') {
+        const priority = { 'fresher': 1, 'mid': 2, 'senior': 3 };
+        filtered.sort((a, b) => {
+          const levelA = getExperienceLevel(a);
+          const levelB = getExperienceLevel(b);
+          if (priority[levelA] !== priority[levelB]) {
+            return priority[levelA] - priority[levelB];
+          }
+          // same experience level, sort by newest first (created_at desc)
+          const dateA = new Date(a.created_at || a.posted_date);
+          const dateB = new Date(b.created_at || b.posted_date);
+          return dateB - dateA;
+        });
+      } else {
+        // when a specific filter is active, just sort by newest first
+        filtered.sort((a, b) => {
+          const dateA = new Date(a.created_at || a.posted_date);
+          const dateB = new Date(b.created_at || b.posted_date);
+          return dateB - dateA;
+        });
+      }
+
       updateStats(allJobs);
       const container = document.getElementById('jobsContainer');
       if (filtered.length === 0) {
         container.innerHTML = '<div class="empty-message">✨ No jobs found. Try different filters! ✨</div>';
         return;
       }
+
       container.innerHTML = filtered.map(job => {
         const level = getExperienceLevel(job);
         let tagText = level === 'fresher' ? 'Fresher' : (level === 'mid' ? '1-2 Years' : '3+ Years');
@@ -964,6 +963,7 @@
           </div>
         `;
       }).join('');
+
       document.querySelectorAll('.job-card').forEach(card => {
         card.addEventListener('click', (e) => {
           if (e.target.classList.contains('view-details') || e.target.closest('.view-details')) return;
@@ -984,16 +984,13 @@
     async function fetchJobs() {
       try {
         const response = await fetch(`${SUPABASE_URL}/rest/v1/ApplyMore?select=*&order=created_at.desc`, {
-          headers: {
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-          }
+          headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
         });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         allJobs = await response.json();
         displayJobs();
       } catch (err) {
-        console.error('Error fetching jobs:', err);
+        console.error(err);
         document.getElementById('jobsContainer').innerHTML = '<div class="empty-message">⚠️ Failed to load jobs. Please refresh the page. ⚠️</div>';
       }
     }
@@ -1001,11 +998,8 @@
     function setFilter(filter) {
       currentFilter = filter;
       document.querySelectorAll('.filter-btn').forEach(btn => {
-        if (btn.getAttribute('data-filter') === filter) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
+        if (btn.getAttribute('data-filter') === filter) btn.classList.add('active');
+        else btn.classList.remove('active');
       });
       displayJobs();
     }
@@ -1039,17 +1033,11 @@
       };
       const selected = themes[theme];
       if (selected) {
-        Object.entries(selected).forEach(([key, value]) => {
-          document.documentElement.style.setProperty(key, value);
-        });
+        Object.entries(selected).forEach(([key, value]) => document.documentElement.style.setProperty(key, value));
         localStorage.setItem('theme', theme);
-        if (theme === 'light') {
-          document.body.style.background = '#f8fafc';
-        } else if (theme === 'vibrant') {
-          document.body.style.background = '#fdf2f8';
-        } else {
-          document.body.style.background = '#0a0a2a';
-        }
+        if (theme === 'light') document.body.style.background = '#f8fafc';
+        else if (theme === 'vibrant') document.body.style.background = '#fdf2f8';
+        else document.body.style.background = '#0a0a2a';
       }
     }
 
