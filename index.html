@@ -40,7 +40,6 @@
       position: relative;
     }
 
-    /* Animated Gradient Background */
     .gradient-bg {
       position: fixed;
       top: 0;
@@ -51,7 +50,6 @@
       z-index: -2;
     }
 
-    /* Floating Animated Orbs */
     .orb {
       position: fixed;
       border-radius: 50%;
@@ -121,14 +119,8 @@
     }
 
     @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .main-nav a {
@@ -171,14 +163,8 @@
     }
 
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .main-header h1 {
@@ -307,6 +293,82 @@
       line-height: 1.5;
     }
 
+    /* Community Buttons Section (ONLY WhatsApp Group, WhatsApp Community, LinkedIn) */
+    .community-section {
+      background: rgba(15, 25, 45, 0.6);
+      backdrop-filter: blur(16px);
+      border-radius: 1.5rem;
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      animation: fadeUp 0.6s ease;
+      animation-delay: 0.15s;
+      animation-fill-mode: both;
+    }
+
+    .community-section h2 {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .community-section p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .social-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 3rem;
+      padding: 0.8rem 1.8rem;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      backdrop-filter: blur(8px);
+    }
+
+    .social-btn i {
+      font-size: 1.2rem;
+    }
+
+    .social-btn.whatsapp-group {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      border: none;
+    }
+
+    .social-btn.whatsapp-community {
+      background: linear-gradient(135deg, #075E54, #25D366);
+      border: none;
+    }
+
+    .social-btn.linkedin {
+      background: linear-gradient(135deg, #0077B5, #0A66C2);
+      border: none;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
     /* Premium Controls */
     .controls {
       display: flex;
@@ -359,11 +421,6 @@
       font-size: 0.85rem;
       color: var(--text-primary);
       cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .location-filter select:hover {
-      border-color: var(--accent);
     }
 
     .filter-buttons {
@@ -610,6 +667,7 @@
       transform: scale(1.05);
     }
 
+    /* Add Link Box */
     .add-link-box {
       background: rgba(15, 25, 45, 0.6);
       backdrop-filter: blur(16px);
@@ -658,9 +716,10 @@
       .main-nav a { font-size: 0.75rem; padding: 0.3rem 0.8rem; }
       .stats-grid { grid-template-columns: repeat(3, 1fr); }
       .stat-number { font-size: 1.5rem; }
+      .social-buttons { flex-direction: column; align-items: center; }
+      .social-btn { width: 80%; justify-content: center; }
     }
 
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
       * {
         animation-duration: 0.01ms !important;
@@ -676,7 +735,6 @@
   <div class="orb orb-3"></div>
 
   <div class="container">
-    <!-- Navigation -->
     <nav class="main-nav">
       <a href="index.html">🏠 Home</a>
       <a href="about.html">📖 About</a>
@@ -686,14 +744,12 @@
       <a href="terms.html">⚖️ Terms</a>
     </nav>
 
-    <!-- Header -->
     <div class="main-header">
       <h1>ApplyMore</h1>
       <p>⚡ Apply more. Get hired faster. ⚡</p>
       <div class="badge">✨ Trusted by 10,000+ IT freshers ✨</div>
     </div>
 
-    <!-- Stats -->
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-number" id="totalJobsCount">0</div>
@@ -709,7 +765,6 @@
       </div>
     </div>
 
-    <!-- Value Section -->
     <div class="value-section">
       <h2>🎯 Your IT Career Starts Here</h2>
       <p>Handpicked entry-level IT jobs from across India — no spam, just real opportunities</p>
@@ -733,14 +788,29 @@
       </div>
     </div>
 
-    <!-- Top Bar -->
+    <!-- Community Section – Only WhatsApp Group, WhatsApp Community, LinkedIn (No Twitter) -->
+    <div class="community-section">
+      <h2>🌐 Join Our Community</h2>
+      <p>Get daily job alerts, career tips, and connect with fellow job seekers</p>
+      <div class="social-buttons">
+        <a href="https://chat.whatsapp.com/Bv6fKn2VeJ4DZ3zBbONFzV" target="_blank" class="social-btn whatsapp-group">
+          <i class="fab fa-whatsapp"></i> WhatsApp Group
+        </a>
+        <a href="https://chat.whatsapp.com/GLoKj0wSOyC0Qw66QWMFvo" target="_blank" class="social-btn whatsapp-community">
+          <i class="fab fa-whatsapp"></i> WhatsApp Community
+        </a>
+        <a href="https://www.linkedin.com/company/applymore/" target="_blank" class="social-btn linkedin">
+          <i class="fab fa-linkedin-in"></i> LinkedIn
+        </a>
+      </div>
+    </div>
+
     <div class="top-bar">
       <button class="theme-btn" id="lightTheme">Light</button>
       <button class="theme-btn" id="darkTheme">Dark</button>
       <button class="theme-btn" id="vibrantTheme">Vibrant</button>
     </div>
 
-    <!-- Add Link Box -->
     <div class="add-link-box">
       <h3><i class="fas fa-link"></i> Found a job link?</h3>
       <input type="url" id="newLinkInput" placeholder="Paste job URL here...">
@@ -748,7 +818,6 @@
       <div class="links-list" id="linksList"></div>
     </div>
 
-    <!-- Controls -->
     <div class="controls">
       <div class="search-box">
         <i class="fas fa-search"></i>
@@ -778,14 +847,12 @@
       <button id="resetFiltersBtn" class="reset-btn">Reset Filters</button>
     </div>
 
-    <!-- Jobs Container -->
     <div id="jobsContainer" class="jobs-grid">
       <div class="skeleton-card"><div class="skeleton-title"></div><div class="skeleton-text"></div><div class="skeleton-text"></div></div>
       <div class="skeleton-card"><div class="skeleton-title"></div><div class="skeleton-text"></div><div class="skeleton-text"></div></div>
       <div class="skeleton-card"><div class="skeleton-title"></div><div class="skeleton-text"></div><div class="skeleton-text"></div></div>
     </div>
 
-    <!-- Footer -->
     <footer>
       <div class="footer-links">
         <a href="privacy.html">Privacy</a>
@@ -811,17 +878,10 @@
     let allJobs = [];
     let currentFilter = 'fresher';
 
-    // ============================================
-    // EXPERIENCE LEVEL DETECTION
-    // ============================================
     function getExperienceLevel(job) {
       const text = (job.title + ' ' + (job.description || '')).toLowerCase();
-      
       const seniorKeywords = ['senior', 'lead', 'principal', 'architect', 'manager', 'director', 'head', 'staff engineer'];
-      for (let kw of seniorKeywords) {
-        if (text.includes(kw)) return 'senior';
-      }
-      
+      for (let kw of seniorKeywords) if (text.includes(kw)) return 'senior';
       const yearPattern = /(\d+(?:\.\d+)?)\s*years?/i;
       const match = text.match(yearPattern);
       if (match) {
@@ -829,42 +889,28 @@
         if (years >= 3) return 'senior';
         if (years >= 1) return 'mid';
       }
-      
       const fresherKeywords = ['fresher', 'entry level', 'entry-level', 'junior', 'graduate', 'trainee', 'recent graduate', 'new grad', '0 years', 'zero years', 'no experience'];
-      for (let kw of fresherKeywords) {
-        if (text.includes(kw)) return 'fresher';
-      }
-      
+      for (let kw of fresherKeywords) if (text.includes(kw)) return 'fresher';
       return 'mid';
     }
 
-    // ============================================
-    // FORMAT DATE
-    // ============================================
     function formatDate(dateString) {
       if (!dateString) return '';
       const date = new Date(dateString);
       const now = new Date();
       const diffTime = Math.abs(now - date);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      
       if (diffDays === 0) return 'Today';
       if (diffDays === 1) return 'Yesterday';
       if (diffDays < 7) return `${diffDays} days ago`;
       return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
     }
 
-    // ============================================
-    // ESCAPE HTML
-    // ============================================
     function escapeHtml(str) {
       if (!str) return '';
       return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
     }
 
-    // ============================================
-    // UPDATE STATS
-    // ============================================
     function updateStats(jobs) {
       const total = jobs.length;
       const today = new Date().toISOString().split('T')[0];
@@ -872,24 +918,17 @@
         const jobDate = new Date(job.created_at || job.posted_date);
         return jobDate.toISOString().split('T')[0] === today;
       }).length;
-      
       document.getElementById('totalJobsCount').innerText = total;
       document.getElementById('todayJobsCount').innerText = todayJobs;
     }
 
-    // ============================================
-    // DISPLAY JOBS (NO DELAY, INSTANT)
-    // ============================================
     function displayJobs() {
       const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
       const selectedLocation = document.getElementById('locationFilter').value;
-
       let filtered = [...allJobs];
-      
       if (selectedLocation !== 'all') {
         filtered = filtered.filter(job => job.location && job.location.toLowerCase().includes(selectedLocation.toLowerCase()));
       }
-      
       if (searchTerm) {
         filtered = filtered.filter(job =>
           job.title.toLowerCase().includes(searchTerm) ||
@@ -897,50 +936,34 @@
           (job.description && job.description.toLowerCase().includes(searchTerm))
         );
       }
-
       if (currentFilter !== 'all') {
         filtered = filtered.filter(job => getExperienceLevel(job) === currentFilter);
       }
-
       updateStats(allJobs);
-
       const container = document.getElementById('jobsContainer');
-      
       if (filtered.length === 0) {
         container.innerHTML = '<div class="empty-message">✨ No jobs found. Try different filters! ✨</div>';
         return;
       }
-
       container.innerHTML = filtered.map(job => {
         const level = getExperienceLevel(job);
         let tagText = level === 'fresher' ? 'Fresher' : (level === 'mid' ? '1-2 Years' : '3+ Years');
-        
         return `
           <div class="job-card" data-job-id="${job.id}">
             <div class="job-title">
               <span>${escapeHtml(job.title)}</span>
               <span class="exp-tag ${level}">${tagText}</span>
             </div>
-            <div class="company">
-              <i class="fas fa-building"></i> ${escapeHtml(job.company)}
-            </div>
-            <div class="location">
-              <i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}
-            </div>
-            <div class="description">
-              ${escapeHtml((job.description || '').substring(0, 120))}...
-            </div>
+            <div class="company"><i class="fas fa-building"></i> ${escapeHtml(job.company)}</div>
+            <div class="location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}</div>
+            <div class="description">${escapeHtml((job.description || '').substring(0, 120))}...</div>
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
               <span class="deadline">📅 Posted: ${formatDate(job.posted_date || job.created_at)}</span>
-              <a href="#" class="view-details" data-job-id="${job.id}">
-                View Details <i class="fas fa-arrow-right"></i>
-              </a>
+              <a href="#" class="view-details" data-job-id="${job.id}">View Details <i class="fas fa-arrow-right"></i></a>
             </div>
           </div>
         `;
       }).join('');
-
-      // Add click handlers to cards (instant navigation)
       document.querySelectorAll('.job-card').forEach(card => {
         card.addEventListener('click', (e) => {
           if (e.target.classList.contains('view-details') || e.target.closest('.view-details')) return;
@@ -948,8 +971,6 @@
           window.location.href = `job.html?id=${jobId}`;
         });
       });
-      
-      // Add click handlers to buttons (instant navigation)
       document.querySelectorAll('.view-details').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
@@ -960,20 +981,15 @@
       });
     }
 
-    // ============================================
-    // FETCH JOBS FROM SUPABASE
-    // ============================================
     async function fetchJobs() {
       try {
         const response = await fetch(`${SUPABASE_URL}/rest/v1/ApplyMore?select=*&order=created_at.desc`, {
-          headers: { 
-            'apikey': SUPABASE_ANON_KEY, 
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}` 
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
           }
         });
-        
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        
         allJobs = await response.json();
         displayJobs();
       } catch (err) {
@@ -982,9 +998,6 @@
       }
     }
 
-    // ============================================
-    // FILTER FUNCTIONS
-    // ============================================
     function setFilter(filter) {
       currentFilter = filter;
       document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -1003,9 +1016,6 @@
       setFilter('fresher');
     }
 
-    // ============================================
-    // THEME FUNCTIONS
-    // ============================================
     function setTheme(theme) {
       const themes = {
         dark: {
@@ -1027,14 +1037,12 @@
           '--text-secondary': '#9d174d'
         }
       };
-
       const selected = themes[theme];
       if (selected) {
         Object.entries(selected).forEach(([key, value]) => {
           document.documentElement.style.setProperty(key, value);
         });
         localStorage.setItem('theme', theme);
-        
         if (theme === 'light') {
           document.body.style.background = '#f8fafc';
         } else if (theme === 'vibrant') {
@@ -1045,11 +1053,7 @@
       }
     }
 
-    // ============================================
-    // RECOMMENDED LINKS
-    // ============================================
     let recommendedLinks = JSON.parse(localStorage.getItem('recommendedLinks') || '[]');
-    
     function renderLinks() {
       const container = document.getElementById('linksList');
       if (!container) return;
@@ -1059,7 +1063,6 @@
       }
       container.innerHTML = recommendedLinks.map(link => `<a href="${escapeHtml(link)}" target="_blank" style="font-size:0.7rem; background:rgba(255,255,255,0.1); padding:0.2rem 0.5rem; border-radius:1rem; color:var(--accent); text-decoration:none;">🔗 ${link.length > 30 ? link.substring(0,30)+'...' : link}</a>`).join('');
     }
-    
     function addLink(link) {
       if (!link) return;
       try {
@@ -1074,9 +1077,6 @@
       }
     }
 
-    // ============================================
-    // EVENT LISTENERS
-    // ============================================
     document.getElementById('lightTheme')?.addEventListener('click', () => setTheme('light'));
     document.getElementById('darkTheme')?.addEventListener('click', () => setTheme('dark'));
     document.getElementById('vibrantTheme')?.addEventListener('click', () => setTheme('vibrant'));
@@ -1088,30 +1088,23 @@
       if (input.value.trim()) addLink(input.value.trim());
       input.value = '';
     });
-
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const filter = e.currentTarget.getAttribute('data-filter');
         setFilter(filter);
       });
     });
-
     document.getElementById('shareTwitter')?.addEventListener('click', (e) => {
       e.preventDefault();
       window.open(`https://twitter.com/intent/tweet?text=Find IT jobs in India! ${encodeURIComponent(window.location.href)}`, '_blank');
     });
-    
     document.getElementById('shareLinkedin')?.addEventListener('click', (e) => {
       e.preventDefault();
       window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(window.location.href)}&title=IT Jobs in India`, '_blank');
     });
 
-    // ============================================
-    // INITIALIZE
-    // ============================================
     const savedTheme = localStorage.getItem('theme') || 'dark';
     setTheme(savedTheme);
-    
     renderLinks();
     fetchJobs();
     setInterval(fetchJobs, 5 * 60 * 1000);
