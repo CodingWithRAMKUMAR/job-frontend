@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* ===== FULL STYLES (same as before, no changes) ===== */
+    /* ===== FULL STYLES (same as before) ===== */
     * {
       margin: 0;
       padding: 0;
@@ -233,6 +233,23 @@
       font-size: 0.8rem;
       color: var(--text-secondary);
       margin-top: 0.3rem;
+    }
+
+    /* New AdSense-friendly paragraph section */
+    .intro-paragraph {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.08));
+      border-radius: 1rem;
+      padding: 1.2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .intro-paragraph p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .value-section {
@@ -754,6 +771,11 @@
       </div>
     </div>
 
+    <!-- New AdSense-friendly introductory paragraph -->
+    <div class="intro-paragraph">
+      <p>ApplyMore aggregates the latest IT jobs for freshers and junior professionals in Hyderabad, Chennai, Mumbai, Pune, and Gurugram. We filter out senior roles so you only see jobs that match your experience level (0‑2 years). Updated daily from public sources. <strong>No premium plans. No hidden charges. Forever free.</strong></p>
+    </div>
+
     <div class="value-section">
       <h2>🎯 Your IT Career Starts Here</h2>
       <p>Handpicked entry-level IT jobs from across India — no spam, just real opportunities</p>
@@ -846,6 +868,9 @@
   </div>
 
   <script>
+    // ============================================
+    // SUPABASE CONFIGURATION
+    // ============================================
     const SUPABASE_URL = 'https://qmljqckhhdmvcbomydhf.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_rmCQIW6Lw90zleW-lYZcFw_WZrcHw4h';
 
@@ -899,7 +924,6 @@
       const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
       const selectedLocation = document.getElementById('locationFilter').value;
       let filtered = [...allJobs];
-
       if (selectedLocation !== 'all') {
         filtered = filtered.filter(job => job.location && job.location.toLowerCase().includes(selectedLocation.toLowerCase()));
       }
@@ -914,7 +938,7 @@
         filtered = filtered.filter(job => getExperienceLevel(job) === currentFilter);
       }
 
-      // ========== SORTING FOR "ALL JOBS" ==========
+      // Sorting for "All Jobs"
       if (currentFilter === 'all') {
         const priority = { 'fresher': 1, 'mid': 2, 'senior': 3 };
         filtered.sort((a, b) => {
@@ -923,13 +947,11 @@
           if (priority[levelA] !== priority[levelB]) {
             return priority[levelA] - priority[levelB];
           }
-          // same experience level, sort by newest first (created_at desc)
           const dateA = new Date(a.created_at || a.posted_date);
           const dateB = new Date(b.created_at || b.posted_date);
           return dateB - dateA;
         });
       } else {
-        // when a specific filter is active, just sort by newest first
         filtered.sort((a, b) => {
           const dateA = new Date(a.created_at || a.posted_date);
           const dateB = new Date(b.created_at || b.posted_date);
