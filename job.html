@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+    /* Your existing CSS – unchanged (same as before) */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --accent: #3b82f6;
@@ -230,6 +231,21 @@
     </footer>
   </div>
 
+  <!-- Cookie Consent Banner -->
+  <div id="cookieConsent" style="position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15,25,45,0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(59,130,246,0.3); padding: 0.8rem; text-align: center; z-index: 1000; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.8rem; font-size: 0.8rem;">
+    <span>🍪 We use cookies to improve your experience and for AdSense personalisation. By using our site, you accept our <a href="privacy.html" style="color: #3b82f6;">Privacy Policy</a>.</span>
+    <button id="acceptCookies" style="background: #3b82f6; border: none; padding: 0.4rem 1rem; border-radius: 2rem; color: white; cursor: pointer;">Accept</button>
+  </div>
+  <script>
+    if (localStorage.getItem('cookiesAccepted') === 'true') {
+      document.getElementById('cookieConsent').style.display = 'none';
+    }
+    document.getElementById('acceptCookies')?.addEventListener('click', () => {
+      localStorage.setItem('cookiesAccepted', 'true');
+      document.getElementById('cookieConsent').style.display = 'none';
+    });
+  </script>
+
   <script>
     const SUPABASE_URL = 'https://qmljqckhhdmvcbomydhf.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_rmCQIW6Lw90zleW-lYZcFw_WZrcHw4h';
@@ -302,6 +318,14 @@
       } catch (err) {
         console.error('Error fetching similar jobs:', err);
       }
+    }
+
+    function getJobType(title) {
+      const t = title.toLowerCase();
+      if (t.includes('intern')) return 'INTERN';
+      if (t.includes('trainee')) return 'TRAINEE';
+      if (t.includes('contract')) return 'CONTRACTOR';
+      return 'FULL_TIME';
     }
 
     function displayJob(job) {
@@ -513,6 +537,34 @@
       `;
 
       document.getElementById('jobContent').innerHTML = html;
+
+      // ========== ADD STRUCTURED DATA (JSON-LD) ==========
+      const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "JobPosting",
+        "title": job.title,
+        "description": cleanDesc.substring(0, 5000),
+        "datePosted": job.posted_date || job.created_at,
+        "employmentType": getJobType(job.title),
+        "hiringOrganization": {
+          "@type": "Organization",
+          "name": job.company,
+          "sameAs": job.url ? new URL(job.url).origin : null
+        },
+        "jobLocation": {
+          "@type": "Place",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": job.location || "India",
+            "addressCountry": "IN"
+          }
+        },
+        "url": window.location.href
+      };
+      const scriptTag = document.createElement('script');
+      scriptTag.type = 'application/ld+json';
+      scriptTag.textContent = JSON.stringify(jsonLd);
+      document.head.appendChild(scriptTag);
     }
 
     function formatDate(dateString) {
@@ -553,19 +605,5 @@
 
     fetchJob();
   </script>
-  <!-- Cookie Consent Banner -->
-<div id="cookieConsent" style="position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15,25,45,0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(59,130,246,0.3); padding: 1rem; text-align: center; z-index: 1000; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; font-size: 0.85rem;">
-  <span>🍪 We use cookies to improve your experience and for AdSense personalisation. By using our site, you accept our <a href="privacy.html" style="color: #3b82f6;">Privacy Policy</a>.</span>
-  <button id="acceptCookies" style="background: #3b82f6; border: none; padding: 0.4rem 1rem; border-radius: 2rem; color: white; cursor: pointer;">Accept</button>
-</div>
-<script>
-  if (localStorage.getItem('cookiesAccepted') === 'true') {
-    document.getElementById('cookieConsent').style.display = 'none';
-  }
-  document.getElementById('acceptCookies')?.addEventListener('click', () => {
-    localStorage.setItem('cookiesAccepted', 'true');
-    document.getElementById('cookieConsent').style.display = 'none';
-  });
-</script>
 </body>
 </html>
