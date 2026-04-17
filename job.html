@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ApplyMore – Job Details & Career Resources</title>
-  <meta name="description" content="View full job details, skills required, resume tips, and similar jobs. Apply directly.">
+  <meta name="description" content="Full job details, skills, resume tips, interview prep, and similar jobs. Apply directly.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -88,7 +88,7 @@
       transition: all 0.3s ease;
     }
     .theme-btn:hover { background: var(--accent); }
-    /* Job header & cards (same as before) */
+    /* Job header */
     .job-header {
       background: var(--glass-bg);
       backdrop-filter: blur(16px);
@@ -100,36 +100,87 @@
     .job-header h1 { font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--accent); }
     .company-name { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.5rem; }
     .job-meta { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem; }
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.2rem;
-      margin-bottom: 2rem;
-    }
-    .info-card {
+    /* Informational sections */
+    .info-section {
       background: var(--glass-bg);
       backdrop-filter: blur(16px);
       border-radius: 1.2rem;
       padding: 1.2rem;
+      margin-bottom: 1.2rem;
       border: 1px solid var(--glass-border);
-      transition: all 0.3s ease;
+      transition: 0.3s;
     }
-    .info-card:hover { transform: translateY(-4px); border-color: var(--accent); }
-    .info-card h3 { font-size: 1.2rem; margin-bottom: 0.8rem; color: var(--accent); display: flex; align-items: center; gap: 0.5rem; }
-    .info-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
-    .skill-tag { background: rgba(59, 130, 246, 0.15); border-radius: 2rem; padding: 0.2rem 0.7rem; font-size: 0.7rem; color: var(--accent); }
+    .info-section h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .info-section p, .info-section ul {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .info-section ul { margin-left: 1.2rem; }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+    }
+    .skill-tag {
+      background: rgba(59, 130, 246, 0.15);
+      border-radius: 2rem;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.7rem;
+      color: var(--accent);
+    }
+    /* Full description */
     .description-section {
       background: var(--glass-bg);
       backdrop-filter: blur(16px);
       border-radius: 1.2rem;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
+      padding: 1.2rem;
+      margin-bottom: 1.2rem;
       border: 1px solid var(--glass-border);
     }
     .description-section h3 { font-size: 1.2rem; margin-bottom: 0.8rem; color: var(--accent); }
     .description-section p { font-size: 0.9rem; line-height: 1.6; color: var(--text-secondary); white-space: pre-wrap; }
-    .apply-card {
+    /* Similar jobs */
+    .similar-jobs-section {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      border-radius: 1.2rem;
+      padding: 1.2rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid var(--glass-border);
+    }
+    .similar-jobs-section h3 { font-size: 1.2rem; margin-bottom: 0.8rem; color: var(--accent); display: flex; align-items: center; gap: 0.5rem; }
+    .similar-jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .similar-job-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--glass-border);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .similar-job-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.05);
+    }
+    .similar-job-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .similar-job-company { font-size: 0.8rem; color: var(--accent); margin-bottom: 0.3rem; }
+    .similar-job-location { font-size: 0.7rem; color: var(--text-muted); }
+    /* Apply button at bottom */
+    .apply-section {
       background: linear-gradient(135deg, rgba(25, 35, 65, 0.9), rgba(20, 25, 55, 0.8));
       backdrop-filter: blur(16px);
       border-radius: 1.2rem;
@@ -153,61 +204,11 @@
     }
     .apply-btn:hover { gap: 1rem; box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4); transform: scale(1.02); }
     .apply-note { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.8rem; }
-    /* Similar jobs section */
-    .similar-jobs-section {
-      background: var(--glass-bg);
-      backdrop-filter: blur(16px);
-      border-radius: 1.2rem;
-      padding: 1.5rem;
-      margin-top: 1rem;
-      border: 1px solid var(--glass-border);
-    }
-    .similar-jobs-section h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .similar-jobs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-    .similar-job-card {
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 1rem;
-      padding: 1rem;
-      border: 1px solid var(--glass-border);
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    .similar-job-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--accent);
-      background: rgba(59, 130, 246, 0.05);
-    }
-    .similar-job-title {
-      font-weight: 700;
-      font-size: 0.9rem;
-      margin-bottom: 0.3rem;
-    }
-    .similar-job-company {
-      font-size: 0.8rem;
-      color: var(--accent);
-      margin-bottom: 0.3rem;
-    }
-    .similar-job-location {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-    }
     .loading, .error { text-align: center; padding: 3rem; background: var(--glass-bg); border-radius: 1rem; }
     footer { text-align: center; margin-top: 2rem; font-size: 0.7rem; color: var(--text-muted); }
     @media (max-width: 640px) {
       body { padding: 1rem; }
       .job-header h1 { font-size: 1.4rem; }
-      .info-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -227,11 +228,6 @@
 
     <div id="jobContent">
       <div class="loading">Loading job details...</div>
-    </div>
-
-    <div id="similarJobsSection" class="similar-jobs-section" style="display: none;">
-      <h3><i class="fas fa-clock"></i> Latest Jobs for You</h3>
-      <div id="similarJobsGrid" class="similar-jobs-grid"></div>
     </div>
 
     <footer>
@@ -256,30 +252,11 @@
       return urlParams.get(param);
     }
 
+    // Extract common skills
     function extractSkills(title, description) {
       const text = (title + ' ' + description).toLowerCase();
       const commonSkills = ['python', 'sql', 'java', 'javascript', 'react', 'angular', 'node.js', 'pandas', 'numpy', 'tableau', 'power bi', 'aws', 'azure', 'git', 'docker', 'kubernetes', 'django', 'flask', 'spring', 'html', 'css', 'c++', 'c#', 'typescript', 'mongodb', 'postgresql', 'mysql', 'excel'];
-      return commonSkills.filter(skill => text.includes(skill)).slice(0, 6);
-    }
-
-    function getResumeTips() {
-      return [
-        "Highlight relevant projects (even academic) that demonstrate required skills.",
-        "Include a 'Technical Skills' section with keywords from the job description.",
-        "Keep your resume to one page – focus on achievements, not responsibilities.",
-        "Add your GitHub/LinkedIn profile links at the top.",
-        "Mention internships, certifications, or online courses."
-      ];
-    }
-
-    function getLandingTips() {
-      return [
-        "Tailor your resume to match job description keywords.",
-        "Write a short cover letter explaining your interest.",
-        "Prepare for technical interviews by practicing coding problems.",
-        "Research the company's products and values before applying.",
-        "Follow up with the recruiter on LinkedIn after 5-7 days."
-      ];
+      return commonSkills.filter(skill => text.includes(skill)).slice(0, 8);
     }
 
     async function fetchJob() {
@@ -329,7 +306,7 @@
           });
         });
       } catch (err) {
-        console.error('Error fetching latest jobs:', err);
+        console.error('Error fetching similar jobs:', err);
       }
     }
 
@@ -337,12 +314,42 @@
       const rawDesc = job.description || '';
       const cleanDesc = decodeHtmlEntities(rawDesc);
       const skills = extractSkills(job.title, cleanDesc);
-      const resumeTips = getResumeTips();
-      const landingTips = getLandingTips();
       const companyInitial = job.company ? job.company.trim()[0].toUpperCase() : '?';
       document.title = `${job.title} at ${job.company} – ApplyMore`;
 
+      // Helper to generate random tips (but consistent for each job)
+      const resumeTips = [
+        "Keep your resume concise and one page – Recruiters prefer short, focused resumes.",
+        "Use a clean, professional design – Simple layouts make your resume easy to read.",
+        "Add job‑related keywords for ATS – Include terms from the job description.",
+        "Include a professional email and LinkedIn link – Shows credibility.",
+        "Highlight key projects and achievements – Demonstrate real results.",
+        "Avoid clichés like 'hardworking' – show examples instead.",
+        "Tailor your resume for each application – match keywords."
+      ];
+      const interviewTips = [
+        "Research the company before attending – Understand their products and culture.",
+        "Practice common interview questions – Use the STAR method for answers.",
+        "Ask smart questions at the end – Reflects curiosity and enthusiasm.",
+        "Maintain confidence and good body language – Positive posture leaves a strong impression.",
+        "Send a thank‑you note after the interview – Reinforces professionalism."
+      ];
+      const applicationTips = [
+        "Read the job description carefully before applying.",
+        "Fill out all required fields – avoid leaving blanks (use 'N/A' if needed).",
+        "Double‑check your contact information – email and phone number.",
+        "Submit before the deadline – don't wait until the last minute.",
+        "Use a professional email address – avoid nicknames or numbers."
+      ];
+      const faq = [
+        { q: "Can I apply if I'm still a student?", a: "Yes, many fresher jobs accept final‑year students. Check the eligibility section in the job description." },
+        { q: "Do I need prior experience?", a: "This job is for freshers (0‑2 years). Focus on your projects and internships." },
+        { q: "How long does it take to hear back?", a: "Typically 1‑3 weeks. If you don't hear back, follow up politely on LinkedIn." },
+        { q: "Should I apply if I don't meet all skills?", a: "Yes, if you meet 60‑70% of the requirements. Fresher roles value learning potential." }
+      ];
+
       const html = `
+        <!-- Job Header -->
         <div class="job-header">
           <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
             <div style="width: 56px; height: 56px; background: linear-gradient(135deg, var(--accent), var(--purple)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; text-transform: uppercase;">
@@ -359,38 +366,71 @@
           </div>
         </div>
 
-        <div class="info-grid">
-          <div class="info-card">
-            <h3><i class="fas fa-microchip"></i> Skills You'll Need</h3>
-            <div class="skill-tags">
-              ${skills.length ? skills.map(s => `<span class="skill-tag">${escapeHtml(s)}</span>`).join('') : '<span>No specific skills extracted. Check description below.</span>'}
-            </div>
-            <p style="margin-top: 0.8rem;">Focus on building projects around these technologies. Even basic proficiency is valued for freshers.</p>
+        <!-- Skills Section -->
+        <div class="info-section">
+          <h3><i class="fas fa-microchip"></i> Skills You'll Need</h3>
+          <div class="skill-tags">
+            ${skills.length ? skills.map(s => `<span class="skill-tag">${escapeHtml(s)}</span>`).join('') : '<span>No specific skills extracted. Check description below.</span>'}
           </div>
-          <div class="info-card">
-            <h3><i class="fas fa-rocket"></i> How to Land This Job</h3>
-            <ul style="margin-left: 1.2rem; color: var(--text-secondary); font-size: 0.85rem;">
-              ${landingTips.map(tip => `<li style="margin-bottom: 0.5rem;">${escapeHtml(tip)}</li>`).join('')}
-            </ul>
-          </div>
-          <div class="info-card">
-            <h3><i class="fas fa-file-alt"></i> Resume Tips</h3>
-            <ul style="margin-left: 1.2rem; color: var(--text-secondary); font-size: 0.85rem;">
-              ${resumeTips.map(tip => `<li style="margin-bottom: 0.5rem;">${escapeHtml(tip)}</li>`).join('')}
-            </ul>
-          </div>
+          <p style="margin-top: 0.8rem;">Focus on building projects around these technologies. Even basic proficiency is valued for freshers.</p>
         </div>
 
+        <!-- Resume Tips -->
+        <div class="info-section">
+          <h3><i class="fas fa-file-alt"></i> Resume Tips for This Role</h3>
+          <ul>
+            ${resumeTips.map(tip => `<li>${escapeHtml(tip)}</li>`).join('')}
+          </ul>
+        </div>
+
+        <!-- Interview Tips -->
+        <div class="info-section">
+          <h3><i class="fas fa-chalkboard-user"></i> Interview Preparation</h3>
+          <ul>
+            ${interviewTips.map(tip => `<li>${escapeHtml(tip)}</li>`).join('')}
+          </ul>
+        </div>
+
+        <!-- Full Job Description -->
         <div class="description-section">
           <h3><i class="fas fa-align-left"></i> Full Job Description</h3>
           <p>${escapeHtml(cleanDesc) || 'No description provided.'}</p>
         </div>
 
-        <div class="apply-card">
+        <!-- Application Guide -->
+        <div class="info-section">
+          <h3><i class="fas fa-pen-alt"></i> How to Apply (Step‑by‑Step)</h3>
+          <ul>
+            ${applicationTips.map(tip => `<li>${escapeHtml(tip)}</li>`).join('')}
+          </ul>
+          <p style="margin-top: 0.5rem;"><strong>Important:</strong> Only official company job openings are posted. Read the full description before applying.</p>
+        </div>
+
+        <!-- FAQ -->
+        <div class="info-section">
+          <h3><i class="fas fa-question-circle"></i> Frequently Asked Questions</h3>
+          ${faq.map(item => `
+            <div style="margin-bottom: 0.8rem;">
+              <strong style="color: var(--accent);">Q: ${escapeHtml(item.q)}</strong><br>
+              <span style="font-size: 0.85rem;">${escapeHtml(item.a)}</span>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Similar Jobs -->
+        <div id="similarJobsSection" class="similar-jobs-section" style="display: none;">
+          <h3><i class="fas fa-clock"></i> Latest Jobs for You</h3>
+          <div id="similarJobsGrid" class="similar-jobs-grid"></div>
+        </div>
+
+        <!-- Apply Button (bottom) -->
+        <div class="apply-section">
           <a href="${escapeHtml(job.url)}" target="_blank" class="apply-btn">Apply Now <i class="fas fa-arrow-right"></i></a>
           <div class="apply-note">You will be redirected to the original job posting (LinkedIn/Indeed).</div>
+          <div class="apply-note">📌 Read the job description carefully before applying. Apply only once per job.</div>
         </div>
       `;
+
       document.getElementById('jobContent').innerHTML = html;
     }
 
