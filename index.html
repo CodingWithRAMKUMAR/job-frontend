@@ -1,481 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6599003415562086" crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>ApplyMore – India's most trusted IT fresher job platform — real listings, verified companies, daily updates.</title>
+  <title>ApplyMore – India's most trusted IT fresher job platform</title>
   <meta name="description" content="ApplyMore lists IT jobs in India. Filter by experience level: Fresher, 1‑2 years, 3+ years. Free and updated daily.">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Preconnect to external origins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://qmljqckhhdmvcbomydhf.supabase.co">
+  <link rel="dns-prefetch" href="https://qmljqckhhdmvcbomydhf.supabase.co">
+  <!-- Google Fonts with font-display: swap -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome (async) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'">
+  <!-- AdSense (async) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6599003415562086" crossorigin="anonymous"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* ========== MINIFIED CSS (NO ANIMATIONS) ========== */
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--accent:#3b82f6;--accent-dark:#2563eb;--accent-light:#60a5fa;--purple:#8b5cf6;--pink:#ec489a;--glass-bg:rgba(15,25,45,0.65);--glass-border:rgba(255,255,255,0.08);--card-bg:linear-gradient(135deg,rgba(25,35,65,0.8),rgba(20,25,55,0.7));--text-primary:#f0f3ff;--text-secondary:#9ca3cf;--text-muted:#6b7280;--success:#10b981;--warning:#f59e0b;--danger:#ef4444}
+    body{font-family:'Inter',sans-serif;background:#0a0a2a;color:var(--text-primary);overflow-x:hidden}
+    .gradient-bg{position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 30%,#1a1a4a,#0a0a2a);z-index:-2}
+    .container{max-width:1400px;margin:0 auto;padding:1.5rem 1rem;position:relative;z-index:2}
+    .main-nav{background:rgba(15,25,45,0.7);backdrop-filter:blur(20px);border-radius:3rem;padding:0.8rem 2rem;margin-bottom:2rem;border:1px solid rgba(255,255,255,0.1);display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
+    .main-nav a{color:var(--text-primary);text-decoration:none;font-size:0.9rem;font-weight:500;padding:0.5rem 1.2rem;border-radius:2rem;transition:all 0.2s ease}
+    .main-nav a:hover{background:rgba(59,130,246,0.15);transform:translateY(-2px)}
+    .hero-section{text-align:center;margin-bottom:2rem}
+    .hero-section h1{font-size:3.5rem;background:linear-gradient(135deg,var(--accent),var(--purple),var(--pink));background-clip:text;-webkit-background-clip:text;color:transparent;margin-bottom:0.5rem}
+    .hero-section p{font-size:1.1rem;color:var(--text-secondary);max-width:700px;margin:0 auto 1rem}
+    .hero-badge{display:inline-block;background:rgba(59,130,246,0.2);border-radius:2rem;padding:0.2rem 1rem;font-size:0.8rem}
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin-bottom:2rem}
+    .stat-card{background:rgba(15,25,45,0.6);backdrop-filter:blur(16px);border-radius:1.2rem;padding:1.2rem;text-align:center;border:1px solid rgba(255,255,255,0.08);transition:all 0.2s ease;cursor:pointer}
+    .stat-card:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:0 10px 30px rgba(59,130,246,0.15)}
+    .stat-number{font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--purple));background-clip:text;-webkit-background-clip:text;color:transparent}
+    .stat-label{font-size:0.8rem;color:var(--text-secondary);margin-top:0.3rem}
+    .services-section{background:linear-gradient(135deg,rgba(59,130,246,0.08),rgba(139,92,246,0.08));border-radius:1.5rem;padding:2rem;margin-bottom:2rem;border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(10px)}
+    .services-section h2{font-size:1.8rem;margin-bottom:0.5rem;text-align:center}
+    .services-section>p{text-align:center;color:var(--text-secondary);margin-bottom:1.5rem}
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
+    .service-card{background:rgba(255,255,255,0.03);border-radius:1rem;padding:1.5rem;text-align:center;transition:all 0.2s ease;border:1px solid rgba(255,255,255,0.05)}
+    .service-card:hover{transform:translateY(-5px);background:rgba(59,130,246,0.1);border-color:var(--accent)}
+    .service-icon{font-size:2rem;margin-bottom:1rem}
+    .service-card h3{font-size:1.2rem;margin-bottom:0.5rem;color:var(--accent)}
+    .service-card p{font-size:0.85rem;color:var(--text-secondary);line-height:1.5}
+    .service-btn{display:inline-block;margin-top:1rem;background:var(--accent);color:white;padding:0.4rem 1rem;border-radius:2rem;text-decoration:none;font-size:0.8rem;transition:0.2s}
+    .service-btn:hover{background:var(--accent-dark);transform:scale(1.02)}
+    .community-section{background:rgba(15,25,45,0.6);backdrop-filter:blur(16px);border-radius:1.5rem;padding:1.8rem;margin-bottom:2rem;text-align:center;border:1px solid rgba(255,255,255,0.08)}
+    .community-section h2{font-size:1.6rem;margin-bottom:0.5rem;background:linear-gradient(135deg,var(--accent),var(--purple));background-clip:text;-webkit-background-clip:text;color:transparent}
+    .community-section p{color:var(--text-secondary);margin-bottom:1.5rem;font-size:0.9rem}
+    .social-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:1.2rem}
+    .social-btn{display:inline-flex;align-items:center;gap:0.8rem;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:3rem;padding:0.8rem 1.8rem;color:white;text-decoration:none;font-weight:600;font-size:0.9rem;transition:all 0.2s ease;backdrop-filter:blur(8px)}
+    .social-btn i{font-size:1.2rem}
+    .social-btn.whatsapp-group{background:linear-gradient(135deg,#25D366,#128C7E);border:none}
+    .social-btn.whatsapp-community{background:linear-gradient(135deg,#075E54,#25D366);border:none}
+    .social-btn.linkedin{background:linear-gradient(135deg,#0077B5,#0A66C2);border:none}
+    .social-btn.telegram{background:linear-gradient(135deg,#26A5E4,#0088cc);border:none}
+    .social-btn:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 10px 25px rgba(0,0,0,0.3)}
+    .controls{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem;background:rgba(15,25,45,0.6);backdrop-filter:blur(16px);padding:1rem 1.5rem;border-radius:2rem;border:1px solid rgba(255,255,255,0.08);align-items:center}
+    .search-box{flex:2;position:relative}
+    .search-box i{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--text-secondary)}
+    .search-box input{width:100%;padding:0.8rem 1rem 0.8rem 2.5rem;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);border-radius:2rem;font-size:0.9rem;color:var(--text-primary);transition:all 0.2s ease}
+    .search-box input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 15px rgba(59,130,246,0.2)}
+    .location-filter select{padding:0.8rem 1.2rem;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);border-radius:2rem;font-size:0.85rem;color:var(--text-primary);cursor:pointer}
+    .filter-buttons{display:flex;gap:0.5rem;flex-wrap:wrap}
+    .filter-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:2rem;padding:0.6rem 1.2rem;cursor:pointer;font-size:0.85rem;color:var(--text-primary);transition:all 0.2s ease}
+    .filter-btn:hover{background:rgba(59,130,246,0.2);transform:translateY(-2px)}
+    .filter-btn.active{background:linear-gradient(135deg,var(--accent),var(--purple));border-color:transparent;box-shadow:0 5px 15px rgba(59,130,246,0.3)}
+    .reset-btn{background:linear-gradient(135deg,var(--accent),var(--purple));border:none;padding:0.6rem 1.5rem;border-radius:2rem;color:white;cursor:pointer;font-size:0.85rem;transition:all 0.2s ease}
+    .reset-btn:hover{transform:scale(1.02);box-shadow:0 5px 15px rgba(59,130,246,0.3)}
+    .jobs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:1.5rem;margin-top:1rem}
+    .job-card{background:linear-gradient(135deg,rgba(25,35,65,0.8),rgba(20,25,55,0.7));backdrop-filter:blur(10px);border-radius:1.2rem;padding:1.2rem;border:1px solid rgba(255,255,255,0.08);transition:all 0.3s ease;cursor:pointer;display:flex;flex-direction:column;gap:0.6rem}
+    .job-card:hover{transform:translateY(-8px);border-color:var(--accent);box-shadow:0 20px 40px rgba(0,0,0,0.3),0 0 20px rgba(59,130,246,0.15)}
+    .card-company-row{display:flex;align-items:center;gap:0.8rem}
+    .company-logo{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),var(--purple));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;text-transform:uppercase;color:white;flex-shrink:0}
+    .company-details{flex:1}
+    .company-name{font-size:0.9rem;font-weight:600;color:var(--accent)}
+    .job-type-badge{font-size:0.65rem;background:rgba(255,255,255,0.1);padding:0.2rem 0.5rem;border-radius:1rem;display:inline-block;margin-top:0.2rem}
+    .job-title{font-size:1.1rem;font-weight:700;margin:0.2rem 0}
+    .location{font-size:0.8rem;color:var(--text-secondary);display:flex;align-items:center;gap:0.3rem}
+    .description{font-size:0.8rem;color:var(--text-secondary);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:0.2rem}
+    .posted-date{font-size:0.7rem;color:var(--text-muted)}
+    .exp-tag{font-size:0.7rem;padding:0.2rem 0.7rem;border-radius:1rem;color:white;font-weight:500}
+    .exp-tag.fresher{background:linear-gradient(135deg,var(--purple),#a855f7)}
+    .exp-tag.mid{background:linear-gradient(135deg,var(--warning),#f97316)}
+    .exp-tag.senior{background:linear-gradient(135deg,var(--danger),#dc2626)}
+    .view-details{display:inline-flex;align-items:center;gap:0.5rem;background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:white;padding:0.4rem 1rem;border-radius:2rem;text-decoration:none;font-size:0.8rem;transition:all 0.2s ease;align-self:flex-end}
+    .view-details:hover{gap:0.8rem;box-shadow:0 5px 15px rgba(59,130,246,0.3)}
+    .skeleton-card{background:linear-gradient(135deg,rgba(25,35,65,0.5),rgba(20,25,55,0.4));border-radius:1rem;padding:1.2rem;animation:pulse 1.5s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:0.5}50%{opacity:0.8}}
+    .skeleton-title{width:80%;height:20px;background:rgba(255,255,255,0.1);border-radius:0.5rem;margin-bottom:0.5rem}
+    .skeleton-text{width:60%;height:15px;background:rgba(255,255,255,0.08);border-radius:0.5rem;margin-bottom:0.3rem}
+    .empty-message{text-align:center;padding:3rem;color:var(--text-secondary);background:rgba(15,25,45,0.6);backdrop-filter:blur(16px);border-radius:1rem}
+    footer{text-align:center;margin-top:3rem;color:var(--text-muted);font-size:0.8rem}
+    .footer-links{display:flex;justify-content:center;gap:1.5rem;margin:1rem 0;flex-wrap:wrap}
+    .footer-links a{color:var(--accent);text-decoration:none;transition:all 0.2s ease}
+    .footer-links a:hover{color:var(--purple)}
+    .top-bar{display:flex;justify-content:flex-end;align-items:center;gap:0.8rem;margin-bottom:1.5rem}
+    .theme-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:2rem;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.7rem;color:var(--text-primary);transition:all 0.2s ease}
+    .theme-btn:hover{background:var(--accent);transform:scale(1.05)}
+    .add-link-box{background:rgba(15,25,45,0.6);backdrop-filter:blur(16px);border-radius:1.5rem;padding:0.8rem 1rem;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.08);display:flex;flex-wrap:wrap;align-items:center;gap:0.8rem}
+    .add-link-box input{flex:2;padding:0.5rem 0.8rem;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);border-radius:2rem;font-size:0.8rem;color:var(--text-primary)}
+    .add-link-box button{background:var(--accent);border:none;padding:0.5rem 1rem;border-radius:2rem;color:white;cursor:pointer}
+    .links-list{flex:2;display:flex;flex-wrap:wrap;gap:0.3rem}
+    @media (max-width:768px){
+      .hero-section h1{font-size:2rem}
+      .controls{flex-direction:column;align-items:stretch}
+      .filter-buttons{justify-content:center}
+      .main-nav{gap:0.8rem;padding:0.8rem 1rem}
+      .main-nav a{font-size:0.75rem;padding:0.3rem 0.8rem}
+      .stats-grid{grid-template-columns:repeat(3,1fr)}
+      .stat-number{font-size:1.5rem}
+      .social-buttons{flex-direction:column;align-items:center}
+      .social-btn{width:80%;justify-content:center}
     }
-
-    :root {
-      --accent: #3b82f6;
-      --accent-dark: #2563eb;
-      --accent-light: #60a5fa;
-      --purple: #8b5cf6;
-      --pink: #ec489a;
-      --glass-bg: rgba(15, 25, 45, 0.65);
-      --glass-border: rgba(255, 255, 255, 0.08);
-      --card-bg: linear-gradient(135deg, rgba(25, 35, 65, 0.8), rgba(20, 25, 55, 0.7));
-      --text-primary: #f0f3ff;
-      --text-secondary: #9ca3cf;
-      --text-muted: #6b7280;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #0a0a2a;
-      color: var(--text-primary);
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    .gradient-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 20% 30%, #1a1a4a, #0a0a2a);
-      z-index: -2;
-    }
-
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.5;
-      pointer-events: none;
-      z-index: -1;
-      animation: float 20s ease-in-out infinite;
-    }
-    .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, var(--accent), transparent); top: -200px; left: -200px; animation-delay: 0s; }
-    .orb-2 { width: 600px; height: 600px; background: radial-gradient(circle, var(--purple), transparent); bottom: -300px; right: -200px; animation-delay: -5s; }
-    .orb-3 { width: 400px; height: 400px; background: radial-gradient(circle, var(--pink), transparent); top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: -10s; opacity: 0.3; }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(30px, -30px) scale(1.05); }
-      66% { transform: translate(-20px, 20px) scale(0.95); }
-    }
-
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 1.5rem 1rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .main-nav {
-      background: rgba(15, 25, 45, 0.7);
-      backdrop-filter: blur(20px);
-      border-radius: 3rem;
-      padding: 0.8rem 2rem;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-      animation: slideDown 0.5s ease;
-    }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .main-nav a {
-      color: var(--text-primary);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      padding: 0.5rem 1.2rem;
-      border-radius: 2rem;
-      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      position: relative;
-    }
-    .main-nav a::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%) scaleX(0);
-      width: 80%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--purple));
-      transition: transform 0.3s ease;
-    }
-    .main-nav a:hover::before { transform: translateX(-50%) scaleX(1); }
-    .main-nav a:hover { background: rgba(59, 130, 246, 0.15); transform: translateY(-2px); }
-
-    /* Hero Section */
-    .hero-section {
-      text-align: center;
-      margin-bottom: 2rem;
-      animation: fadeUp 0.6s ease;
-    }
-    .hero-section h1 {
-      font-size: 3.5rem;
-      background: linear-gradient(135deg, var(--accent), var(--purple), var(--pink));
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      margin-bottom: 0.5rem;
-    }
-    .hero-section p {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      max-width: 700px;
-      margin: 0 auto 1rem;
-    }
-    .hero-badge {
-      display: inline-block;
-      background: rgba(59, 130, 246, 0.2);
-      border-radius: 2rem;
-      padding: 0.2rem 1rem;
-      font-size: 0.8rem;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Stats */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.2rem;
-      margin-bottom: 2rem;
-      animation: fadeUp 0.6s ease;
-      animation-fill-mode: both;
-    }
-    .stats-grid > div:nth-child(1) { animation-delay: 0.1s; }
-    .stats-grid > div:nth-child(2) { animation-delay: 0.2s; }
-    .stats-grid > div:nth-child(3) { animation-delay: 0.3s; }
-
-    .stat-card {
-      background: rgba(15, 25, 45, 0.6);
-      backdrop-filter: blur(16px);
-      border-radius: 1.2rem;
-      padding: 1.2rem;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    .stat-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--accent);
-      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15);
-    }
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--accent), var(--purple));
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-    .stat-label {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      margin-top: 0.3rem;
-    }
-
-    /* Services Section */
-    .services-section {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.08));
-      border-radius: 1.5rem;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-    }
-    .services-section h2 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-      text-align: center;
-    }
-    .services-section > p {
-      text-align: center;
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-    }
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-    }
-    .service-card {
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      text-align: center;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .service-card:hover {
-      transform: translateY(-5px);
-      background: rgba(59, 130, 246, 0.1);
-      border-color: var(--accent);
-    }
-    .service-icon { font-size: 2rem; margin-bottom: 1rem; }
-    .service-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--accent); }
-    .service-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
-    .service-btn {
-      display: inline-block;
-      margin-top: 1rem;
-      background: var(--accent);
-      color: white;
-      padding: 0.4rem 1rem;
-      border-radius: 2rem;
-      text-decoration: none;
-      font-size: 0.8rem;
-      transition: 0.3s;
-    }
-    .service-btn:hover { background: var(--accent-dark); transform: scale(1.02); }
-
-    /* Community Section */
-    .community-section {
-      background: rgba(15, 25, 45, 0.6);
-      backdrop-filter: blur(16px);
-      border-radius: 1.5rem;
-      padding: 1.8rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .community-section h2 {
-      font-size: 1.6rem;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, var(--accent), var(--purple));
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-    .community-section p {
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      font-size: 0.9rem;
-    }
-    .social-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.2rem;
-    }
-    .social-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.8rem;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 3rem;
-      padding: 0.8rem 1.8rem;
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      backdrop-filter: blur(8px);
-    }
-    .social-btn i { font-size: 1.2rem; }
-    .social-btn.whatsapp-group { background: linear-gradient(135deg, #25D366, #128C7E); border: none; }
-    .social-btn.whatsapp-community { background: linear-gradient(135deg, #075E54, #25D366); border: none; }
-    .social-btn.linkedin { background: linear-gradient(135deg, #0077B5, #0A66C2); border: none; }
-    .social-btn.telegram { background: linear-gradient(135deg, #26A5E4, #0088cc); border: none; }
-    .social-btn:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); }
-
-    /* Controls */
-    .controls {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-      background: rgba(15, 25, 45, 0.6);
-      backdrop-filter: blur(16px);
-      padding: 1rem 1.5rem;
-      border-radius: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      align-items: center;
-    }
-    .search-box { flex: 2; position: relative; }
-    .search-box i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary); }
-    .search-box input {
-      width: 100%;
-      padding: 0.8rem 1rem 0.8rem 2.5rem;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 2rem;
-      font-size: 0.9rem;
-      color: var(--text-primary);
-      transition: all 0.3s ease;
-    }
-    .search-box input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
-    .location-filter select {
-      padding: 0.8rem 1.2rem;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 2rem;
-      font-size: 0.85rem;
-      color: var(--text-primary);
-      cursor: pointer;
-    }
-    .filter-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .filter-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 2rem;
-      padding: 0.6rem 1.2rem;
-      cursor: pointer;
-      font-size: 0.85rem;
-      color: var(--text-primary);
-      transition: all 0.3s ease;
-    }
-    .filter-btn:hover { background: rgba(59, 130, 246, 0.2); transform: translateY(-2px); }
-    .filter-btn.active { background: linear-gradient(135deg, var(--accent), var(--purple)); border-color: transparent; box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3); }
-    .reset-btn {
-      background: linear-gradient(135deg, var(--accent), var(--purple));
-      border: none;
-      padding: 0.6rem 1.5rem;
-      border-radius: 2rem;
-      color: white;
-      cursor: pointer;
-      font-size: 0.85rem;
-      transition: all 0.3s ease;
-    }
-    .reset-btn:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3); }
-
-    /* Job Cards */
-    .jobs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-    .job-card {
-      background: linear-gradient(135deg, rgba(25, 35, 65, 0.8), rgba(20, 25, 55, 0.7));
-      backdrop-filter: blur(10px);
-      border-radius: 1.2rem;
-      padding: 1.2rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-    .job-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-      transition: left 0.5s ease;
-    }
-    .job-card:hover::before { left: 100%; }
-    .job-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(59, 130, 246, 0.15); }
-    .card-company-row { display: flex; align-items: center; gap: 0.8rem; }
-    .company-logo {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, var(--accent), var(--purple));
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.2rem;
-      text-transform: uppercase;
-      color: white;
-      flex-shrink: 0;
-    }
-    .company-details { flex: 1; }
-    .company-name { font-size: 0.9rem; font-weight: 600; color: var(--accent); }
-    .job-type-badge { font-size: 0.65rem; background: rgba(255,255,255,0.1); padding: 0.2rem 0.5rem; border-radius: 1rem; display: inline-block; margin-top: 0.2rem; }
-    .job-title { font-size: 1.1rem; font-weight: 700; margin: 0.2rem 0; }
-    .location { font-size: 0.8rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.3rem; }
-    .description { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 0.2rem; }
-    .posted-date { font-size: 0.7rem; color: var(--text-muted); }
-    .exp-tag { font-size: 0.7rem; padding: 0.2rem 0.7rem; border-radius: 1rem; color: white; font-weight: 500; }
-    .exp-tag.fresher { background: linear-gradient(135deg, var(--purple), #a855f7); }
-    .exp-tag.mid { background: linear-gradient(135deg, var(--warning), #f97316); }
-    .exp-tag.senior { background: linear-gradient(135deg, var(--danger), #dc2626); }
-    .view-details {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-      color: white;
-      padding: 0.4rem 1rem;
-      border-radius: 2rem;
-      text-decoration: none;
-      font-size: 0.8rem;
-      transition: all 0.3s ease;
-      align-self: flex-end;
-    }
-    .view-details:hover { gap: 0.8rem; box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3); }
-
-    .skeleton-card { background: linear-gradient(135deg, rgba(25, 35, 65, 0.5), rgba(20, 25, 55, 0.4)); border-radius: 1rem; padding: 1.2rem; animation: pulse 1.5s ease-in-out infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.8; } }
-    .skeleton-title { width: 80%; height: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 0.5rem; margin-bottom: 0.5rem; }
-    .skeleton-text { width: 60%; height: 15px; background: rgba(255, 255, 255, 0.08); border-radius: 0.5rem; margin-bottom: 0.3rem; }
-    .empty-message { text-align: center; padding: 3rem; color: var(--text-secondary); background: rgba(15, 25, 45, 0.6); backdrop-filter: blur(16px); border-radius: 1rem; }
-
-    footer { text-align: center; margin-top: 3rem; color: var(--text-muted); font-size: 0.8rem; }
-    .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin: 1rem 0; flex-wrap: wrap; }
-    .footer-links a { color: var(--accent); text-decoration: none; transition: all 0.3s ease; }
-    .footer-links a:hover { color: var(--purple); }
-
-    .top-bar { display: flex; justify-content: flex-end; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem; }
-    .theme-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 2rem; padding: 0.3rem 0.8rem; cursor: pointer; font-size: 0.7rem; color: var(--text-primary); transition: all 0.3s ease; }
-    .theme-btn:hover { background: var(--accent); transform: scale(1.05); }
-
-    .add-link-box { background: rgba(15, 25, 45, 0.6); backdrop-filter: blur(16px); border-radius: 1.5rem; padding: 0.8rem 1rem; margin-bottom: 1rem; border: 1px solid rgba(255, 255, 255, 0.08); display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem; }
-    .add-link-box input { flex: 2; padding: 0.5rem 0.8rem; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 2rem; font-size: 0.8rem; color: var(--text-primary); }
-    .add-link-box button { background: var(--accent); border: none; padding: 0.5rem 1rem; border-radius: 2rem; color: white; cursor: pointer; }
-    .links-list { flex: 2; display: flex; flex-wrap: wrap; gap: 0.3rem; }
-
-    @media (max-width: 768px) {
-      .hero-section h1 { font-size: 2rem; }
-      .controls { flex-direction: column; align-items: stretch; }
-      .filter-buttons { justify-content: center; }
-      .main-nav { gap: 0.8rem; padding: 0.8rem 1rem; }
-      .main-nav a { font-size: 0.75rem; padding: 0.3rem 0.8rem; }
-      .stats-grid { grid-template-columns: repeat(3, 1fr); }
-      .stat-number { font-size: 1.5rem; }
-      .social-buttons { flex-direction: column; align-items: center; }
-      .social-btn { width: 80%; justify-content: center; }
-    }
-    @media (prefers-reduced-motion: reduce) { * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    @media (prefers-reduced-motion:reduce){*{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
   </style>
-  <script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Analytics (deferred) -->
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
   <div class="gradient-bg"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-
   <div class="container">
     <nav class="main-nav">
       <a href="index.html">🏠 Home</a>
@@ -486,55 +133,28 @@
       <a href="terms.html">⚖️ Terms</a>
     </nav>
 
-    <!-- Hero Section -->
     <div class="hero-section">
       <h1>ApplyMore</h1>
       <p>⚡ Apply more. Get hired faster. ⚡</p>
       <div class="hero-badge">✨ Trusted by 10,000+ IT freshers ✨</div>
     </div>
 
-    <!-- Stats -->
     <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-number" id="totalJobsCount">0</div>
-        <div class="stat-label">Total Jobs</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number" id="todayJobsCount">0</div>
-        <div class="stat-label">New Today</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">10+</div>
-        <div class="stat-label">Cities</div>
-      </div>
+      <div class="stat-card"><div class="stat-number" id="totalJobsCount">0</div><div class="stat-label">Total Jobs</div></div>
+      <div class="stat-card"><div class="stat-number" id="todayJobsCount">0</div><div class="stat-label">New Today</div></div>
+      <div class="stat-card"><div class="stat-number">10+</div><div class="stat-label">Cities</div></div>
     </div>
 
-    <!-- Services Section -->
     <div class="services-section">
       <h2>🎯 Your IT Career Starts Here</h2>
       <p>Handpicked entry-level IT jobs from across India — no spam, just real opportunities</p>
       <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon"><i class="fas fa-code"></i></div>
-          <h3>Skills You Need</h3>
-          <p>Python, SQL, Cloud basics, Git, JavaScript, DSA – these are the top skills companies are hiring for in 2026.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon"><i class="fas fa-file-alt"></i></div>
-          <h3>Resume That Gets Noticed</h3>
-          <p>One page, project-focused, ATS-friendly. Highlight internships and GitHub links. Avoid clichés.</p>
-          <a href="contact.html" class="service-btn">Get Resume Review →</a>
-        </div>
-        <div class="service-card">
-          <div class="service-icon"><i class="fas fa-chalkboard-user"></i></div>
-          <h3>Free Interview Prep</h3>
-          <p>Mock interviews, common DSA questions, and company-specific tips. We're here to help.</p>
-          <a href="contact.html" class="service-btn">Request a Session →</a>
-        </div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-code"></i></div><h3>Skills You Need</h3><p>Python, SQL, Cloud basics, Git, JavaScript, DSA – top skills for 2026.</p></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-file-alt"></i></div><h3>Resume That Gets Noticed</h3><p>One page, project-focused, ATS-friendly. Highlight internships and GitHub links.</p><a href="contact.html" class="service-btn">Get Resume Review →</a></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-chalkboard-user"></i></div><h3>Free Interview Prep</h3><p>Mock interviews, DSA questions, company-specific tips.</p><a href="contact.html" class="service-btn">Request a Session →</a></div>
       </div>
     </div>
 
-    <!-- Community Section (with Telegram) -->
     <div class="community-section">
       <h2>🌐 Join Our Community</h2>
       <p>Get daily job alerts, career tips, and connect with fellow job seekers</p>
@@ -559,27 +179,15 @@
       <div class="links-list" id="linksList"></div>
     </div>
 
-    <!-- Controls -->
     <div class="controls">
-      <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" placeholder="Search jobs, companies...">
-      </div>
-      <div class="location-filter">
-        <select id="locationFilter">
-          <option value="all">🌍 All Locations</option>
-          <option value="Chennai">Chennai</option>
-          <option value="Hyderabad">Hyderabad</option>
-          <option value="Gurugram">Gurugram</option>
-          <option value="Mumbai">Mumbai</option>
-          <option value="Pune">Pune</option>
-          <option value="Bangalore">Bangalore</option>
-          <option value="Delhi">Delhi</option>
-          <option value="Kolkata">Kolkata</option>
-          <option value="Ahmedabad">Ahmedabad</option>
-          <option value="Noida">Noida</option>
-        </select>
-      </div>
+      <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Search jobs, companies..."></div>
+      <div class="location-filter"><select id="locationFilter">
+        <option value="all">🌍 All Locations</option>
+        <option value="Chennai">Chennai</option><option value="Hyderabad">Hyderabad</option><option value="Gurugram">Gurugram</option>
+        <option value="Mumbai">Mumbai</option><option value="Pune">Pune</option><option value="Bangalore">Bangalore</option>
+        <option value="Delhi">Delhi</option><option value="Kolkata">Kolkata</option><option value="Ahmedabad">Ahmedabad</option>
+        <option value="Noida">Noida</option>
+      </select></div>
       <div class="filter-buttons">
         <button data-filter="all" class="filter-btn">All Jobs</button>
         <button data-filter="fresher" class="filter-btn active">Fresher (0 yrs)</button>
@@ -589,7 +197,6 @@
       <button id="resetFiltersBtn" class="reset-btn">Reset Filters</button>
     </div>
 
-    <!-- Jobs Container -->
     <div id="jobsContainer" class="jobs-grid">
       <div class="skeleton-card"><div class="skeleton-title"></div><div class="skeleton-text"></div><div class="skeleton-text"></div></div>
       <div class="skeleton-card"><div class="skeleton-title"></div><div class="skeleton-text"></div><div class="skeleton-text"></div></div>
@@ -598,11 +205,8 @@
 
     <footer>
       <div class="footer-links">
-        <a href="privacy.html">Privacy</a>
-        <a href="terms.html">Terms</a>
-        <a href="about.html">About</a>
-        <a href="blog.html">Blog</a>
-        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="about.html">About</a>
+        <a href="blog.html">Blog</a><a href="contact.html">Contact</a>
         <a href="#" id="shareTwitter"><i class="fab fa-twitter"></i> Share</a>
         <a href="#" id="shareLinkedin"><i class="fab fa-linkedin"></i> Share</a>
       </div>
@@ -611,280 +215,272 @@
     </footer>
   </div>
 
+  <!-- Cookie Consent Banner -->
+  <div id="cookieConsent" style="position:fixed;bottom:0;left:0;right:0;background:rgba(15,25,45,0.95);backdrop-filter:blur(10px);border-top:1px solid rgba(59,130,246,0.3);padding:1rem;text-align:center;z-index:1000;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:1rem;font-size:0.85rem">
+    <span>🍪 We use cookies to improve your experience and for AdSense personalisation. By using our site, you accept our <a href="privacy.html" style="color:#3b82f6;">Privacy Policy</a>.</span>
+    <button id="acceptCookies" style="background:#3b82f6;border:none;padding:0.4rem 1rem;border-radius:2rem;color:white;cursor:pointer">Accept</button>
+  </div>
+
   <script>
-    // ============================================
-    // UTILITY FUNCTIONS
-    // ============================================
-    const SUPABASE_URL = 'https://qmljqckhhdmvcbomydhf.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_rmCQIW6Lw90zleW-lYZcFw_WZrcHw4h';
-
-    // Decode HTML entities (e.g., &#x1f680; → 🚀)
-    function decodeHtmlEntities(str) {
-      if (!str) return '';
-      const textarea = document.createElement('textarea');
-      textarea.innerHTML = str;
-      return textarea.value;
-    }
-
-    let allJobs = [];
-    let currentFilter = 'fresher';
-
-    function getExperienceLevel(job) {
-      const text = (job.title + ' ' + (job.description || '')).toLowerCase();
-      const seniorKeywords = ['senior', 'lead', 'principal', 'architect', 'manager', 'director', 'head', 'staff engineer'];
-      for (let kw of seniorKeywords) if (text.includes(kw)) return 'senior';
-      const yearPattern = /(\d+(?:\.\d+)?)\s*years?/i;
-      const match = text.match(yearPattern);
-      if (match) {
-        let years = parseFloat(match[1]);
-        if (years >= 3) return 'senior';
-        if (years >= 1) return 'mid';
+    (function() {
+      // Cookie consent
+      if (localStorage.getItem('cookiesAccepted') === 'true') {
+        document.getElementById('cookieConsent').style.display = 'none';
       }
-      const fresherKeywords = ['fresher', 'entry level', 'entry-level', 'junior', 'graduate', 'trainee', 'recent graduate', 'new grad', '0 years', 'zero years', 'no experience'];
-      for (let kw of fresherKeywords) if (text.includes(kw)) return 'fresher';
-      return 'mid';
-    }
+      document.getElementById('acceptCookies')?.addEventListener('click', () => {
+        localStorage.setItem('cookiesAccepted', 'true');
+        document.getElementById('cookieConsent').style.display = 'none';
+      });
 
-    function getJobType(title) {
-      const t = title.toLowerCase();
-      if (t.includes('intern')) return 'Internship';
-      if (t.includes('trainee')) return 'Trainee';
-      if (t.includes('contract')) return 'Contract';
-      return 'Full-time';
-    }
+      // Supabase config
+      const SUPABASE_URL = 'https://qmljqckhhdmvcbomydhf.supabase.co';
+      const SUPABASE_ANON_KEY = 'sb_publishable_rmCQIW6Lw90zleW-lYZcFw_WZrcHw4h';
 
-    function formatDate(dateString) {
-      if (!dateString) return '';
-      const date = new Date(dateString);
-      const now = new Date();
-      const diffDays = Math.ceil(Math.abs(now - date) / (1000 * 60 * 60 * 24));
-      if (diffDays === 0) return 'Today';
-      if (diffDays === 1) return 'Yesterday';
-      if (diffDays < 7) return `${diffDays} days ago`;
-      return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
-    }
+      let allJobs = [];
+      let currentFilter = 'fresher';
 
-    function escapeHtml(str) {
-      if (!str) return '';
-      return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
-    }
-
-    function updateStats(jobs) {
-      const total = jobs.length;
-      const today = new Date().toISOString().split('T')[0];
-      const todayJobs = jobs.filter(job => {
-        const jobDate = new Date(job.created_at || job.posted_date);
-        return jobDate.toISOString().split('T')[0] === today;
-      }).length;
-      document.getElementById('totalJobsCount').innerText = total;
-      document.getElementById('todayJobsCount').innerText = todayJobs;
-    }
-
-    function displayJobs() {
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-      const selectedLocation = document.getElementById('locationFilter').value;
-      let filtered = [...allJobs];
-      if (selectedLocation !== 'all') {
-        filtered = filtered.filter(job => job.location && job.location.toLowerCase().includes(selectedLocation.toLowerCase()));
-      }
-      if (searchTerm) {
-        filtered = filtered.filter(job =>
-          job.title.toLowerCase().includes(searchTerm) ||
-          (job.company && job.company.toLowerCase().includes(searchTerm)) ||
-          (job.description && job.description.toLowerCase().includes(searchTerm))
-        );
-      }
-      if (currentFilter !== 'all') {
-        filtered = filtered.filter(job => getExperienceLevel(job) === currentFilter);
+      function decodeHtmlEntities(str) {
+        if (!str) return '';
+        const textarea = document.createElement('textarea');
+        textarea.innerHTML = str;
+        return textarea.value;
       }
 
-      // Sorting for "All Jobs"
-      if (currentFilter === 'all') {
-        const priority = { 'fresher': 1, 'mid': 2, 'senior': 3 };
-        filtered.sort((a, b) => {
-          const levelA = getExperienceLevel(a);
-          const levelB = getExperienceLevel(b);
-          if (priority[levelA] !== priority[levelB]) {
-            return priority[levelA] - priority[levelB];
-          }
-          const dateA = new Date(a.created_at || a.posted_date);
-          const dateB = new Date(b.created_at || b.posted_date);
-          return dateB - dateA;
-        });
-      } else {
-        filtered.sort((a, b) => {
-          const dateA = new Date(a.created_at || a.posted_date);
-          const dateB = new Date(b.created_at || b.posted_date);
-          return dateB - dateA;
-        });
+      function getExperienceLevel(job) {
+        const text = (job.title + ' ' + (job.description || '')).toLowerCase();
+        if (/(senior|lead|principal|architect|manager|director|head|staff engineer)/i.test(text)) return 'senior';
+        const match = text.match(/(\d+(?:\.\d+)?)\s*years?/i);
+        if (match) {
+          let years = parseFloat(match[1]);
+          if (years >= 3) return 'senior';
+          if (years >= 1) return 'mid';
+        }
+        if (/(fresher|entry level|entry-level|junior|graduate|trainee|recent graduate|new grad|0 years|zero years|no experience)/i.test(text)) return 'fresher';
+        return 'mid';
       }
 
-      updateStats(allJobs);
-      const container = document.getElementById('jobsContainer');
-      if (filtered.length === 0) {
-        container.innerHTML = '<div class="empty-message">✨ No jobs found. Try different filters! ✨</div>';
-        return;
+      function getJobType(title) {
+        const t = title.toLowerCase();
+        if (t.includes('intern')) return 'Internship';
+        if (t.includes('trainee')) return 'Trainee';
+        if (t.includes('contract')) return 'Contract';
+        return 'Full-time';
       }
 
-      container.innerHTML = filtered.map(job => {
-        const level = getExperienceLevel(job);
-        let tagText = level === 'fresher' ? 'Fresher' : (level === 'mid' ? '1-2 Years' : '3+ Years');
-        const jobType = getJobType(job.title);
-        const companyInitial = (job.company && job.company.trim()) ? job.company.trim()[0].toUpperCase() : '?';
-        const decodedDesc = decodeHtmlEntities(job.description || '');
-        return `
-          <div class="job-card" data-job-id="${job.id}">
-            <div class="card-company-row">
-              <div class="company-logo">${escapeHtml(companyInitial)}</div>
-              <div class="company-details">
-                <div class="company-name">${escapeHtml(job.company)}</div>
-                <div class="job-type-badge">${jobType}</div>
+      function formatDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffDays = Math.ceil(Math.abs(now - date) / (1000 * 60 * 60 * 24));
+        if (diffDays === 0) return 'Today';
+        if (diffDays === 1) return 'Yesterday';
+        if (diffDays < 7) return `${diffDays} days ago`;
+        return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+      }
+
+      function updateStats(jobs) {
+        const total = jobs.length;
+        const today = new Date().toISOString().split('T')[0];
+        const todayJobs = jobs.filter(job => {
+          const jobDate = new Date(job.created_at || job.posted_date);
+          return jobDate.toISOString().split('T')[0] === today;
+        }).length;
+        document.getElementById('totalJobsCount').innerText = total;
+        document.getElementById('todayJobsCount').innerText = todayJobs;
+      }
+
+      function displayJobs() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+        const selectedLocation = document.getElementById('locationFilter').value;
+        let filtered = [...allJobs];
+        if (selectedLocation !== 'all') {
+          filtered = filtered.filter(job => job.location && job.location.toLowerCase().includes(selectedLocation.toLowerCase()));
+        }
+        if (searchTerm) {
+          filtered = filtered.filter(job =>
+            job.title.toLowerCase().includes(searchTerm) ||
+            (job.company && job.company.toLowerCase().includes(searchTerm)) ||
+            (job.description && job.description.toLowerCase().includes(searchTerm))
+          );
+        }
+        if (currentFilter !== 'all') {
+          filtered = filtered.filter(job => getExperienceLevel(job) === currentFilter);
+        }
+
+        // Sorting for "All Jobs"
+        if (currentFilter === 'all') {
+          const priority = { 'fresher': 1, 'mid': 2, 'senior': 3 };
+          filtered.sort((a, b) => {
+            const levelA = getExperienceLevel(a);
+            const levelB = getExperienceLevel(b);
+            if (priority[levelA] !== priority[levelB]) return priority[levelA] - priority[levelB];
+            const dateA = new Date(a.created_at || a.posted_date);
+            const dateB = new Date(b.created_at || b.posted_date);
+            return dateB - dateA;
+          });
+        } else {
+          filtered.sort((a, b) => {
+            const dateA = new Date(a.created_at || a.posted_date);
+            const dateB = new Date(b.created_at || b.posted_date);
+            return dateB - dateA;
+          });
+        }
+
+        updateStats(allJobs);
+        const container = document.getElementById('jobsContainer');
+        if (filtered.length === 0) {
+          container.innerHTML = '<div class="empty-message">✨ No jobs found. Try different filters! ✨</div>';
+          return;
+        }
+
+        container.innerHTML = filtered.map(job => {
+          const level = getExperienceLevel(job);
+          const tagText = level === 'fresher' ? 'Fresher' : (level === 'mid' ? '1-2 Years' : '3+ Years');
+          const jobType = getJobType(job.title);
+          const companyInitial = (job.company && job.company.trim()) ? job.company.trim()[0].toUpperCase() : '?';
+          const decodedDesc = decodeHtmlEntities(job.description || '');
+          return `
+            <div class="job-card" data-job-id="${job.id}">
+              <div class="card-company-row">
+                <div class="company-logo">${escapeHtml(companyInitial)}</div>
+                <div class="company-details">
+                  <div class="company-name">${escapeHtml(job.company)}</div>
+                  <div class="job-type-badge">${jobType}</div>
+                </div>
+              </div>
+              <div class="job-title">${escapeHtml(job.title)}</div>
+              <div class="location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}</div>
+              <div class="description">${escapeHtml(decodedDesc.substring(0, 120))}...</div>
+              <div class="card-footer">
+                <span class="posted-date">📅 Posted: ${formatDate(job.posted_date || job.created_at)}</span>
+                <span class="exp-tag ${level}">${tagText}</span>
+              </div>
+              <div style="display: flex; justify-content: flex-end;">
+                <a href="#" class="view-details" data-job-id="${job.id}">View Details <i class="fas fa-arrow-right"></i></a>
               </div>
             </div>
-            <div class="job-title">${escapeHtml(job.title)}</div>
-            <div class="location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}</div>
-            <div class="description">${escapeHtml(decodedDesc.substring(0, 120))}...</div>
-            <div class="card-footer">
-              <span class="posted-date">📅 Posted: ${formatDate(job.posted_date || job.created_at)}</span>
-              <span class="exp-tag ${level}">${tagText}</span>
-            </div>
-            <div style="display: flex; justify-content: flex-end;">
-              <a href="#" class="view-details" data-job-id="${job.id}">View Details <i class="fas fa-arrow-right"></i></a>
-            </div>
-          </div>
-        `;
-      }).join('');
+          `;
+        }).join('');
 
-      document.querySelectorAll('.job-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-          if (e.target.classList.contains('view-details') || e.target.closest('.view-details')) return;
-          const jobId = card.getAttribute('data-job-id');
-          window.location.href = `job.html?id=${jobId}`;
+        document.querySelectorAll('.job-card').forEach(card => {
+          card.addEventListener('click', (e) => {
+            if (e.target.classList.contains('view-details') || e.target.closest('.view-details')) return;
+            const jobId = card.getAttribute('data-job-id');
+            window.location.href = `job.html?id=${jobId}`;
+          });
         });
-      });
-      document.querySelectorAll('.view-details').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          const jobId = btn.getAttribute('data-job-id');
-          window.location.href = `job.html?id=${jobId}`;
+        document.querySelectorAll('.view-details').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const jobId = btn.getAttribute('data-job-id');
+            window.location.href = `job.html?id=${jobId}`;
+          });
         });
-      });
-    }
+      }
 
-    async function fetchJobs() {
-      try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/ApplyMore?select=*&order=created_at.desc`, {
-          headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+      async function fetchJobs() {
+        try {
+          const response = await fetch(`${SUPABASE_URL}/rest/v1/ApplyMore?select=*&order=created_at.desc`, {
+            headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          allJobs = await response.json();
+          displayJobs();
+        } catch (err) {
+          console.error(err);
+          document.getElementById('jobsContainer').innerHTML = '<div class="empty-message">⚠️ Failed to load jobs. Please refresh the page. ⚠️</div>';
+        }
+      }
+
+      function setFilter(filter) {
+        currentFilter = filter;
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          if (btn.getAttribute('data-filter') === filter) btn.classList.add('active');
+          else btn.classList.remove('active');
         });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        allJobs = await response.json();
         displayJobs();
-      } catch (err) {
-        console.error(err);
-        document.getElementById('jobsContainer').innerHTML = '<div class="empty-message">⚠️ Failed to load jobs. Please refresh the page. ⚠️</div>';
       }
-    }
 
-    function setFilter(filter) {
-      currentFilter = filter;
+      function resetFilters() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('locationFilter').value = 'all';
+        setFilter('fresher');
+      }
+
+      function setTheme(theme) {
+        const themes = {
+          dark: { '--glass-bg': 'rgba(15, 25, 45, 0.65)', '--card-bg': 'linear-gradient(135deg, rgba(25, 35, 65, 0.8), rgba(20, 25, 55, 0.7))', '--text-primary': '#f0f3ff', '--text-secondary': '#9ca3cf' },
+          light: { '--glass-bg': 'rgba(255, 255, 255, 0.75)', '--card-bg': 'linear-gradient(135deg, rgba(245, 245, 255, 0.9), rgba(235, 235, 255, 0.85))', '--text-primary': '#1e293b', '--text-secondary': '#475569' },
+          vibrant: { '--glass-bg': 'rgba(255, 240, 245, 0.75)', '--card-bg': 'linear-gradient(135deg, rgba(255, 235, 245, 0.9), rgba(255, 225, 235, 0.85))', '--text-primary': '#831843', '--text-secondary': '#9d174d' }
+        };
+        const selected = themes[theme];
+        if (selected) {
+          Object.entries(selected).forEach(([key, value]) => document.documentElement.style.setProperty(key, value));
+          localStorage.setItem('theme', theme);
+          document.body.style.background = theme === 'light' ? '#f8fafc' : (theme === 'vibrant' ? '#fdf2f8' : '#0a0a2a');
+        }
+      }
+
+      let recommendedLinks = JSON.parse(localStorage.getItem('recommendedLinks') || '[]');
+      function renderLinks() {
+        const container = document.getElementById('linksList');
+        if (!container) return;
+        if (recommendedLinks.length === 0) {
+          container.innerHTML = '<span style="color: var(--text-muted);">No links yet. Add one!</span>';
+          return;
+        }
+        container.innerHTML = recommendedLinks.map(link => `<a href="${escapeHtml(link)}" target="_blank" style="font-size:0.7rem; background:rgba(255,255,255,0.1); padding:0.2rem 0.5rem; border-radius:1rem; color:var(--accent); text-decoration:none;">🔗 ${link.length > 30 ? link.substring(0,30)+'...' : link}</a>`).join('');
+      }
+      function addLink(link) {
+        if (!link) return;
+        try {
+          new URL(link);
+          recommendedLinks.unshift(link);
+          if (recommendedLinks.length > 8) recommendedLinks.pop();
+          localStorage.setItem('recommendedLinks', JSON.stringify(recommendedLinks));
+          renderLinks();
+          alert('Link added!');
+        } catch(e) { alert('Invalid URL'); }
+      }
+
+      document.getElementById('lightTheme')?.addEventListener('click', () => setTheme('light'));
+      document.getElementById('darkTheme')?.addEventListener('click', () => setTheme('dark'));
+      document.getElementById('vibrantTheme')?.addEventListener('click', () => setTheme('vibrant'));
+      document.getElementById('searchInput')?.addEventListener('input', displayJobs);
+      document.getElementById('locationFilter')?.addEventListener('change', displayJobs);
+      document.getElementById('resetFiltersBtn')?.addEventListener('click', resetFilters);
+      document.getElementById('submitLinkBtn')?.addEventListener('click', () => {
+        const input = document.getElementById('newLinkInput');
+        if (input.value.trim()) addLink(input.value.trim());
+        input.value = '';
+      });
       document.querySelectorAll('.filter-btn').forEach(btn => {
-        if (btn.getAttribute('data-filter') === filter) btn.classList.add('active');
-        else btn.classList.remove('active');
+        btn.addEventListener('click', (e) => {
+          const filter = e.currentTarget.getAttribute('data-filter');
+          setFilter(filter);
+        });
       });
-      displayJobs();
-    }
-
-    function resetFilters() {
-      document.getElementById('searchInput').value = '';
-      document.getElementById('locationFilter').value = 'all';
-      setFilter('fresher');
-    }
-
-    function setTheme(theme) {
-      const themes = {
-        dark: { '--glass-bg': 'rgba(15, 25, 45, 0.65)', '--card-bg': 'linear-gradient(135deg, rgba(25, 35, 65, 0.8), rgba(20, 25, 55, 0.7))', '--text-primary': '#f0f3ff', '--text-secondary': '#9ca3cf' },
-        light: { '--glass-bg': 'rgba(255, 255, 255, 0.75)', '--card-bg': 'linear-gradient(135deg, rgba(245, 245, 255, 0.9), rgba(235, 235, 255, 0.85))', '--text-primary': '#1e293b', '--text-secondary': '#475569' },
-        vibrant: { '--glass-bg': 'rgba(255, 240, 245, 0.75)', '--card-bg': 'linear-gradient(135deg, rgba(255, 235, 245, 0.9), rgba(255, 225, 235, 0.85))', '--text-primary': '#831843', '--text-secondary': '#9d174d' }
-      };
-      const selected = themes[theme];
-      if (selected) {
-        Object.entries(selected).forEach(([key, value]) => document.documentElement.style.setProperty(key, value));
-        localStorage.setItem('theme', theme);
-        if (theme === 'light') document.body.style.background = '#f8fafc';
-        else if (theme === 'vibrant') document.body.style.background = '#fdf2f8';
-        else document.body.style.background = '#0a0a2a';
-      }
-    }
-
-    let recommendedLinks = JSON.parse(localStorage.getItem('recommendedLinks') || '[]');
-    function renderLinks() {
-      const container = document.getElementById('linksList');
-      if (!container) return;
-      if (recommendedLinks.length === 0) {
-        container.innerHTML = '<span style="color: var(--text-muted);">No links yet. Add one!</span>';
-        return;
-      }
-      container.innerHTML = recommendedLinks.map(link => `<a href="${escapeHtml(link)}" target="_blank" style="font-size:0.7rem; background:rgba(255,255,255,0.1); padding:0.2rem 0.5rem; border-radius:1rem; color:var(--accent); text-decoration:none;">🔗 ${link.length > 30 ? link.substring(0,30)+'...' : link}</a>`).join('');
-    }
-    function addLink(link) {
-      if (!link) return;
-      try {
-        new URL(link);
-        recommendedLinks.unshift(link);
-        if (recommendedLinks.length > 8) recommendedLinks.pop();
-        localStorage.setItem('recommendedLinks', JSON.stringify(recommendedLinks));
-        renderLinks();
-        alert('Link added!');
-      } catch(e) { alert('Invalid URL'); }
-    }
-
-    document.getElementById('lightTheme')?.addEventListener('click', () => setTheme('light'));
-    document.getElementById('darkTheme')?.addEventListener('click', () => setTheme('dark'));
-    document.getElementById('vibrantTheme')?.addEventListener('click', () => setTheme('vibrant'));
-    document.getElementById('searchInput')?.addEventListener('input', displayJobs);
-    document.getElementById('locationFilter')?.addEventListener('change', displayJobs);
-    document.getElementById('resetFiltersBtn')?.addEventListener('click', resetFilters);
-    document.getElementById('submitLinkBtn')?.addEventListener('click', () => {
-      const input = document.getElementById('newLinkInput');
-      if (input.value.trim()) addLink(input.value.trim());
-      input.value = '';
-    });
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const filter = e.currentTarget.getAttribute('data-filter');
-        setFilter(filter);
+      document.getElementById('shareTwitter')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open(`https://twitter.com/intent/tweet?text=Find IT jobs in India! ${encodeURIComponent(window.location.href)}`, '_blank');
       });
-    });
-    document.getElementById('shareTwitter')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.open(`https://twitter.com/intent/tweet?text=Find IT jobs in India! ${encodeURIComponent(window.location.href)}`, '_blank');
-    });
-    document.getElementById('shareLinkedin')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(window.location.href)}&title=IT Jobs in India`, '_blank');
-    });
+      document.getElementById('shareLinkedin')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(window.location.href)}&title=IT Jobs in India`, '_blank');
+      });
 
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
-    renderLinks();
-    fetchJobs();
-    setInterval(fetchJobs, 5 * 60 * 1000);
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      setTheme(savedTheme);
+      renderLinks();
+      fetchJobs();
+      setInterval(fetchJobs, 5 * 60 * 1000);
+    })();
   </script>
-  <!-- Cookie Consent Banner -->
-<div id="cookieConsent" style="position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15,25,45,0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(59,130,246,0.3); padding: 1rem; text-align: center; z-index: 1000; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; font-size: 0.85rem;">
-  <span>🍪 We use cookies to improve your experience and for AdSense personalisation. By using our site, you accept our <a href="privacy.html" style="color: #3b82f6;">Privacy Policy</a>.</span>
-  <button id="acceptCookies" style="background: #3b82f6; border: none; padding: 0.4rem 1rem; border-radius: 2rem; color: white; cursor: pointer;">Accept</button>
-</div>
-<script>
-  if (localStorage.getItem('cookiesAccepted') === 'true') {
-    document.getElementById('cookieConsent').style.display = 'none';
-  }
-  document.getElementById('acceptCookies')?.addEventListener('click', () => {
-    localStorage.setItem('cookiesAccepted', 'true');
-    document.getElementById('cookieConsent').style.display = 'none';
-  });
-</script>
-    
 </body>
 </html>
