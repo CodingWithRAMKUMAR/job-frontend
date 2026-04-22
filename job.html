@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* Your existing CSS – unchanged (same as before) */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --accent: #3b82f6;
@@ -34,6 +33,24 @@
       padding: 2rem;
       position: relative;
       min-height: 100vh;
+    }
+    body.light {
+      --glass-bg: rgba(255, 255, 255, 0.9);
+      --glass-border: rgba(0, 0, 0, 0.1);
+      --card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      background: #f8fafc;
+    }
+    body.vibrant {
+      --glass-bg: rgba(255, 240, 245, 0.9);
+      --glass-border: rgba(236, 72, 153, 0.2);
+      --card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(254, 242, 242, 0.8));
+      --text-primary: #831843;
+      --text-secondary: #be185d;
+      --accent: #ec489a;
+      background: #fdf2f8;
     }
     .gradient-bg {
       position: fixed;
@@ -240,7 +257,21 @@
     <span>🍪 We use cookies to improve your experience and for AdSense personalisation. By using our site, you accept our <a href="privacy.html" style="color: #3b82f6;">Privacy Policy</a>.</span>
     <button id="acceptCookies" style="background: #3b82f6; border: none; padding: 0.4rem 1rem; border-radius: 2rem; color: white; cursor: pointer;">Accept</button>
   </div>
+
+  <!-- Feedback Widget -->
+  <div id="feedbackWidget" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+    <button id="feedbackBtn" style="background: #3b82f6; border: none; padding: 0.5rem 1rem; border-radius: 2rem; color: white; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+      💬 Quick Feedback
+    </button>
+    <div id="feedbackForm" style="display: none; background: rgba(20, 20, 50, 0.95); padding: 1rem; border-radius: 1rem; margin-top: 0.5rem; width: 300px; border: 1px solid #3b82f6;">
+      <textarea id="feedbackText" placeholder="Found a bug? Have a suggestion? Tell Ram..." style="width: 100%; height: 80px; margin-bottom: 0.5rem; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #3b82f6; background: rgba(0,0,0,0.3); color: white;"></textarea>
+      <button onclick="submitFeedback()" style="background: #3b82f6; border: none; padding: 0.3rem 0.8rem; border-radius: 1rem; color: white; cursor: pointer;">Send to Ram</button>
+      <button onclick="closeFeedback()" style="background: #666; border: none; padding: 0.3rem 0.8rem; border-radius: 1rem; color: white; cursor: pointer; margin-left: 0.5rem;">Close</button>
+    </div>
+  </div>
+
   <script>
+    // Cookie consent
     if (localStorage.getItem('cookiesAccepted') === 'true') {
       document.getElementById('cookieConsent').style.display = 'none';
     }
@@ -248,9 +279,46 @@
       localStorage.setItem('cookiesAccepted', 'true');
       document.getElementById('cookieConsent').style.display = 'none';
     });
-  </script>
 
-  <script>
+    // Feedback widget
+    document.getElementById('feedbackBtn').addEventListener('click', function() {
+      const form = document.getElementById('feedbackForm');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    });
+
+    function closeFeedback() {
+      document.getElementById('feedbackForm').style.display = 'none';
+      document.getElementById('feedbackText').value = '';
+    }
+
+    function submitFeedback() {
+      const feedback = document.getElementById('feedbackText').value.trim();
+      if (!feedback) {
+        alert('Please write something first!');
+        return;
+      }
+      
+      const subject = 'ApplyMore Job Page Feedback';
+      const body = `Hi Ram,\n\nFeedback from ApplyMore job page:\n\n${feedback}\n\nPage: ${window.location.href}\nTime: ${new Date().toLocaleString()}`;
+      const mailtoLink = `mailto:connectwithme.ramkumar@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      window.open(mailtoLink);
+      
+      alert('Thanks! Your email app should open. If not, copy this and email Ram:\n\n' + feedback);
+      closeFeedback();
+    }
+
+    // Error handling
+    window.addEventListener('error', function(e) {
+      console.error('Global error:', e.error);
+      if (window.va) {
+        window.va('track', 'error', { 
+          message: e.error?.message,
+          page: window.location.pathname 
+        });
+      }
+    });
+
     const SUPABASE_URL = 'https://qmljqckhhdmvcbomydhf.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_rmCQIW6Lw90zleW-lYZcFw_WZrcHw4h';
     let currentJobId = null;
@@ -273,26 +341,81 @@
       return commonSkills.filter(skill => text.includes(skill)).slice(0, 8);
     }
 
-    async function fetchJob() {
+    function escapeHtml(str) {
+      if (!str) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    async function fetchJobWithRetry(retries = 3) {
       const jobId = getQueryParam('id');
       if (!jobId) {
-        document.getElementById('jobContent').innerHTML = `<div class="error">❌ No job ID specified.</div>`;
+        showError('No job ID specified', true);
         return;
       }
       currentJobId = jobId;
-      try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/ApplyMore?id=eq.${jobId}`, {
-          headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
-        });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const jobs = await response.json();
-        if (!jobs || jobs.length === 0) throw new Error('Job not found');
-        displayJob(jobs[0]);
-        fetchLatestJobs(jobId);
-      } catch (err) {
-        console.error(err);
-        document.getElementById('jobContent').innerHTML = `<div class="error">⚠️ Failed to load job. Please try again later.</div>`;
+      
+      for (let i = 0; i < retries; i++) {
+        try {
+          const response = await fetch(`${SUPABASE_URL}/rest/v1/ApplyMore?id=eq.${jobId}`, {
+            headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+          });
+          
+          if (!response.ok) {
+            if (response.status === 404) {
+              showError('Job not found. It may have been filled or removed.', true);
+              return;
+            }
+            throw new Error(`HTTP ${response.status}`);
+          }
+          
+          const jobs = await response.json();
+          if (!jobs || jobs.length === 0) {
+            showError('Job not found. It may have been filled or removed.', true);
+            return;
+          }
+          
+          displayJob(jobs[0]);
+          fetchLatestJobs(jobId);
+          return;
+          
+        } catch (error) {
+          console.error(`Attempt ${i + 1} failed:`, error);
+          if (i === retries - 1) {
+            showError('Failed to load job details. Please try again.', false);
+          } else {
+            await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+          }
+        }
       }
+    }
+
+    function showError(message, isPermanent) {
+      const retryButton = isPermanent ? '' : `
+        <button onclick="location.reload()" style="
+          background: var(--accent); 
+          border: none; 
+          padding: 0.5rem 1rem; 
+          border-radius: 2rem; 
+          color: white; 
+          cursor: pointer; 
+          margin-top: 1rem;
+        ">Try Again</button>
+      `;
+      
+      document.getElementById('jobContent').innerHTML = `
+        <div class="error">
+          ⚠️ ${message}
+          ${retryButton}
+          <div style="margin-top: 1rem;">
+            <a href="/" style="color: var(--accent);">← Back to Jobs</a>
+          </div>
+          <div style="margin-top: 0.5rem;">
+            <a href="mailto:connectwithme.ramkumar@gmail.com" style="color: var(--accent);">Report this to Ram</a>
+          </div>
+        </div>
+      `;
     }
 
     async function fetchLatestJobs(excludeId) {
@@ -339,6 +462,11 @@
       const companyInitial = job.company ? job.company.trim()[0].toUpperCase() : '?';
       document.title = `${job.title} at ${job.company} – ApplyMore`;
 
+      // Track job view
+      if (window.va) {
+        window.va('track', 'job_viewed', { job_id: job.id });
+      }
+
       // Helper content arrays
       const resumeTips = [
         "Keep your resume concise and one page – Recruiters prefer short, focused resumes.",
@@ -357,257 +485,109 @@
         "Send a thank‑you note after the interview – Reinforces professionalism."
       ];
       const applicationTips = [
-        "Read the job description carefully before applying.",
-        "Fill out all required fields – avoid leaving blanks (use 'N/A' if needed).",
-        "Double‑check your contact information – email and phone number.",
-        "Submit before the deadline – don't wait until the last minute.",
-        "Use a professional email address – avoid nicknames or numbers."
-      ];
-      const companyCulture = [
-        "Most IT companies value continuous learning – show your curiosity in the interview.",
-        "Team collaboration is key – highlight group projects or open‑source contributions.",
-        "Innovation and problem‑solving are highly regarded – prepare examples.",
-        "Many firms offer mentorship programs for freshers – ask about them during the interview."
-      ];
-      const benefits = [
-        "Competitive salary (as per industry standards for freshers).",
-        "Health insurance and wellness programs (common in medium/large companies).",
-        "Opportunities for professional development – certifications, workshops.",
-        "Flexible work hours or remote options (depending on the role).",
-        "Performance‑based bonuses and incentives."
-      ];
-      const certifications = [
-        "AWS Certified Cloud Practitioner",
-        "Microsoft Azure Fundamentals (AZ‑900)",
-        "Google Associate Cloud Engineer",
-        "Python Institute PCEP",
-        "Oracle Certified Associate, Java SE 8 Programmer",
-        "CompTIA IT Fundamentals (ITF+)"
-      ];
-      const successStories = [
-        "Riya, a 2025 graduate, landed a Data Analyst role after using ApplyMore and following our resume tips.",
-        "Arjun, a self‑taught coder, got his first Software Engineer job through a listing on ApplyMore.",
-        "Priya improved her interview skills using our guides and secured a DevOps internship."
-      ];
-      const checklist = [
-        "☐ Read the full job description.",
-        "☐ Update your resume with relevant keywords.",
-        "☐ Prepare a tailored cover letter (optional but recommended).",
-        "☐ Check your internet connection and documents before applying.",
-        "☐ Apply before the deadline.",
-        "☐ Follow up after 1 week if no response."
-      ];
-      const commonMistakes = [
-        "❌ Submitting the same generic resume for every job.",
-        "❌ Ignoring application instructions (e.g., wrong subject line).",
-        "❌ Applying after the deadline.",
-        "❌ Not proofreading your application.",
-        "❌ Forgetting to attach required documents."
-      ];
-      const faq = [
-        { q: "Can I apply if I'm still a student?", a: "Yes, many fresher jobs accept final‑year students. Check the eligibility section in the job description." },
-        { q: "Do I need prior experience?", a: "This job is for freshers (0‑2 years). Focus on your projects and internships." },
-        { q: "How long does it take to hear back?", a: "Typically 1‑3 weeks. If you don't hear back, follow up politely on LinkedIn." },
-        { q: "Should I apply if I don't meet all skills?", a: "Yes, if you meet 60‑70% of the requirements. Fresher roles value learning potential." }
+        "Read the job description carefully before applying – Match your skills to requirements.",
+        "Write a personalized cover letter – Address specific company needs.",
+        "Apply early in the posting cycle – First applicants get more attention.",
+        "Follow up professionally after 1-2 weeks – Shows genuine interest.",
+        "Keep track of your applications – Use a spreadsheet to stay organized."
       ];
 
-      const html = `
-        <!-- Job Header -->
+      document.getElementById('jobContent').innerHTML = `
         <div class="job-header">
-          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
-            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, var(--accent), var(--purple)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.5rem; text-transform: uppercase;">
-              ${escapeHtml(companyInitial)}
-            </div>
-            <div>
-              <h1>${escapeHtml(job.title)}</h1>
-              <div class="company-name">${escapeHtml(job.company)}</div>
-            </div>
-          </div>
+          <h1>${escapeHtml(job.title)}</h1>
+          <div class="company-name">${escapeHtml(job.company)}</div>
           <div class="job-meta">
-            <span><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}</span>
-            <span><i class="fas fa-calendar-alt"></i> Posted: ${formatDate(job.posted_date || job.created_at)}</span>
+            <span><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Location not specified')}</span>
+            <span><i class="fas fa-briefcase"></i> ${getJobType(job.title)}</span>
+            <span><i class="fas fa-calendar-alt"></i> Posted ${formatDate(job.posted_date || job.created_at)}</span>
           </div>
         </div>
 
-        <!-- Skills Section -->
+        <div class="apply-section">
+          <a href="${job.apply_link || '#'}" target="_blank" class="apply-btn" onclick="trackApplyClick()">
+            <i class="fas fa-external-link-alt"></i>
+            Apply Now
+          </a>
+          <div class="apply-note">Opens in new tab • Apply directly on company website</div>
+        </div>
+
+        <div class="description-section">
+          <h3><i class="fas fa-file-text"></i> Job Description</h3>
+          <p>${escapeHtml(cleanDesc)}</p>
+        </div>
+
+        ${skills.length > 0 ? `
         <div class="info-section">
-          <h3><i class="fas fa-microchip"></i> Skills You'll Need</h3>
+          <h3><i class="fas fa-code"></i> Skills Mentioned</h3>
           <div class="skill-tags">
-            ${skills.length ? skills.map(s => `<span class="skill-tag">${escapeHtml(s)}</span>`).join('') : '<span>No specific skills extracted. Check description below.</span>'}
+            ${skills.map(skill => `<span class="skill-tag">${escapeHtml(skill)}</span>`).join('')}
           </div>
-          <p style="margin-top: 0.8rem;">Focus on building projects around these technologies. Even basic proficiency is valued for freshers.</p>
         </div>
+        ` : ''}
 
-        <!-- Resume Tips -->
         <div class="info-section">
           <h3><i class="fas fa-file-alt"></i> Resume Tips for This Role</h3>
           <ul>
-            ${resumeTips.map(tip => `<li>${escapeHtml(tip)}</li>`).join('')}
+            ${resumeTips.slice(0, 5).map(tip => `<li>${tip}</li>`).join('')}
           </ul>
         </div>
 
-        <!-- Interview Tips -->
         <div class="info-section">
-          <h3><i class="fas fa-chalkboard-user"></i> Interview Preparation</h3>
+          <h3><i class="fas fa-comments"></i> Interview Preparation</h3>
           <ul>
-            ${interviewTips.map(tip => `<li>${escapeHtml(tip)}</li>`).join('')}
+            ${interviewTips.map(tip => `<li>${tip}</li>`).join('')}
           </ul>
         </div>
 
-        <!-- Full Job Description -->
-        <div class="description-section">
-          <h3><i class="fas fa-align-left"></i> Full Job Description</h3>
-          <p>${escapeHtml(cleanDesc) || 'No description provided.'}</p>
-        </div>
-
-        <!-- Application Guide -->
         <div class="info-section">
-          <h3><i class="fas fa-pen-alt"></i> How to Apply (Step‑by‑Step)</h3>
+          <h3><i class="fas fa-paper-plane"></i> Application Strategy</h3>
           <ul>
-            ${applicationTips.map(tip => `<li>${escapeHtml(tip)}</li>`).join('')}
-          </ul>
-          <p style="margin-top: 0.5rem;"><strong>Important:</strong> Only official company job openings are posted. Read the full description before applying.</p>
-        </div>
-
-        <!-- Company Culture & Benefits -->
-        <div class="info-section">
-          <h3><i class="fas fa-building"></i> Company Culture & Benefits (Typical for IT Freshers)</h3>
-          <p><strong>What to expect:</strong></p>
-          <ul>
-            ${companyCulture.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
-          </ul>
-          <p style="margin-top: 0.5rem;"><strong>Common benefits offered:</strong></p>
-          <ul>
-            ${benefits.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+            ${applicationTips.map(tip => `<li>${tip}</li>`).join('')}
           </ul>
         </div>
 
-        <!-- Recommended Certifications -->
-        <div class="info-section">
-          <h3><i class="fas fa-certificate"></i> Certifications That Add Value</h3>
-          <p>Earning any of these can boost your resume (not mandatory, but helpful):</p>
-          <div class="skill-tags">
-            ${certifications.map(cert => `<span class="skill-tag">${escapeHtml(cert)}</span>`).join('')}
-          </div>
-        </div>
-
-        <!-- Success Stories -->
-        <div class="info-section">
-          <h3><i class="fas fa-star"></i> Success Stories from ApplyMore Users</h3>
-          <ul>
-            ${successStories.map(story => `<li>✨ ${escapeHtml(story)}</li>`).join('')}
-          </ul>
-        </div>
-
-        <!-- Checklist Before Applying -->
-        <div class="info-section">
-          <h3><i class="fas fa-check-circle"></i> Checklist Before You Apply</h3>
-          <ul>
-            ${checklist.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
-          </ul>
-        </div>
-
-        <!-- Common Mistakes to Avoid -->
-        <div class="info-section">
-          <h3><i class="fas fa-exclamation-triangle"></i> Common Mistakes Freshers Make</h3>
-          <ul>
-            ${commonMistakes.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
-          </ul>
-        </div>
-
-        <!-- FAQ -->
-        <div class="info-section">
-          <h3><i class="fas fa-question-circle"></i> Frequently Asked Questions</h3>
-          ${faq.map(item => `
-            <div style="margin-bottom: 0.8rem;">
-              <strong style="color: var(--accent);">Q: ${escapeHtml(item.q)}</strong><br>
-              <span style="font-size: 0.85rem;">${escapeHtml(item.a)}</span>
-            </div>
-          `).join('')}
-        </div>
-
-        <!-- Similar Jobs -->
         <div id="similarJobsSection" class="similar-jobs-section" style="display: none;">
-          <h3><i class="fas fa-clock"></i> Latest Jobs for You</h3>
+          <h3><i class="fas fa-search"></i> Similar Jobs</h3>
           <div id="similarJobsGrid" class="similar-jobs-grid"></div>
         </div>
-
-        <!-- Apply Button (bottom) -->
-        <div class="apply-section">
-          <a href="${escapeHtml(job.url)}" target="_blank" class="apply-btn">Apply Now <i class="fas fa-arrow-right"></i></a>
-          <div class="apply-note">You will be redirected to the original job posting (LinkedIn/Indeed).</div>
-          <div class="apply-note">📌 Read the job description carefully before applying. Apply only once per job.</div>
-        </div>
       `;
-
-      document.getElementById('jobContent').innerHTML = html;
-
-      // ========== ADD STRUCTURED DATA (JSON-LD) ==========
-      const jsonLd = {
-        "@context": "https://schema.org",
-        "@type": "JobPosting",
-        "title": job.title,
-        "description": cleanDesc.substring(0, 5000),
-        "datePosted": job.posted_date || job.created_at,
-        "employmentType": getJobType(job.title),
-        "hiringOrganization": {
-          "@type": "Organization",
-          "name": job.company,
-          "sameAs": job.url ? new URL(job.url).origin : null
-        },
-        "jobLocation": {
-          "@type": "Place",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": job.location || "India",
-            "addressCountry": "IN"
-          }
-        },
-        "url": window.location.href
-      };
-      const scriptTag = document.createElement('script');
-      scriptTag.type = 'application/ld+json';
-      scriptTag.textContent = JSON.stringify(jsonLd);
-      document.head.appendChild(scriptTag);
     }
 
     function formatDate(dateString) {
-      if (!dateString) return '';
+      if (!dateString) return 'Recently';
       const date = new Date(dateString);
       const now = new Date();
-      const diffDays = Math.ceil(Math.abs(now - date) / (1000 * 60 * 60 * 24));
+      const diffTime = Math.abs(now - date);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
       if (diffDays === 0) return 'Today';
       if (diffDays === 1) return 'Yesterday';
       if (diffDays < 7) return `${diffDays} days ago`;
-      return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+      if (diffDays < 30) return `${Math.ceil(diffDays / 7)} weeks ago`;
+      return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
     }
 
-    function escapeHtml(str) {
-      if (!str) return '';
-      return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
-    }
-
-    function setTheme(theme) {
-      const themes = {
-        dark: { '--glass-bg': 'rgba(15, 25, 45, 0.65)', '--text-primary': '#f0f3ff', '--text-secondary': '#9ca3cf' },
-        light: { '--glass-bg': 'rgba(255, 255, 255, 0.75)', '--text-primary': '#1e293b', '--text-secondary': '#475569' },
-        vibrant: { '--glass-bg': 'rgba(255, 240, 245, 0.75)', '--text-primary': '#831843', '--text-secondary': '#9d174d' }
-      };
-      const selected = themes[theme];
-      if (selected) {
-        Object.entries(selected).forEach(([key, value]) => document.documentElement.style.setProperty(key, value));
-        localStorage.setItem('theme', theme);
-        document.body.style.background = theme === 'light' ? '#f8fafc' : (theme === 'vibrant' ? '#fdf2f8' : '#0a0a2a');
+    function trackApplyClick() {
+      if (window.va && currentJobId) {
+        window.va('track', 'apply_clicked', { job_id: currentJobId });
       }
     }
 
+    // Theme switching
+    function setTheme(theme) {
+      document.body.className = theme === 'dark' ? '' : theme;
+      localStorage.setItem('theme', theme);
+    }
+    
     const savedTheme = localStorage.getItem('theme') || 'dark';
     setTheme(savedTheme);
+    
     document.getElementById('lightTheme')?.addEventListener('click', () => setTheme('light'));
     document.getElementById('darkTheme')?.addEventListener('click', () => setTheme('dark'));
     document.getElementById('vibrantTheme')?.addEventListener('click', () => setTheme('vibrant'));
 
-    fetchJob();
+    // Initialize
+    fetchJobWithRetry();
   </script>
 </body>
 </html>
