@@ -1,3 +1,5 @@
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +21,7 @@
     body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.4}
     body.light{--bg:#f8fafc;--card-bg:rgba(255,255,255,0.9);--text:#1e293b;--text-muted:#334155;--border:rgba(0,0,0,0.1);--accent:#2563eb}
     body.vibrant{--bg:#fdf2f8;--card-bg:rgba(255,255,255,0.9);--text:#831843;--text-muted:#9d174d;--accent:#ec489a}
+    body.offline{filter:grayscale(0.5)}
     .container{max-width:1400px;margin:0 auto;padding:1rem}
     .main-nav{background:var(--card-bg);border-radius:2rem;padding:0.5rem 1rem;margin-bottom:1.5rem;display:flex;justify-content:center;gap:0.8rem;flex-wrap:wrap;border:1px solid var(--border)}
     .main-nav a{color:var(--text);text-decoration:none;font-size:0.85rem;padding:0.3rem 0.8rem;border-radius:2rem;transition:0.1s}
@@ -85,6 +88,8 @@
     .add-link-box input{flex:2;padding:0.3rem;background:rgba(0,0,0,0.1);border:1px solid var(--border);border-radius:2rem;font-size:0.7rem;color:var(--text)}
     .add-link-box button{background:var(--accent);border:none;padding:0.3rem 0.6rem;border-radius:2rem;color:white;cursor:pointer}
     .links-list{display:flex;flex-wrap:wrap;gap:0.3rem}
+    .empty-message{text-align:center;padding:3rem;background:var(--card-bg);border-radius:1rem;border:1px solid var(--border)}
+    .offline-banner{background:#ef4444;color:white;text-align:center;padding:0.5rem;font-size:0.8rem;position:fixed;top:0;left:0;right:0;z-index:1000}
     @media (max-width:640px){
       .hero h1{font-size:1.8rem}
       .controls{flex-direction:column}
@@ -97,6 +102,10 @@
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
+<div id="offlineBanner" class="offline-banner" style="display:none;">
+  📡 You're offline. Some features may not work.
+</div>
+
 <div class="container">
   <nav class="main-nav" aria-label="Main navigation">
     <a href="index.html">🏠 Home</a>
@@ -174,15 +183,80 @@
     <p>Made with ❤️ by Ram — Helping IT freshers</p>
   </footer>
 </div>
+
 <div id="cookieConsent" style="position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,0.9);padding:0.5rem;text-align:center;z-index:1000;display:flex;justify-content:center;align-items:center;gap:0.5rem;font-size:0.7rem">
   <span>🍪 We use cookies. <a href="privacy.html" style="color:#3b82f6;">Privacy</a></span>
   <button id="acceptCookies" style="background:#3b82f6;border:none;padding:0.2rem 0.6rem;border-radius:2rem;color:white;cursor:pointer">Accept</button>
 </div>
+
+<!-- Feedback Widget -->
+<div id="feedbackWidget" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+  <button id="feedbackBtn" style="background: #3b82f6; border: none; padding: 0.5rem 1rem; border-radius: 2rem; color: white; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+    💬 Quick Feedback
+  </button>
+  <div id="feedbackForm" style="display: none; background: rgba(20, 20, 50, 0.95); padding: 1rem; border-radius: 1rem; margin-top: 0.5rem; width: 300px; border: 1px solid #3b82f6;">
+    <textarea id="feedbackText" placeholder="Found a bug? Have a suggestion? Tell Ram..." style="width: 100%; height: 80px; margin-bottom: 0.5rem; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #3b82f6; background: rgba(0,0,0,0.3); color: white;"></textarea>
+    <button onclick="submitFeedback()" style="background: #3b82f6; border: none; padding: 0.3rem 0.8rem; border-radius: 1rem; color: white; cursor: pointer;">Send to Ram</button>
+    <button onclick="closeFeedback()" style="background: #666; border: none; padding: 0.3rem 0.8rem; border-radius: 1rem; color: white; cursor: pointer; margin-left: 0.5rem;">Close</button>
+  </div>
+</div>
+
 <script>
 (function() {
   // Cookie consent
   if (localStorage.getItem('cookiesAccepted') === 'true') document.getElementById('cookieConsent').style.display = 'none';
   document.getElementById('acceptCookies')?.addEventListener('click', () => { localStorage.setItem('cookiesAccepted', 'true'); document.getElementById('cookieConsent').style.display = 'none'; });
+
+  // Network status detection
+  window.addEventListener('online', () => {
+    document.body.classList.remove('offline');
+    document.getElementById('offlineBanner').style.display = 'none';
+    if (typeof fetchJobsWithRetry === 'function') fetchJobsWithRetry();
+  });
+
+  window.addEventListener('offline', () => {
+    document.body.classList.add('offline');
+    document.getElementById('offlineBanner').style.display = 'block';
+  });
+
+  // Feedback widget
+  document.getElementById('feedbackBtn').addEventListener('click', function() {
+    const form = document.getElementById('feedbackForm');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  });
+
+  window.closeFeedback = function() {
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('feedbackText').value = '';
+  }
+
+  window.submitFeedback = function() {
+    const feedback = document.getElementById('feedbackText').value.trim();
+    if (!feedback) {
+      alert('Please write something first!');
+      return;
+    }
+    
+    const subject = 'ApplyMore Feedback';
+    const body = `Hi Ram,\n\nFeedback from ApplyMore:\n\n${feedback}\n\nPage: ${window.location.href}\nTime: ${new Date().toLocaleString()}`;
+    const mailtoLink = `mailto:connectwithme.ramkumar@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    window.open(mailtoLink);
+    
+    alert('Thanks! Your email app should open. If not, copy this and email Ram:\n\n' + feedback);
+    closeFeedback();
+  }
+
+  // Error handling
+  window.addEventListener('error', function(e) {
+    console.error('Global error:', e.error);
+    if (window.va) {
+      window.va('track', 'error', { 
+        message: e.error?.message,
+        page: window.location.pathname 
+      });
+    }
+  });
 
   const SUPABASE_URL = 'https://qmljqckhhdmvcbomydhf.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_rmCQIW6Lw90zleW-lYZcFw_WZrcHw4h';
@@ -203,10 +277,28 @@
   function formatDate(d) { if (!d) return ''; const diff = Math.ceil(Math.abs(new Date() - new Date(d)) / (1000*60*60*24)); if (diff===0) return 'Today'; if (diff===1) return 'Yesterday'; if (diff<7) return `${diff} days ago`; return new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short'}); }
   function escapeHtml(s) { return s ? s.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]) : ''; }
   function updateStats(j) { document.getElementById('totalJobsCount').innerText = j.length; const today = new Date().toISOString().split('T')[0]; document.getElementById('todayJobsCount').innerText = j.filter(job => (new Date(job.created_at||job.posted_date)).toISOString().split('T')[0] === today).length; }
+  
+  function validateJobData(job) {
+    const required = ['id', 'title', 'company'];
+    const missing = required.filter(field => !job[field]);
+    
+    if (missing.length > 0) {
+      console.warn('Invalid job data:', missing, job);
+      return false;
+    }
+    
+    job.title = job.title?.trim() || 'Untitled Position';
+    job.company = job.company?.trim() || 'Company Name Not Available';
+    job.location = job.location?.trim() || 'Location Not Specified';
+    
+    return true;
+  }
+
   function displayJobs() {
     const search = document.getElementById('searchInput').value.toLowerCase().trim();
     const loc = document.getElementById('locationFilter').value;
-    let filtered = [...allJobs];
+    let filtered = allJobs.filter(validateJobData);
+    
     if (loc !== 'all') filtered = filtered.filter(j => j.location && j.location.toLowerCase().includes(loc.toLowerCase()));
     if (search) filtered = filtered.filter(j => j.title.toLowerCase().includes(search) || (j.company && j.company.toLowerCase().includes(search)) || (j.description && j.description.toLowerCase().includes(search)));
     if (currentFilter !== 'all') filtered = filtered.filter(j => getExperienceLevel(j) === currentFilter);
@@ -222,57 +314,131 @@
       const tag = level === 'fresher' ? 'Fresher' : (level === 'mid' ? '1-2Y' : '3+Y');
       const type = getJobType(job.title);
       const initial = job.company?.trim()?.[0]?.toUpperCase() || '?';
-      const desc = decodeHtmlEntities(job.description || '').substring(0,100);
-      return `<div class="job-card" data-job-id="${job.id}" role="article">
-        <div class="card-header">
-          <div class="company-logo" aria-label="${escapeHtml(job.company)} logo">${escapeHtml(initial)}</div>
-          <div><div class="company-name">${escapeHtml(job.company)}</div><div class="job-type">${type}</div></div>
+            const desc = decodeHtmlEntities(job.description || '').substring(0, 120);
+      return `
+        <div class="job-card" tabindex="0" onclick="window.location.href='job.html?id=${job.id}'" onkeydown="if(event.key==='Enter')window.location.href='job.html?id=${job.id}'">
+          <div class="card-header">
+            <div class="company-logo">${escapeHtml(initial)}</div>
+            <div>
+              <div class="company-name">${escapeHtml(job.company)}</div>
+              <div class="job-type">${escapeHtml(type)}</div>
+            </div>
+          </div>
+          <h3 class="job-title">${escapeHtml(job.title)}</h3>
+          <div class="location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}</div>
+          <div class="description">${escapeHtml(desc)}${desc.length >= 120 ? '...' : ''}</div>
+          <div class="card-footer">
+            <span class="posted-date">${formatDate(job.posted_date || job.created_at)}</span>
+            <span class="exp-tag ${level}">${escapeHtml(tag)}</span>
+            <a href="job.html?id=${job.id}" class="view-details" onclick="event.stopPropagation()">View Details</a>
+          </div>
         </div>
-        <div class="job-title">${escapeHtml(job.title)}</div>
-        <div class="location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> ${escapeHtml(job.location || 'Not specified')}</div>
-        <div class="description">${escapeHtml(desc)}...</div>
-        <div class="card-footer">
-          <span class="posted-date">📅 ${formatDate(job.posted_date||job.created_at)}</span>
-          <span class="exp-tag ${level}">${tag}</span>
-        </div>
-        <div style="text-align:right"><a href="#" class="view-details" data-job-id="${job.id}" aria-label="View details for ${escapeHtml(job.title)}">Details →</a></div>
-      </div>`;
+      `;
     }).join('');
-    document.querySelectorAll('.job-card').forEach(card => { card.addEventListener('click', (e) => { if (e.target.closest('.view-details')) return; window.location.href = `job.html?id=${card.getAttribute('data-job-id')}`; }); });
-    document.querySelectorAll('.view-details').forEach(btn => { btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); window.location.href = `job.html?id=${btn.getAttribute('data-job-id')}`; }); });
   }
-  async function fetchJobs() {
-    if (jobsLoaded) return;
-    jobsLoaded = true;
-    try {
-      const r = await fetch(`${SUPABASE_URL}/rest/v1/ApplyMore?select=*&order=created_at.desc`, { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } });
-      if (!r.ok) throw new Error();
-      allJobs = await r.json();
+
+  async function fetchJobsWithRetry(retries = 3) {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/ApplyMore?select=*&order=created_at.desc&limit=1000`, {
+          headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const jobs = await response.json();
+        allJobs = jobs || [];
+        jobsLoaded = true;
+        displayJobs();
+        return;
+      } catch (error) {
+        console.error(`Attempt ${i + 1} failed:`, error);
+        if (i === retries - 1) {
+          document.getElementById('jobsContainer').innerHTML = `
+            <div class="empty-message">
+              ⚠️ Couldn't load jobs right now. This happens sometimes.
+              <br><br>
+              <button onclick="location.reload()" style="background: #3b82f6; border: none; padding: 0.5rem 1rem; border-radius: 2rem; color: white; cursor: pointer; margin-top: 0.5rem;">
+                Try Again
+              </button>
+              <br><br>
+              <a href="mailto:connectwithme.ramkumar@gmail.com" style="color: #3b82f6;">Email Ram if this keeps happening</a>
+            </div>
+          `;
+        } else {
+          await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+        }
+      }
+    }
+  }
+
+  // Event listeners
+  document.getElementById('searchInput').addEventListener('input', displayJobs);
+  document.getElementById('locationFilter').addEventListener('change', displayJobs);
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
       displayJobs();
-    } catch(e) { document.getElementById('jobsContainer').innerHTML = '<div class="empty-message">⚠️ Failed to load jobs. Please refresh.</div>'; }
+    });
+  });
+  document.getElementById('resetFiltersBtn').addEventListener('click', () => {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('locationFilter').value = 'all';
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-filter="fresher"]').classList.add('active');
+    currentFilter = 'fresher';
+    displayJobs();
+  });
+
+  // Theme switching
+  function setTheme(theme) {
+    document.body.className = theme === 'dark' ? '' : theme;
+    localStorage.setItem('theme', theme);
   }
-  function setFilter(f) { currentFilter = f; document.querySelectorAll('.filter-btn').forEach(btn => { if (btn.getAttribute('data-filter') === f) btn.classList.add('active'); else btn.classList.remove('active'); }); displayJobs(); }
-  function resetFilters() { document.getElementById('searchInput').value = ''; document.getElementById('locationFilter').value = 'all'; setFilter('fresher'); }
-  function setTheme(theme) { document.body.classList.remove('light', 'vibrant'); if (theme !== 'dark') document.body.classList.add(theme); localStorage.setItem('theme', theme); }
-  let links = JSON.parse(localStorage.getItem('recommendedLinks') || '[]');
-  function renderLinks() { const c = document.getElementById('linksList'); if (!c) return; if (!links.length) { c.innerHTML = '<span>No links yet. Add one!</span>'; return; } c.innerHTML = links.map(l => `<a href="${escapeHtml(l)}" target="_blank" rel="noopener" style="background:rgba(255,255,255,0.1); padding:0.2rem 0.4rem; border-radius:1rem; font-size:0.7rem; color:var(--accent); text-decoration:none;">🔗 ${l.length>30?l.substring(0,30)+'...':l}</a>`).join(''); }
-  function addLink(l) { try { new URL(l); links.unshift(l); if (links.length>8) links.pop(); localStorage.setItem('recommendedLinks', JSON.stringify(links)); renderLinks(); alert('Link added!'); } catch(e) { alert('Invalid URL'); } }
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  setTheme(savedTheme);
   document.getElementById('lightTheme')?.addEventListener('click', () => setTheme('light'));
   document.getElementById('darkTheme')?.addEventListener('click', () => setTheme('dark'));
   document.getElementById('vibrantTheme')?.addEventListener('click', () => setTheme('vibrant'));
-  document.getElementById('searchInput')?.addEventListener('input', displayJobs);
-  document.getElementById('locationFilter')?.addEventListener('change', displayJobs);
-  document.getElementById('resetFiltersBtn')?.addEventListener('click', resetFilters);
-  document.getElementById('submitLinkBtn')?.addEventListener('click', () => { const i = document.getElementById('newLinkInput'); if (i.value.trim()) addLink(i.value.trim()); i.value = ''; });
-  document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', (e) => setFilter(e.currentTarget.getAttribute('data-filter'))));
-  document.getElementById('shareTwitter')?.addEventListener('click', (e) => { e.preventDefault(); window.open(`https://twitter.com/intent/tweet?text=Find IT jobs in India! ${encodeURIComponent(window.location.href)}`, '_blank'); });
-  document.getElementById('shareLinkedin')?.addEventListener('click', (e) => { e.preventDefault(); window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(window.location.href)}&title=IT Jobs in India`, '_blank'); });
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  setTheme(savedTheme);
-  renderLinks();
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fetchJobs);
-  else fetchJobs();
-  setInterval(fetchJobs, 5*60*1000);
+
+  // Social sharing
+  document.getElementById('shareTwitter')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.open(`https://twitter.com/intent/tweet?text=Found%20amazing%20IT%20fresher%20jobs%20on%20ApplyMore!&url=${encodeURIComponent(window.location.href)}`, '_blank');
+  });
+  document.getElementById('shareLinkedin')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank');
+  });
+
+  // Link submission
+  document.getElementById('submitLinkBtn')?.addEventListener('click', () => {
+    const url = document.getElementById('newLinkInput').value.trim();
+    if (!url) return;
+    const subject = 'New Job Link Submission';
+    const body = `Hi Ram,\n\nI found this job link that might be useful for ApplyMore:\n\n${url}\n\nSubmitted from: ${window.location.href}\nTime: ${new Date().toLocaleString()}`;
+    const mailtoLink = `mailto:connectwithme.ramkumar@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(mailtoLink);
+    document.getElementById('newLinkInput').value = '';
+    alert('Thanks! Your email app should open to send the link to Ram.');
+  });
+
+  // Performance tracking
+  function trackPerformance() {
+    if ('performance' in window) {
+      const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+      if (window.va && loadTime > 0) {
+        window.va('track', 'page_load_time', { 
+          duration: loadTime,
+          page: window.location.pathname 
+        });
+      }
+    }
+  }
+  window.addEventListener('load', trackPerformance);
+
+  // Initialize
+  fetchJobsWithRetry();
 })();
 </script>
 </body>
