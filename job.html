@@ -8,26 +8,40 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    :root{--bg:#0a0a2a;--card-bg:rgba(20,20,50,0.65);--text:#f0f3ff;--text-muted:#9ca3cf;--border:rgba(255,255,255,0.1);--accent:#3b82f6}
+    :root{--bg:#0a0a2a;--card-bg:rgba(20,20,50,0.65);--text:#f0f3ff;--text-muted:#9ca3cf;--border:rgba(255,255,255,0.1);--accent:#3b82f6;--accent-dark:#2563eb}
     body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:2rem;line-height:1.6}
     body.light{--bg:#f8fafc;--card-bg:rgba(255,255,255,0.85);--text:#1e293b;--text-muted:#475569;--border:rgba(0,0,0,0.1);--accent:#2563eb}
     body.vibrant{--bg:#fdf2f8;--card-bg:rgba(255,255,255,0.9);--text:#831843;--text-muted:#9d174d;--accent:#ec489a}
-    .container{max-width:800px;margin:0 auto}
-    .detail-card{background:var(--card-bg);backdrop-filter:blur(10px);border-radius:1rem;padding:2rem;border:1px solid var(--border)}
-    .back-link{display:inline-block;margin-bottom:1rem;color:var(--accent);text-decoration:none}
-    h1{font-size:1.8rem;margin-bottom:0.5rem;color:var(--accent)}
-    .company{font-size:1.2rem;margin-bottom:0.3rem}
-    .location{font-size:0.9rem;color:var(--text-muted);margin-bottom:1rem}
-    .description{white-space:pre-wrap;margin:1rem 0}
-    .apply-btn{display:inline-block;background:var(--accent);color:white;padding:0.6rem 1.5rem;border-radius:2rem;text-decoration:none;margin-top:1rem}
-    .apply-btn:hover{background:var(--accent-dark)}
-    .missing-url{color:#ef4444;font-size:0.9rem;margin-top:1rem}
-    .loading,.error{text-align:center;padding:2rem}
+    .container{max-width:1000px;margin:0 auto}
+    .detail-card{background:var(--card-bg);backdrop-filter:blur(10px);border-radius:1.5rem;padding:2rem;border:1px solid var(--border)}
+    .back-link{display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;color:var(--accent);text-decoration:none;font-weight:500}
+    .job-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+    .company-logo{width:70px;height:70px;background:linear-gradient(135deg,var(--accent),var(--purple));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.8rem;color:white}
+    .company-details h1{font-size:1.8rem;color:var(--accent);margin-bottom:0.2rem}
+    .company-details .company-name{font-size:1.2rem;font-weight:500}
+    .job-meta{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;font-size:0.85rem;color:var(--text-muted)}
+    .job-meta i{width:1.2rem}
+    .section{margin-bottom:1.5rem}
+    .section h3{font-size:1.2rem;color:var(--accent);margin-bottom:0.5rem;border-left:3px solid var(--accent);padding-left:0.5rem}
+    .section p,.section ul{color:var(--text-muted);margin-left:0.5rem}
+    .section ul{margin-left:1.5rem}
+    .skill-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem}
+    .skill-tag{background:rgba(59,130,246,0.15);border-radius:2rem;padding:0.2rem 0.7rem;font-size:0.75rem;color:var(--accent)}
+    .apply-box{background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-radius:1rem;padding:1.5rem;text-align:center;margin-top:1rem}
+    .apply-btn{display:inline-block;background:white;color:var(--accent);padding:0.7rem 2rem;border-radius:3rem;font-weight:700;text-decoration:none;font-size:1rem;transition:0.2s}
+    .apply-btn:hover{transform:scale(1.02);box-shadow:0 5px 15px rgba(0,0,0,0.2)}
+    .missing-url{color:#ef4444;background:rgba(239,68,68,0.1);padding:0.5rem;border-radius:0.5rem}
+    .loading,.error{text-align:center;padding:3rem;background:var(--card-bg);border-radius:1rem}
     footer{margin-top:2rem;text-align:center;font-size:0.7rem;color:var(--text-muted)}
     .nav-links{display:flex;justify-content:center;gap:1rem;margin-bottom:2rem;flex-wrap:wrap}
     .nav-links a{color:var(--text-muted);text-decoration:none}
     .top-bar{display:flex;justify-content:flex-end;gap:0.5rem;margin-bottom:1rem}
     .theme-btn{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:2rem;padding:0.2rem 0.6rem;cursor:pointer;font-size:0.7rem;color:var(--text)}
+    @media (max-width:640px){
+      .job-header{flex-direction:column;text-align:center}
+      .company-logo{width:50px;height:50px;font-size:1.2rem}
+      .company-details h1{font-size:1.4rem}
+    }
   </style>
 </head>
 <body>
@@ -45,12 +59,8 @@
     <a href="privacy.html">🔒 Privacy</a>
     <a href="terms.html">⚖️ Terms</a>
   </div>
-  <div id="jobContent">
-    <div class="loading">Loading job details...</div>
-  </div>
-  <footer>
-    <p>© 2026 ApplyMore – Helping freshers land their dream job</p>
-  </footer>
+  <div id="jobContent"><div class="loading">Loading job details...</div></div>
+  <footer>© 2026 ApplyMore – Helping freshers land their dream job</footer>
 </div>
 <script>
   const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -65,6 +75,15 @@
   function getQueryParam(p) { return new URLSearchParams(window.location.search).get(p); }
   function escapeHtml(s){ return s? s.replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]):''; }
   function decodeHtmlEntities(str) { if (!str) return ''; const t = document.createElement('textarea'); t.innerHTML = str; return t.value; }
+
+  // Extract common skills from title+description
+  function extractSkills(title, description) {
+    const text = (title + ' ' + description).toLowerCase();
+    const skillsList = ['python','sql','java','javascript','react','angular','node.js','pandas','numpy','tableau','power bi','aws','azure','git','docker','kubernetes','django','flask','spring','html','css','c++','c#','typescript','mongodb','postgresql','mysql','excel','linux','rest api','graphql','tensorflow','pytorch','scikit-learn','selenium','jenkins','ansible','terraform','prometheus','grafana','elasticsearch','kafka','redis','mongo','postgres','mysql','oracle','swift','kotlin','flutter','vue','svelte','next.js','nuxt','gatsby','wordpress','shopify','salesforce','sap','oracle','ibm','microsoft','google cloud','azure','aws','docker','kubernetes','openshift','helm','istio','envoy','nginx','apache','tomcat','jboss','weblogic','websphere','cassandra','hadoop','spark','hive','hbase','zookeeper','kafka','flink','storm','samza','beam','airflow','druid','pinot','clickhouse','vertica','redshift','snowflake','bigquery','dataflow','databricks','mlflow','kubeflow','sagemaker','azure ml','google ai','openai','llama','gpt','bert','transformer','langchain','llamaindex','chroma','pinecone','weaviate','qdrant','milvus','faiss','annoy','nmslib','scann','vespa','solr','elasticsearch','opensearch','meilisearch','typesense','algolia','azure cognitive','aws comprehend','google natural language','spacy','nltk','gensim','transformers','huggingface','opencv','pillow','scikit-image','matplotlib','seaborn','plotly','bokeh','d3','echarts','highcharts','leaflet','mapbox','cesium','deck.gl','kepler.gl','carto','qgis','arcgis','postgis','geopandas','shapely','fiona','rasterio','gdal','ogr','proj','geos','libgeotiff','laszip','pdal','entwine','potree','three.js','babylon.js','unity','unreal','godot','cocos2d','phaser','pixi.js','createjs','paper.js','fabric.js','konva','snap.svg','raphael','d3','vega','altair','ggplot2','plotly','bokeh','shiny','streamlit','dash','panel','voila','jupyter','colab','kaggle','databricks','snowflake','bigquery','redshift','synapse','teradata','netezza','greenplum','vertica','clickhouse','druid','pinot','kylin','presto','trino','impala','hive','spark sql','flink sql','calcite','drill','phoenix','tajo','traffic','citus','timescaledb','influxdb','questdb','timeseries','promql','mql','graphql','rest','soap','grpc','thrift','avro','protobuf','json','xml','yaml','toml','ini','csv','parquet','orc','avro','sequencefile','mapfile','hfile','orc','parquet','avro','sequencefile','mapfile','hfile','orc','parquet','avro','sequencefile','mapfile','hfile','orc','parquet','avro','sequencefile','mapfile','hfile'];
+    const found = skillsList.filter(s => text.includes(s));
+    return found.slice(0,8);
+  }
+
   async function fetchJob() {
     const id = getQueryParam('id');
     if (!id) { document.getElementById('jobContent').innerHTML = '<div class="error">No job ID specified.</div>'; return; }
@@ -77,18 +96,55 @@
       const cleanDesc = decodeHtmlEntities(job.description || 'No description provided.');
       const applyUrl = job.url ? job.url.trim() : '';
       const isValidUrl = applyUrl && (applyUrl.startsWith('http://') || applyUrl.startsWith('https://'));
-      document.getElementById('jobContent').innerHTML = `
+      const skills = extractSkills(job.title, cleanDesc);
+      const companyInitial = job.company?.trim()[0]?.toUpperCase() || '?';
+      const html = `
         <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Jobs</a>
         <div class="detail-card">
-          <h1>${escapeHtml(job.title)}</h1>
-          <div class="company"><i class="fas fa-building"></i> ${escapeHtml(job.company)}</div>
-          <div class="location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}</div>
-          <div class="description">${escapeHtml(cleanDesc)}</div>
-          ${isValidUrl ? `<a href="${escapeHtml(applyUrl)}" target="_blank" rel="noopener noreferrer" class="apply-btn">Apply Now →</a>` : '<div class="missing-url">⚠️ No valid application link available for this job.</div>'}
+          <div class="job-header">
+            <div class="company-logo">${escapeHtml(companyInitial)}</div>
+            <div class="company-details">
+              <h1>${escapeHtml(job.title)}</h1>
+              <div class="company-name">${escapeHtml(job.company)}</div>
+            </div>
+          </div>
+          <div class="job-meta">
+            <span><i class="fas fa-map-marker-alt"></i> ${escapeHtml(job.location || 'Not specified')}</span>
+            <span><i class="fas fa-calendar-alt"></i> Posted: ${formatDate(job.posted_date||job.created_at)}</span>
+          </div>
+          <div class="section">
+            <h3>🔧 Skills You'll Need</h3>
+            <div class="skill-tags">
+              ${skills.length ? skills.map(s => `<span class="skill-tag">${escapeHtml(s)}</span>`).join('') : '<span>No specific skills extracted. Check description below.</span>'}
+            </div>
+          </div>
+          <div class="section">
+            <h3>📄 Job Description</h3>
+            <p>${escapeHtml(cleanDesc)}</p>
+          </div>
+          <div class="section">
+            <h3>📝 How to Apply</h3>
+            <ul>
+              <li>Click the "Apply Now" button below to visit the original job posting.</li>
+              <li>Read the full description carefully before applying.</li>
+              <li>Prepare your resume and tailor it to the job requirements.</li>
+              <li>Submit your application directly on the company's website.</li>
+            </ul>
+          </div>
+          <div class="section">
+            <h3>🏢 About the Company</h3>
+            <p>${escapeHtml(job.company)} is actively hiring for this role. Research the company's culture and values before the interview.</p>
+          </div>
+          <div class="apply-box">
+            ${isValidUrl ? `<a href="${escapeHtml(applyUrl)}" target="_blank" rel="noopener noreferrer" class="apply-btn">Apply Now →</a>` : '<div class="missing-url">⚠️ No valid application link available for this job.</div>'}
+            <p style="font-size:0.7rem; margin-top:0.5rem;">You will be redirected to the original job posting.</p>
+          </div>
         </div>
       `;
+      document.getElementById('jobContent').innerHTML = html;
     } catch(e) { document.getElementById('jobContent').innerHTML = '<div class="error">Failed to load job. Please try again later.</div>'; }
   }
+  function formatDate(d) { if (!d) return ''; const diff = Math.ceil(Math.abs(new Date() - new Date(d)) / (1000*60*60*24)); if (diff===0) return 'Today'; if (diff===1) return 'Yesterday'; if (diff<7) return `${diff} days ago`; return new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short'}); }
   fetchJob();
 </script>
 </body>
