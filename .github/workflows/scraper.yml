@@ -16,6 +16,18 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: pip install -r scraper/requirements.txt
+      
+      # DEBUG: Test Supabase connection with curl
+      - name: Test Supabase connection
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          echo "Testing Supabase connection..."
+          curl -v -X GET "${SUPABASE_URL}/rest/v1/ApplyMore?limit=1" \
+            -H "apikey: ${SUPABASE_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_KEY}"
+      
       - name: Run scraper
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
