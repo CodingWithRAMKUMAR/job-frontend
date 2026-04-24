@@ -1,13 +1,12 @@
 import os
 import requests
-import json
 from datetime import datetime, timezone, timedelta
 from supabase import create_client
 import time
 
 SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_SERVICE_ROLE_KEY = os.environ["SUPABASE_SERVICE_ROLE_KEY"]
-RAPIDAPI_KEY = os.environ["RAPIDAPI_KEY"]
+RAPIDAPI_KEY = os.environ["RAPIDAPI_KEY"].strip()   # <-- FIX: removes newlines/spaces
 
 supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
@@ -40,6 +39,8 @@ def fetch_jobs(city):
         "x-rapidapi-key": RAPIDAPI_KEY,
         "x-rapidapi-host": "jsearch.p.rapidapi.com"
     }
+    # Remove any stray newlines that might have been left (extra safety)
+    headers = {k: v.replace('\n', '').replace('\r', '').strip() for k, v in headers.items()}
     resp = requests.get(url, headers=headers, params=params, timeout=10)
     if resp.status_code != 200:
         print(f"Error {resp.status_code} for {city}")
