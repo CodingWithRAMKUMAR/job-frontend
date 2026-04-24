@@ -2,8 +2,8 @@ name: Automated Job Scraper
 
 on:
   schedule:
-    - cron: '0 0,12 * * *'  # Runs at 00:00 and 12:00 UTC every day
-  workflow_dispatch:         # Allows manual run from the GitHub UI
+    - cron: '0 0,12 * * *'
+  workflow_dispatch:
 
 jobs:
   scrape:
@@ -25,5 +25,4 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          # Add other secrets for Telegram notifications if you have them
         run: python scraper.py
