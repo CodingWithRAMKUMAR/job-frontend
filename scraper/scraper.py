@@ -1,19 +1,15 @@
 import os
 import time
 import random
+import requests
 from datetime import datetime
 from dotenv import load_dotenv
-from supabase import create_client
 from jobspy import scrape_jobs
 
 load_dotenv()
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
-
-# DEBUG: print first few characters of the key (to confirm it's loaded)
-print(f"SUPABASE_URL: {SUPABASE_URL}")
-print(f"SUPABASE_KEY prefix: {SUPABASE_KEY[:15]}...")
+SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")   # anon key works here
 
 SEARCH_TERMS = [
     "software engineer", "data analyst", "java developer", "python developer",
@@ -24,20 +20,46 @@ LOCATIONS = ["Hyderabad", "Chennai", "Mumbai", "Pune", "Gurugram",
 RESULTS_WANTED = 20
 SLEEP_SECONDS = 30
 
-def get_existing_urls(supabase):
-    response = supabase.table("ApplyMore").select("url").execute()
-    return {item["url"] for item in response.data}
+def get_existing_urls():
+    url = f"{SUPABASE_URL}/rest/v1/ApplyMore?select=url"
+    headers = {
+        "apikey": SUPABASE_KEY,
+        "Authorization": f"Bearer {SUPABASE_KEY}"
+    }
+    resp = requests.get(url, headers=headers)
+    if resp.status_code == 200:
+        return {item["url"] for item in resp.json()}
+    print(f"Failed to fetch existing URLs: {resp.status_code}")
+    return set()
+
+def insert_jobs(jobs):
+    if not jobs:
+        return
+    url = f"{SUPABASE_URL}/rest/v1/ApplyMore"
+    headers = {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": f"Bearer {SUPABASE_KEY}",
+        "Prefer": "return=minimal"
+    }
+    batch_size = 50
+    for i in range(0, len(jobs), batch_size):
+        batch = jobs[i:i+batch_size]
+        resp = requests.post(url, headers=headers, json=batch)
+        if resp.status_code in (200, 201):
+            print(f"Inserted batch of {len(batch)} jobs")
+        else:
+            print(f"Insert failed: {resp.status_code} - {resp.text}")
 
 def scrape_and_store():
-    supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
-    existing = get_existing_urls(supabase)
+    existing_urls = get_existing_urls()
     new_jobs = []
 
     for location in LOCATIONS:
         for term in SEARCH_TERMS:
             print(f"Scraping {term} in {location}")
             try:
-                jobs = scrape_jobs(
+                jobs_df = scrape_jobs(
                     site_name=["linkedin", "indeed"],
                     search_term=term,
                     location=location,
@@ -45,9 +67,9 @@ def scrape_and_store():
                     hours_old=72,
                     country_indeed='india'
                 )
-                for _, row in jobs.iterrows():
+                for _, row in jobs_df.iterrows():
                     url = row.get('job_url', '')
-                    if url and url not in existing:
+                    if url and url not in existing_urls:
                         new_jobs.append({
                             "title": row.get('title', '')[:200],
                             "company": row.get('company', '')[:100],
@@ -57,16 +79,14 @@ def scrape_and_store():
                             "posted_date": datetime.now().isoformat(),
                             "created_at": datetime.now().isoformat()
                         })
-                        existing.add(url)
+                        existing_urls.add(url)
                 time.sleep(random.randint(SLEEP_SECONDS, SLEEP_SECONDS + 20))
             except Exception as e:
                 print(f"Error: {e}")
                 time.sleep(SLEEP_SECONDS * 2)
 
     if new_jobs:
-        batch_size = 50
-        for i in range(0, len(new_jobs), batch_size):
-            supabase.table("ApplyMore").insert(new_jobs[i:i+batch_size]).execute()
+        insert_jobs(new_jobs)
         print(f"Inserted {len(new_jobs)} new jobs.")
     else:
         print("No new jobs found.")
