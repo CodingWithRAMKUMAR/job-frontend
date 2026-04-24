@@ -12,7 +12,7 @@ TELEGRAM_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 
 ALLOWED_SOURCES = {"linkedin", "indeed", "glassdoor"}
-CITIES = ["Hyderabad", "Bangalore", "Chennai"]   # Only these three
+CITIES = ["Hyderabad", "Bangalore", "Chennai"]
 SEARCH_TERMS = [
     "fresher software engineer", "graduate engineer trainee", "entry level developer",
     "fresher data analyst", "trainee engineer", "fresher devops", "fresher cybersecurity", "fresher qa"
@@ -49,10 +49,12 @@ async def fetch_jobs(session, query, city):
     try:
         async with session.get(url, headers=headers, params=params, timeout=10) as resp:
             if resp.status != 200:
+                print(f"API error {resp.status} for {query} in {city}")
                 return []
             data = await resp.json()
             return data.get("data", [])
-    except:
+    except Exception as e:
+        print(f"Request failed for {query} in {city}: {e}")
         return []
 
 async def send_telegram(session, text):
@@ -62,7 +64,7 @@ async def send_telegram(session, text):
     await session.post(url, json={"chat_id": TELEGRAM_CHAT_ID, "text": text, "parse_mode": "HTML", "disable_web_page_preview": True})
 
 async def main():
-    print("🚀 ApplyMore scraper (Hyderabad, Bangalore, Chennai only)")
+    print("🚀 ApplyMore DIAGNOSTIC scraper")
     start = datetime.now(timezone.utc)
 
     # Existing URLs
@@ -70,87 +72,78 @@ async def main():
     existing_urls = {row["url"] for row in existing.data} if existing.data else set()
     print(f"Existing jobs: {len(existing_urls)}")
 
-    # Parallel fetch
+    total_raw = 0
+    total_source_blocked = 0
+    total_duplicate = 0
+    total_old = 0
+    total_not_fresher = 0
+    total_kept = 0
+
     async with aiohttp.ClientSession() as session:
-        tasks = []
         for city in CITIES:
             for term in SEARCH_TERMS:
-                tasks.append((city, fetch_jobs(session, term, city)))
-        results = await asyncio.gather(*[task[1] for task in tasks])
-        city_map = [task[0] for task in tasks]
-
-    # Process with city info
-    seen_urls = set()
-    new_jobs = []
-    cutoff = datetime.now(timezone.utc) - timedelta(days=DAYS_BACK)
-
-    for city, job_list in zip(city_map, results):
-        for job in job_list:
-            title = job.get("job_title")
-            company = job.get("employer_name")
-            url = job.get("job_apply_link")
-            desc = job.get("job_description", "")
-            posted_str = job.get("job_posted_at_datetime_utc") or job.get("job_posted_at")
-            source = job.get("job_publisher", "").lower()
-            if not title or not company or not url:
-                continue
-            if source not in ALLOWED_SOURCES:
-                continue
-            if url in existing_urls or url in seen_urls:
-                continue
-            if posted_str:
-                try:
-                    if datetime.fromisoformat(posted_str.replace('Z', '+00:00')) < cutoff:
+                jobs = await fetch_jobs(session, term, city)
+                print(f"  {term} in {city}: {len(jobs)} raw jobs")
+                total_raw += len(jobs)
+                for job in jobs:
+                    title = job.get("job_title")
+                    company = job.get("employer_name")
+                    url = job.get("job_apply_link")
+                    desc = job.get("job_description", "")
+                    posted_str = job.get("job_posted_at_datetime_utc") or job.get("job_posted_at")
+                    source = job.get("job_publisher", "").lower()
+                    if not title or not company or not url:
                         continue
-                except:
-                    pass
-            if not is_fresher_job(title, desc):
-                continue
-            exp_level = extract_experience_level(title, desc)
-            new_jobs.append({
-                "title": title,
-                "company": company,
-                "location": city,          # actual city name
-                "url": url,
-                "description": desc,
-                "posted_date": posted_str or datetime.now(timezone.utc).isoformat(),
-                "created_at": datetime.now(timezone.utc).isoformat(),
-                "experience_level": exp_level
-            })
-            seen_urls.add(url)
+                    # Source filter
+                    if source not in ALLOWED_SOURCES:
+                        total_source_blocked += 1
+                        continue
+                    if url in existing_urls:
+                        total_duplicate += 1
+                        continue
+                    # Date filter
+                    if posted_str:
+                        try:
+                            posted_dt = datetime.fromisoformat(posted_str.replace('Z', '+00:00'))
+                            if posted_dt < datetime.now(timezone.utc) - timedelta(days=DAYS_BACK):
+                                total_old += 1
+                                continue
+                        except:
+                            pass
+                    if not is_fresher_job(title, desc):
+                        total_not_fresher += 1
+                        continue
+                    total_kept += 1
+                    # (We don't insert in this diagnostic run, just count)
 
-    print(f"New fresher jobs: {len(new_jobs)}")
-    if new_jobs:
-        # Insert in batches
-        for i in range(0, len(new_jobs), 50):
-            batch = new_jobs[i:i+50]
-            supabase.table("ApplyMore").insert(batch).execute()
-            print(f"Inserted batch {i//50+1}")
-        # Telegram alert with ApplyMore links (need to fetch inserted IDs)
-        # Fetch last inserted jobs by created_at
-        latest = supabase.table("ApplyMore").select("id,title,company").order("created_at", desc=True).limit(len(new_jobs)).execute()
-        if latest.data:
-            inserted = list(reversed(latest.data))  # oldest first to match new_jobs order
-            async with aiohttp.ClientSession() as session:
-                lines = [f"✅ <b>ApplyMore – {len(inserted)} new fresher jobs</b>\n"]
-                for idx, rec in enumerate(inserted[:10], 1):
-                    link = f"https://applymore.vercel.app/job.html?id={rec['id']}"
-                    lines.append(
-                        f"{idx}. <b>{rec['title']}</b>\n"
-                        f"   🏢 {rec['company']}\n"
-                        f"   🔗 <a href='{link}'>View & Apply on ApplyMore</a>\n"
-                        f"   ⚠️ <b>APPLY ASAP</b>"
-                    )
-                if len(inserted) > 10:
-                    lines.append(f"\n... and {len(inserted)-10} more. <a href='https://applymore.vercel.app'>Browse all</a>")
-                else:
-                    lines.append(f"\n🌐 <a href='https://applymore.vercel.app'>Visit ApplyMore</a>")
-                await send_telegram(session, "\n\n".join(lines))
-    else:
+    print("\n=== DIAGNOSTIC SUMMARY ===")
+    print(f"Total raw jobs fetched:   {total_raw}")
+    print(f"Blocked by source filter: {total_source_blocked}")
+    print(f"Duplicate URLs:           {total_duplicate}")
+    print(f"Older than {DAYS_BACK} days:   {total_old}")
+    print(f"Not fresher (or senior):  {total_not_fresher}")
+    print(f"Jobs that would be kept:  {total_kept}")
+    print(f"===========================")
+
+    if total_kept == 0:
+        print("⚠️ No jobs passed all filters. Check that your allowed sources (LinkedIn, Indeed, Glassdoor) are actually appearing in the API response.")
+        # Show a sample of sources from raw jobs
         async with aiohttp.ClientSession() as session:
-            await send_telegram(session, "⚠️ ApplyMore scraper ran but found no new fresher jobs.")
+            sample_jobs = await fetch_jobs(session, SEARCH_TERMS[0], CITIES[0])
+            sources = set()
+            for job in sample_jobs[:10]:
+                src = job.get("job_publisher", "").lower()
+                if src:
+                    sources.add(src)
+            if sources:
+                print(f"Sample sources from API: {', '.join(sources)}")
+            else:
+                print("No sources found – JSearch may not be returning jobs at all.")
+    else:
+        print("✅ Filters are working. To insert, remove diagnostic prints and re‑enable insertion.")
 
-    print(f"Finished in {(datetime.now(timezone.utc)-start).total_seconds():.2f}s")
+    elapsed = (datetime.now(timezone.utc) - start).total_seconds()
+    print(f"Finished in {elapsed:.2f}s")
 
 if __name__ == "__main__":
     asyncio.run(main())
