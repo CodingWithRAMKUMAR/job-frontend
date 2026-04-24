@@ -11,6 +11,10 @@ load_dotenv()
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 
+# DEBUG: print first few characters of the key (to confirm it's loaded)
+print(f"SUPABASE_URL: {SUPABASE_URL}")
+print(f"SUPABASE_KEY prefix: {SUPABASE_KEY[:15]}...")
+
 SEARCH_TERMS = [
     "software engineer", "data analyst", "java developer", "python developer",
     "devops engineer", "data scientist", "cyber security", "frontend developer"
