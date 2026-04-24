@@ -8,9 +8,11 @@ SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_SERVICE_ROLE_KEY = os.environ["SUPABASE_SERVICE_ROLE_KEY"]
 RAPIDAPI_KEY = os.environ["RAPIDAPI_KEY"].strip()
 
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
+
 supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
-# Better search terms that actually return Indian fresher jobs
 SEARCH_TERMS = [
     "fresher software engineer",
     "graduate engineer trainee",
@@ -53,8 +55,24 @@ def fetch_jobs(query, city):
     data = resp.json()
     return data.get("data", [])
 
+def send_telegram(message):
+    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
+        print("Telegram secrets missing. Skipping notification.")
+        return
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    payload = {
+        "chat_id": TELEGRAM_CHAT_ID,
+        "text": message,
+        "parse_mode": "HTML",
+        "disable_web_page_preview": True
+    }
+    try:
+        requests.post(url, json=payload, timeout=5)
+    except Exception as e:
+        print(f"Telegram send failed: {e}")
+
 def main():
-    print("Starting JSearch scraper with better queries...")
+    print("Starting JSearch scraper...")
     existing = get_existing_urls()
     print(f"Existing URLs: {len(existing)}")
     cutoff = datetime.now(timezone.utc) - timedelta(days=DAYS_BACK)
@@ -76,7 +94,6 @@ def main():
                     continue
                 if url in existing or url in seen:
                     continue
-                # Date filter
                 try:
                     if posted_str:
                         posted = datetime.fromisoformat(posted_str.replace('Z', '+00:00'))
@@ -96,15 +113,32 @@ def main():
                     "created_at": datetime.now(timezone.utc).isoformat()
                 })
                 seen.add(url)
-            time.sleep(1)  # slight delay between queries
+            time.sleep(1)
 
     print(f"New fresher jobs: {len(new_jobs)}")
     if new_jobs:
         for i in range(0, len(new_jobs), 50):
             supabase.table("ApplyMore").insert(new_jobs[i:i+50]).execute()
             print(f"Inserted batch {i//50 + 1}")
+        
+        # Build detailed Telegram message
+        msg_lines = [f"✅ <b>ApplyMore: {len(new_jobs)} New Fresher Jobs</b>\n"]
+        # Show first 10 jobs to avoid message too long
+        for idx, job in enumerate(new_jobs[:10], 1):
+            msg_lines.append(
+                f"{idx}. <b>{job['title']}</b>\n"
+                f"   🏢 {job['company']} | 📍 {job['location']}\n"
+                f"   🔗 <a href='{job['url']}'>Apply Now</a>\n"
+            )
+        if len(new_jobs) > 10:
+            msg_lines.append(f"\n... and {len(new_jobs) - 10} more jobs. Visit <a href='https://applymore.vercel.app'>ApplyMore</a>")
+        else:
+            msg_lines.append(f"\n🌐 <a href='https://applymore.vercel.app'>View all jobs on ApplyMore</a>")
+        
+        send_telegram("\n".join(msg_lines))
     else:
         print("No new jobs.")
+        send_telegram("⚠️ ApplyMore scraper ran but found no new fresher jobs.")
 
 if __name__ == "__main__":
     main()
