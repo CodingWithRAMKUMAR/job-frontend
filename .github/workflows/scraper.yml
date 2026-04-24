@@ -1,9 +1,9 @@
-name: Scrape Jobs
+name: Automated Job Scraper
 
 on:
   schedule:
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
+    - cron: '0 0,12 * * *'  # Runs at 00:00 and 12:00 UTC every day
+  workflow_dispatch:         # Allows manual run from the GitHub UI
 
 jobs:
   scrape:
@@ -11,14 +11,19 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install aiohttp supabase
-      - run: python scraper.py
+
+      - name: Install dependencies
+        run: |
+          pip install pandas python-jobspy supabase
+
+      - name: Run scraper
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Add other secrets for Telegram notifications if you have them
+        run: python scraper.py
