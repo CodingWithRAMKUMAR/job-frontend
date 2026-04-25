@@ -2,13 +2,13 @@ name: ApplyMore Job Scraper
 
 on:
   schedule:
-    - cron: '0 */12 * * *'   # every 12 hours
-  workflow_dispatch:          # allow manual trigger
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 15       # increased because direct scraping may take longer
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
