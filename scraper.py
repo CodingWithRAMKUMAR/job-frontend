@@ -38,7 +38,7 @@ def is_fresher(title, desc):
     return any(k in text for k in FRESHER_WORDS) and not any(k in text for k in SENIOR_WORDS)
 
 def extract_exp(title, desc):
-    return "Fresher (0-2 years)"  # all jobs are fresher anyway
+    return "Fresher (0-2 years)"
 
 def extract_skills(desc):
     if not desc:
@@ -130,7 +130,17 @@ async def scrape_city(session, city):
                     continue
                 if not is_fresher(title, desc):
                     continue
-                posted_iso = posted.isoformat() if isinstance(posted, datetime) else (safe_str(posted) if posted else datetime.now(timezone.utc).isoformat())
+                # Ensure posted_date is a valid ISO timestamp, never empty
+                if posted is None or pd.isna(posted) or safe_str(posted) == "":
+                    posted_iso = datetime.now(timezone.utc).isoformat()
+                elif isinstance(posted, datetime):
+                    posted_iso = posted.isoformat()
+                else:
+                    # Try to parse string, fallback to now
+                    try:
+                        posted_iso = datetime.fromisoformat(safe_str(posted).replace('Z', '+00:00')).isoformat()
+                    except:
+                        posted_iso = datetime.now(timezone.utc).isoformat()
                 new_jobs.append({
                     "title": title,
                     "company": company,
@@ -147,7 +157,7 @@ async def scrape_city(session, city):
     return new_jobs
 
 async def main():
-    print("⚡ ApplyMore – Enhanced Alerts Scraper Started (Fixed DB schema)")
+    print("⚡ ApplyMore – Enhanced Alerts Scraper Started (Fixed timestamp)")
     start = datetime.now(timezone.utc)
 
     async with aiohttp.ClientSession() as session:
