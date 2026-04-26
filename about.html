@@ -3,45 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About – ApplyMore</title>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6599003415562086" crossorigin="anonymous"></script>
-
+  <title>About ApplyMore – Our Mission & Story</title>
+  <meta name="description" content="Learn about ApplyMore, a free job board built by a fresher for freshers. Our mission, story, and commitment to helping IT graduates find their first job.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    :root{--bg:#0a0a2a;--card-bg:rgba(20,20,50,0.65);--text:#f0f3ff;--text-muted:#9ca3cf;--border:rgba(255,255,255,0.1);--accent:#3b82f6}
-    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:2rem;line-height:1.6}
-    body.light{--bg:#f8fafc;--card-bg:rgba(255,255,255,0.85);--text:#1e293b;--text-muted:#475569;--border:rgba(0,0,0,0.1);--accent:#2563eb}
-    body.vibrant{--bg:#fdf2f8;--card-bg:rgba(255,255,255,0.9);--text:#831843;--text-muted:#9d174d;--accent:#ec489a}
-    .container{max-width:800px;margin:0 auto}
-    .about-card{background:var(--card-bg);backdrop-filter:blur(10px);border-radius:1rem;padding:2rem;border:1px solid var(--border)}
-    h1{color:var(--accent);margin-bottom:0.5rem}
-    h2{color:var(--accent);margin:1.5rem 0 0.5rem}
-    p{margin-bottom:1rem;color:var(--text-muted)}
-    .highlight{background:rgba(59,130,246,0.1);padding:1rem;border-radius:0.5rem;margin:1rem 0;border-left:3px solid var(--accent)}
-    .quote{font-style:italic;padding:1rem;background:rgba(0,0,0,0.2);border-radius:0.5rem;margin:1rem 0}
+    :root{--bg:#0a0a2a;--card-bg:rgba(20,20,50,0.65);--text:#f0f3ff;--text-muted:#9ca3cf;--border:rgba(255,255,255,0.1);--accent:#3b82f6;--purple:#8b5cf6}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:1.5rem;line-height:1.6}
+    .container{max-width:1000px;margin:0 auto}
     .nav-links{display:flex;justify-content:center;gap:1rem;margin-bottom:2rem;flex-wrap:wrap}
-    .nav-links a{color:var(--text-muted);text-decoration:none}
+    .nav-links a{color:var(--text-muted);text-decoration:none;font-size:0.9rem}
     .nav-links a:hover{color:var(--accent)}
-    .top-bar{display:flex;justify-content:flex-end;gap:0.5rem;margin-bottom:1rem}
-    .theme-btn{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:2rem;padding:0.2rem 0.6rem;cursor:pointer;font-size:0.7rem;color:var(--text)}
+    .about-card{background:var(--card-bg);backdrop-filter:blur(10px);border-radius:1.5rem;padding:2rem;border:1px solid var(--border)}
+    .profile{display:flex;gap:2rem;align-items:center;flex-wrap:wrap;margin-bottom:2rem}
+    .profile-img{width:150px;height:150px;border-radius:50%;object-fit:cover;border:2px solid var(--accent)}
+    .profile h1{font-size:2rem;color:var(--accent);margin-bottom:0.2rem}
+    .profile .tagline{color:var(--text-muted);margin-bottom:1rem}
+    .section{margin-bottom:2rem}
+    .section h2{font-size:1.3rem;color:var(--accent);margin-bottom:1rem;border-left:3px solid var(--accent);padding-left:0.8rem}
+    .social-links{display:flex;gap:1rem;margin-top:1rem}
+    .social-links a{background:rgba(255,255,255,0.05);padding:0.5rem 1rem;border-radius:2rem;color:var(--text);text-decoration:none;font-size:0.8rem}
+    .social-links a:hover{background:var(--accent)}
+    footer{margin-top:2rem;text-align:center;font-size:0.7rem;color:var(--text-muted)}
+    @media (max-width:640px){.profile{flex-direction:column;text-align:center}}
   </style>
-  <!-- ApplyMore Logo / Favicon -->
-<link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
-<link rel="apple-touch-icon" href="/logo.png">
-<meta property="og:image" content="https://applymore.vercel.app/logo.png">
-<meta property="og:image:width" content="512">
-<meta property="og:image:height" content="512">
-<meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
+  <link rel="apple-touch-icon" href="/logo.png">
+  <meta property="og:image" content="https://applymore.vercel.app/logo.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 <div class="container">
-  <div class="top-bar">
-    <button class="theme-btn" id="lightTheme">Light</button>
-    <button class="theme-btn" id="darkTheme">Dark</button>
-    <button class="theme-btn" id="vibrantTheme">Vibrant</button>
-  </div>
   <div class="nav-links">
     <a href="index.html">🏠 Home</a>
     <a href="about.html">📖 About</a>
@@ -51,43 +46,55 @@
     <a href="terms.html">⚖️ Terms</a>
   </div>
   <div class="about-card">
-    <h1>📖 Still Searching, Still Building</h1>
-    <div class="quote">"I've applied to 600+ jobs. Still waiting for that one 'Congratulations' email. But I won't give up – and neither should you."</div>
-    <h2>🎯 My Story – The Reality of Being a Fresher in India (2026)</h2>
-    <p>My name is Ram Kumar. I graduated in 2024 with a Computer Science degree. I was excited, hopeful, and ready to start my IT career. But the reality? It's been two years, and I'm still searching.</p>
-    <div class="highlight">
-      <strong>📊 My Job Search Numbers (So Far):</strong><br>
-      • 600+ applications sent<br>
-      • 550+ rejections or no response<br>
-      • 50 interviews (some went well, some didn't)<br>
-      • 0 offers yet – but I'm still trying every single day<br>
-      • 100% determination to never give up
+    <div class="profile">
+      <!-- Replace 'my-photo.jpg' with your actual photo file name. Upload the photo to your GitHub root folder. -->
+      <img src="my-photo.jpg" alt="Ram Kumar – Founder of ApplyMore" class="profile-img" onerror="this.src='https://via.placeholder.com/150?text=Photo+Coming'">
+      <div>
+        <h1>Ram Kumar</h1>
+        <div class="tagline">Founder & Developer – ApplyMore</div>
+        <p>IT fresher turned job board builder. I know the struggle – because I lived it.</p>
+      </div>
     </div>
-    <p>But here's what I realised: instead of just waiting for a job, I could build something that helps other freshers like me. That's how ApplyMore was born.</p>
-    <h2>💡 Why ApplyMore Exists</h2>
-    <p>I built ApplyMore because I was tired of seeing "Senior Software Engineer" posts when I was looking for entry-level roles. I built it because every fresher deserves a platform that understands their struggle – no paywalls, no premium plans, no fake hopes.</p>
-    <h2>👨‍💻 Who Am I Today?</h2>
-    <p>I'm still a fresher. Still applying. Still getting rejections. But I'm also a self-taught developer who built a platform that serves thousands of job seekers. I may not have a job yet, but I have a mission: to help 10,000 IT freshers in India find their first job before I find mine.</p>
-    <h2>📍 What We Cover</h2>
-    <p><strong>Cities:</strong> Hyderabad, Bangalore, Chennai, Mumbai, Pune, Delhi, Gurugram, Kolkata, Ahmedabad, Noida</p>
-    <p><strong>Roles:</strong> Data Analyst, Software Engineer, Java Developer, Python Developer, DevOps Engineer, Data Scientist, Cyber Security, Apprenticeships</p>
-    <p><strong>Experience:</strong> Strictly 0-2 years. I've been burned by seeing "3+ years" jobs too many times. I won't let that happen to you.</p>
-    <h2>⭐ My Promise to You</h2>
-    <p>ApplyMore will ALWAYS be free. No premium plans, no hidden charges, no paywalls. I know what it's like to be a fresher with no money and no job. You shouldn't have to pay to find a job. Period.</p>
-    <div class="highlight"><strong>🎯 My Goal (While I Keep Searching):</strong><br>Help 10,000 IT freshers in India find their first job by December 2026.</div>
-    <h2>📧 Let's Connect – We're in This Together</h2>
-    <p>I read every email. If you have suggestions, found a bug, or just want to share your own job search story – reach out to me at <a href="mailto:connectwithme.ramkumar@gmail.com" style="color:var(--accent);">connectwithme.ramkumar@gmail.com</a>.</p>
-    <div class="quote">"To every fresher reading this: I'm still in the trenches with you. Some days are hard. Some days you want to give up. But don't. Keep applying, keep learning, and keep believing. We'll make it. Together."</div>
-    <p style="margin-top:1.5rem;">— Ram Kumar, a fresher who's still searching, but still building.</p>
+
+    <div class="section">
+      <h2>📖 My Story</h2>
+      <p>Like many of you, I graduated with a degree in Computer Science and faced the same harsh reality: applying to hundreds of jobs, getting no response, or receiving automated rejections. I spent months learning new skills, building projects, and still struggled to find genuine fresher IT roles. That frustration pushed me to create ApplyMore – a platform that does exactly what I wished existed: a free, no‑nonsense job board that filters only real entry‑level IT jobs, updated automatically every 12 hours.</p>
+      <p>I built the entire scraper myself, pulling data from LinkedIn and Indeed, and added features like resume builder, interview prep, and a blog with actionable guides. Everything is free. No premium plans. No hidden charges. This is my way of giving back to the community that helped me stay motivated during my own job search.</p>
+    </div>
+
+    <div class="section">
+      <h2>🎯 Our Mission</h2>
+      <p>ApplyMore’s mission is simple: <strong>help every IT fresher in India find their first job without spending money or time on fake listings.</strong> We believe that talent is evenly distributed, but opportunity is not. Our job is to bridge that gap with technology, transparency, and a genuine passion for helping freshers succeed.</p>
+    </div>
+
+    <div class="section">
+      <h2>🛠️ How ApplyMore Works</h2>
+      <ul>
+        <li><strong>Automated scraping:</strong> Every 12 hours, we fetch the latest fresher IT jobs from LinkedIn and Indeed.</li>
+        <li><strong>Strict filtering:</strong> We exclude senior roles, duplicate listings, and outdated posts.</li>
+        <li><strong>User‑first design:</strong> No distracting ads (only Google AdSense to keep servers running).</li>
+        <li><strong>Free tools:</strong> Resume builder, interview Q&A, and career blog – all at no cost.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>❤️ Why I Do This</h2>
+      <p>I still remember the day I received my first interview call after months of silence. That feeling of hope is what I want every fresher to experience. ApplyMore is not a business to me – it’s a mission. Every job posted, every resume downloaded, every question answered brings us one step closer to a world where no fresher feels left behind.</p>
+    </div>
+
+    <div class="section">
+      <h2>🌐 Join Our Community</h2>
+      <p>We are active on Telegram and WhatsApp, sharing daily job alerts and answering your doubts. You are not alone in this journey.</p>
+      <div class="social-links">
+        <a href="https://t.me/+lBGo64nHYIgxMmU1" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+        <a href="https://chat.whatsapp.com/Bv6fKn2VeJ4DZ3zBbONFzV" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a href="https://www.linkedin.com/company/applymore/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      </div>
+    </div>
   </div>
+  <footer>
+    <p>© 2026 ApplyMore – Built with ❤️ for IT freshers in India</p>
+  </footer>
 </div>
-<script>
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  document.body.classList.add(savedTheme);
-  function setTheme(theme) { document.body.classList.remove('light','vibrant'); if(theme!=='dark') document.body.classList.add(theme); localStorage.setItem('theme',theme); }
-  document.getElementById('lightTheme')?.addEventListener('click',()=>setTheme('light'));
-  document.getElementById('darkTheme')?.addEventListener('click',()=>setTheme('dark'));
-  document.getElementById('vibrantTheme')?.addEventListener('click',()=>setTheme('vibrant'));
-</script>
 </body>
 </html>
