@@ -2,81 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IT Career Blog – ApplyMore</title>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6599003415562086" crossorigin="anonymous"></script>
-
-  <meta name="description" content="Expert career guidance, resume tips, interview prep, and IT fresher job strategies. Your daily dose of IT career success.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     :root{--bg:#0a0a2a;--card-bg:rgba(20,20,50,0.65);--text:#f0f3ff;--text-muted:#9ca3cf;--border:rgba(255,255,255,0.1);--accent:#3b82f6;--purple:#8b5cf6}
     body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:1.5rem;line-height:1.5}
-    body.light{--bg:#f8fafc;--card-bg:rgba(255,255,255,0.85);--text:#1e293b;--text-muted:#475569;--border:rgba(0,0,0,0.1);--accent:#2563eb}
-    body.vibrant{--bg:#fdf2f8;--card-bg:rgba(255,255,255,0.9);--text:#831843;--text-muted:#9d174d;--accent:#ec489a}
     .container{max-width:1400px;margin:0 auto}
-    /* Navigation & theme */
-    .top-bar{display:flex;justify-content:flex-end;gap:0.5rem;margin-bottom:1rem}
-    .theme-btn{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:2rem;padding:0.2rem 0.6rem;cursor:pointer;font-size:0.7rem;color:var(--text)}
     .nav-links{display:flex;justify-content:center;gap:1rem;margin-bottom:2rem;flex-wrap:wrap}
-    .nav-links a{color:var(--text-muted);text-decoration:none;font-size:0.9rem}
+    .nav-links a{color:var(--text-muted);text-decoration:none}
     .nav-links a:hover{color:var(--accent)}
-    /* Hero */
     .blog-hero{text-align:center;margin-bottom:2rem}
-    .blog-hero h1{font-size:2.5rem;background:linear-gradient(135deg,var(--accent),var(--purple));background-clip:text;-webkit-background-clip:text;color:transparent;margin-bottom:0.5rem}
+    .blog-hero h1{font-size:2.5rem;background:linear-gradient(135deg,var(--accent),var(--purple));background-clip:text;-webkit-background-clip:text;color:transparent}
     .blog-hero p{color:var(--text-muted);max-width:700px;margin:0 auto}
-    /* Search & filters */
-    .search-section{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;align-items:center;justify-content:center}
-    .search-box{flex:2;min-width:200px;position:relative}
-    .search-box i{position:absolute;left:0.8rem;top:50%;transform:translateY(-50%);color:var(--text-muted)}
-    .search-box input{width:100%;padding:0.6rem 0.6rem 0.6rem 2rem;background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:2rem;color:var(--text);font-size:0.9rem}
-    .category-filters{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center}
-    .filter-btn{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:2rem;padding:0.3rem 1rem;cursor:pointer;font-size:0.8rem;color:var(--text);transition:0.2s}
-    .filter-btn.active{background:var(--accent);border-color:var(--accent);color:white}
-    .filter-btn:hover{background:var(--accent);color:white}
-    /* Featured section */
-    .featured-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;margin-bottom:2rem}
-    .featured-card{background:var(--card-bg);border-radius:1rem;padding:1.2rem;border:1px solid var(--border);transition:0.2s}
-    .featured-card:hover{transform:translateY(-5px);border-color:var(--accent)}
-    .featured-badge{display:inline-block;background:var(--accent);color:white;font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:1rem;margin-bottom:0.5rem}
-    .featured-card h3{font-size:1.2rem;margin-bottom:0.5rem}
-    .featured-card p{color:var(--text-muted);font-size:0.85rem;margin-bottom:0.5rem}
+    .articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+    .article-card{background:var(--card-bg);border-radius:1rem;padding:1.2rem;border:1px solid var(--border);transition:0.2s}
+    .article-card:hover{transform:translateY(-5px);border-color:var(--accent)}
+    .article-category{display:inline-block;background:rgba(59,130,246,0.2);color:var(--accent);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:1rem;margin-bottom:0.5rem}
+    .article-card h3{font-size:1.2rem;margin-bottom:0.5rem}
+    .article-card p{color:var(--text-muted);font-size:0.85rem;margin-bottom:0.5rem}
     .article-meta{display:flex;gap:1rem;font-size:0.7rem;color:var(--text-muted);margin-bottom:0.5rem}
     .read-more{color:var(--accent);text-decoration:none;font-weight:500;font-size:0.8rem}
-    /* Latest articles grid */
-    .articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;margin-bottom:2rem}
-    .article-card{background:var(--card-bg);border-radius:1rem;padding:1rem;border:1px solid var(--border);transition:0.2s}
-    .article-card:hover{transform:translateY(-3px);border-color:var(--accent)}
-    .article-category{display:inline-block;background:rgba(59,130,246,0.2);color:var(--accent);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:1rem;margin-bottom:0.5rem}
-    .article-card h4{font-size:1rem;margin-bottom:0.3rem}
-    .article-card p{font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem}
-    .no-results{text-align:center;padding:2rem;color:var(--text-muted)}
     footer{text-align:center;margin-top:2rem;color:var(--text-muted);font-size:0.7rem}
-    .footer-links{display:flex;justify-content:center;gap:1rem;margin-bottom:0.5rem}
-    .footer-links a{color:var(--accent);text-decoration:none}
-    @media (max-width:640px){
-      .blog-hero h1{font-size:1.8rem}
-      .search-section{flex-direction:column}
-      .category-filters{justify-content:flex-start}
-      .featured-grid{grid-template-columns:1fr}
-    }
+    @media (max-width:640px){.blog-hero h1{font-size:1.8rem}}
   </style>
-  <!-- ApplyMore Logo / Favicon -->
-<link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
-<link rel="apple-touch-icon" href="/logo.png">
-<meta property="og:image" content="https://applymore.vercel.app/logo.png">
-<meta property="og:image:width" content="512">
-<meta property="og:image:height" content="512">
-<meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
+  <link rel="apple-touch-icon" href="/logo.png">
+  <meta property="og:image" content="https://applymore.vercel.app/logo.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 <div class="container">
-  <div class="top-bar">
-    <button class="theme-btn" id="lightTheme">Light</button>
-    <button class="theme-btn" id="darkTheme">Dark</button>
-    <button class="theme-btn" id="vibrantTheme">Vibrant</button>
-  </div>
   <div class="nav-links">
     <a href="index.html">🏠 Home</a>
     <a href="about.html">📖 About</a>
@@ -89,139 +49,40 @@
     <h1>IT Career Blog</h1>
     <p>Actionable advice, resume templates, interview prep, and insider tips – all for IT freshers in India.</p>
   </div>
-  <div class="search-section">
-    <div class="search-box">
-      <i class="fas fa-search"></i>
-      <input type="text" id="searchInput" placeholder="Search articles...">
-    </div>
-    <div class="category-filters" id="categoryFilters">
-      <button data-cat="all" class="filter-btn active">All</button>
-      <button data-cat="Job Search" class="filter-btn">📈 Job Search</button>
-      <button data-cat="Resume" class="filter-btn">💼 Resume & Portfolio</button>
-      <button data-cat="Interview" class="filter-btn">🎤 Interview Prep</button>
-      <button data-cat="Skills" class="filter-btn">🚀 Skill Development</button>
-      <button data-cat="Company" class="filter-btn">🏢 Company Insights</button>
-      <button data-cat="Success" class="filter-btn">🌟 Success Stories</button>
-      <button data-cat="Trends" class="filter-btn">📊 Industry Trends</button>
-    </div>
-  </div>
-  <div id="featuredSection"></div>
-  <div id="articlesContainer"></div>
-  <footer>
-    <div class="footer-links">
-      <a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <p>© 2026 ApplyMore — Helping IT freshers land their dream job</p>
-  </footer>
+  <div id="articlesContainer" class="articles-grid"></div>
+  <footer><p>© 2026 ApplyMore — Helping IT freshers land their dream job</p></footer>
 </div>
 <script>
-  // Theme sync
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  document.body.classList.add(savedTheme);
-  function setTheme(theme) { document.body.classList.remove('light','vibrant'); if(theme!=='dark') document.body.classList.add(theme); localStorage.setItem('theme',theme); }
-  document.getElementById('lightTheme')?.addEventListener('click',()=>setTheme('light'));
-  document.getElementById('darkTheme')?.addEventListener('click',()=>setTheme('dark'));
-  document.getElementById('vibrantTheme')?.addEventListener('click',()=>setTheme('vibrant'));
-
-  // Articles data (15+ high-value posts)
   const articles = [
-    { id:1, title:"How to Find Your First IT Job in 2026: Complete Guide", category:"Job Search", excerpt:"Step-by-step roadmap from application to offer letter. Includes timeline, resources, and success tips.", readTime:"8 min", featured:true, date:"Apr 10, 2026" },
-    { id:2, title:"IT Fresher Resume Template: ATS-Friendly Format That Works", category:"Resume", excerpt:"Copy-paste template with 47 keywords that beat applicant tracking systems. Downloadable DOCX included.", readTime:"6 min", featured:true, date:"Apr 8, 2026" },
-    { id:3, title:"50 Most Asked Interview Questions for IT Freshers (With Answers)", category:"Interview", excerpt:"Real questions from TCS, Infosys, Wipro, and startups. Includes STAR method examples.", readTime:"12 min", featured:true, date:"Apr 5, 2026" },
-    { id:4, title:"How to Learn Data Science in 6 Months (Free Roadmap)", category:"Skills", excerpt:"Curated list of free courses, projects, and certifications to become job-ready.", readTime:"7 min", featured:true, date:"Apr 1, 2026" },
-    { id:5, title:"TCS vs Infosys vs Wipro: Fresher's Comparison 2026", category:"Company", excerpt:"Salary, training, work culture, and promotion timeline – which one is best for you?", readTime:"5 min", featured:false, date:"Mar 28, 2026" },
-    { id:6, title:"From Rejection to Dream Job: 5 Inspiring Fresher Stories", category:"Success", excerpt:"Real journeys of candidates who landed offers after months of struggle.", readTime:"9 min", featured:false, date:"Mar 25, 2026" },
-    { id:7, title:"Remote vs Office Jobs: What's Better for Freshers?", category:"Job Search", excerpt:"Pros, cons, and how to decide based on your learning style and career goals.", readTime:"4 min", featured:false, date:"Mar 22, 2026" },
-    { id:8, title:"GitHub Portfolio Ideas: 10 Projects That Get You Hired", category:"Resume", excerpt:"Project ideas with code repos and live demos that impress recruiters.", readTime:"10 min", featured:false, date:"Mar 20, 2026" },
-    { id:9, title:"How to Answer 'Tell Me About Yourself' Like a Pro", category:"Interview", excerpt:"3 templates for freshers (technical, non-technical, and career change).", readTime:"5 min", featured:false, date:"Mar 18, 2026" },
-    { id:10, title:"Top 5 Programming Languages for Freshers in 2026", category:"Skills", excerpt:"Which language gives the best ROI for job hunting? Data-driven analysis.", readTime:"6 min", featured:false, date:"Mar 15, 2026" },
-    { id:11, title:"Working at Startups vs MNCs: Fresher's Perspective", category:"Company", excerpt:"Real employee reviews, learning curves, and salary differences.", readTime:"7 min", featured:false, date:"Mar 12, 2026" },
-    { id:12, title:"How to Get a Job Without Internship Experience", category:"Success", excerpt:"3 case studies of freshers who used projects and freelancing to land offers.", readTime:"8 min", featured:false, date:"Mar 10, 2026" },
-    { id:13, title:"AI Impact on IT Jobs: Opportunities for Freshers", category:"Trends", excerpt:"Which roles are growing? What skills should you learn now?", readTime:"6 min", featured:false, date:"Mar 8, 2026" },
-    { id:14, title:"LinkedIn Optimization for IT Freshers (Checklist)", category:"Job Search", excerpt:"Step-by-step guide to make your profile attract recruiters.", readTime:"7 min", featured:false, date:"Mar 5, 2026" },
-    { id:15, title:"How to Negotiate Your First Salary (Without Fear)", category:"Interview", excerpt:"Scripts, data points, and tactics to get 20-30% more.", readTime:"5 min", featured:false, date:"Mar 2, 2026" }
+    { id:1, title:"How to Find Your First IT Job in 2026: Complete Guide", category:"Job Search", excerpt:"Data-driven roadmap with skill gap analyzer, project plan, and real success stories.", readTime:"25 min", date:"Apr 10, 2026" },
+    { id:2, title:"IT Fresher Resume Template: ATS-Friendly Format That Works", category:"Resume", excerpt:"Copy-paste template with 57 keywords, before/after examples, and ATS scoring tips.", readTime:"20 min", date:"Apr 8, 2026" },
+    { id:3, title:"50 Most Asked Interview Questions for IT Freshers (With Answers)", category:"Interview", excerpt:"STAR-based answers, technical code snippets, and preparation plan from real transcripts.", readTime:"30 min", date:"Apr 5, 2026" },
+    { id:4, title:"How to Learn Data Science in 6 Months (Free Roadmap)", category:"Skills", excerpt:"Month-by-month guide with free courses, projects, and deployment advice.", readTime:"18 min", date:"Mar 28, 2026" },
+    { id:5, title:"TCS vs Infosys vs Wipro: Fresher's Comparison 2026", category:"Company", excerpt:"Salary, training, work culture, promotion timeline – data-driven comparison.", readTime:"12 min", date:"Mar 20, 2026" },
+    { id:6, title:"Remote vs Office Jobs: What's Better for Freshers?", category:"Job Search", excerpt:"Survey results from 500 freshers, pros/cons, and decision framework.", readTime:"8 min", date:"Mar 15, 2026" },
+    { id:7, title:"GitHub Portfolio Ideas: 10 Projects That Get You Hired", category:"Resume", excerpt:"Project tutorials, live demos, and how to present them for maximum impact.", readTime:"15 min", date:"Mar 10, 2026" }
   ];
 
-  // Render featured articles (top 4)
-  function renderFeatured() {
-    const featured = articles.filter(a => a.featured).slice(0,4);
-    const container = document.getElementById('featuredSection');
-    if (!container) return;
-    if (!featured.length) { container.innerHTML = ''; return; }
-    container.innerHTML = `
-      <h2 style="margin:1rem 0 0.5rem; font-size:1.3rem;">✨ Featured Articles</h2>
-      <div class="featured-grid">
-        ${featured.map(art => `
-          <div class="featured-card">
-            <div class="featured-badge">🔥 Featured</div>
-            <h3>${escapeHtml(art.title)}</h3>
-            <div class="article-meta"><span><i class="far fa-clock"></i> ${art.readTime}</span><span><i class="far fa-calendar-alt"></i> ${art.date}</span></div>
-            <p>${escapeHtml(art.excerpt)}</p>
-            <a href="#" class="read-more" data-id="${art.id}">Read full article →</a>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
-
-  function renderArticles(filterCat = 'all', searchTerm = '') {
-    let filtered = articles;
-    if (filterCat !== 'all') filtered = filtered.filter(a => a.category === filterCat);
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      filtered = filtered.filter(a => a.title.toLowerCase().includes(term) || a.excerpt.toLowerCase().includes(term));
-    }
+  function renderArticles() {
     const container = document.getElementById('articlesContainer');
-    if (!filtered.length) { container.innerHTML = '<div class="no-results">No articles found. Try a different category or search term.</div>'; return; }
-    container.innerHTML = `
-      <h2 style="margin:1rem 0 0.5rem; font-size:1.3rem;">📚 Latest Articles</h2>
-      <div class="articles-grid">
-        ${filtered.map(art => `
-          <div class="article-card">
-            <div class="article-category">${art.category}</div>
-            <h4>${escapeHtml(art.title)}</h4>
-            <div class="article-meta" style="margin-bottom:0.3rem;"><span><i class="far fa-clock"></i> ${art.readTime}</span><span><i class="far fa-calendar-alt"></i> ${art.date}</span></div>
-            <p>${escapeHtml(art.excerpt)}</p>
-            <a href="#" class="read-more" data-id="${art.id}">Read more →</a>
-          </div>
-        `).join('')}
+    if (!container) return;
+    container.innerHTML = articles.map(art => `
+      <div class="article-card">
+        <div class="article-category">${art.category}</div>
+        <h3>${escapeHtml(art.title)}</h3>
+        <div class="article-meta"><span><i class="far fa-clock"></i> ${art.readTime}</span><span><i class="far fa-calendar-alt"></i> ${art.date}</span></div>
+        <p>${escapeHtml(art.excerpt)}</p>
+        <a href="article.html?id=${art.id}" class="read-more">Read full article →</a>
       </div>
-    `;
-    attachReadMoreEvents();
+    `).join('');
   }
 
-  function attachReadMoreEvents() {
-    document.querySelectorAll('.read-more').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const id = link.getAttribute('data-id');
-        // For now, open a new page with article ID (you can implement a dedicated article page later)
-        window.open(`article.html?id=${id}`, '_blank');
-        // Or simply alert that full article is coming soon
-        // alert('Full article will be available soon. Check back later!');
-      });
-    });
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, m => m==='&'?'&amp;':(m==='<'?'&lt;':'&gt;'));
   }
 
-  function escapeHtml(str) { return str ? str.replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]) : ''; }
-
-  // Filtering and search events
-  let currentCategory = 'all';
-  let currentSearch = '';
-  function updateDisplay() { renderArticles(currentCategory, currentSearch); }
-  document.getElementById('searchInput')?.addEventListener('input', (e) => { currentSearch = e.target.value.trim(); updateDisplay(); });
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentCategory = btn.getAttribute('data-cat');
-      updateDisplay();
-    });
-  });
-
-  renderFeatured();
-  renderArticles('all', '');
+  renderArticles();
 </script>
 </body>
 </html>
